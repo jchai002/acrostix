@@ -1,0 +1,23 @@
+{
+  "name": "acrostix",
+  "version": "1.0.0",
+  "description": "puzzle game",
+  "main": "index.js",
+  "dependencies": {
+    "react": "^15.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jchai002/acrostix.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jchai002/acrostix/issues"
+  },
+  "homepage": "https://github.com/jchai002/acrostix#readme"
+}
