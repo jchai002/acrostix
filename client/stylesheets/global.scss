@@ -7,23 +7,32 @@ body {
   background-color: $yellow;
 }
 
-.initial-inputs {
+.react-top-level {
   padding: $space-stack-xl;
-  .error-message {
-    display: none;
-  }
-  .has-error {
-    .form-control {
-      border: 1px solid $red;
-      background-color: lighten($red, 50%);
+  .initial-inputs {
+    .has-error {
+      .form-control {
+        border: 1px solid $red;
+        background-color: lighten($red, 50%);
+      }
+      .error-message {
+        display: block;
+        color: $red;
+      }
     }
-    .error-message {
-      display: block;
+    .quote-input, .author-input {
+      @extend .form-control;
+      resize: none;
+    }
+  }
+
+  .constraints {
+    .red {
       color: $red;
     }
+    .green {
+      color: $green;
+    }
   }
-  .quote-input, .author-input {
-    @extend .form-control;
-    resize: none;
-  }
+
 }
