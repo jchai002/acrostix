@@ -1,10 +1,11 @@
 @import
 "../../node_modules/bootstrap/scss/bootstrap-flex.scss",
 "./variables.scss",
+"./helpers.scss",
 "./print.scss";
 
 body {
-  background-color: $yellow;
+  background-color: $bg-color;
 }
 
 .react-top-level {
@@ -25,13 +26,31 @@ body {
       resize: none;
     }
   }
-
-  .constraints {
-    .red {
-      color: $red;
-    }
-    .green {
-      color: $green;
+  
+  .grid {
+    display: flex;
+    flex-flow: row wrap;
+    width: 502px;
+    margin: auto;
+    border-top: 2px solid $black;
+    border-right: 2px solid $black;
+    .tile {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: $space-xs;
+      border: 2px solid $black;
+      border-top: none;
+      border-right: none;
+      .index {
+        position: absolute;
+        right: 2px;
+        top: 0;
+        font-size: 12px;
+      }
     }
   }
 

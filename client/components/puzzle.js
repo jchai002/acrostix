@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import TextArea from './textArea';
+import Tile from './tile';
 import Update from 'immutability-helper';
 
 function isLetter(char) {
@@ -19,9 +20,10 @@ export default class Puzzle extends Component {
       isValid: false,
       quote:'',
       indexedQuote: [],
+      grid: null,
       authorLetters: [],
       quoteLetters: {},
-      currentStep: 1
+      currentStep: 1,
     };
   }
   handleQuoteChange(string) {
@@ -82,14 +84,17 @@ export default class Puzzle extends Component {
 
   handleStepChange(step) {
     if (step == 2) {
-      this.createGrid()
+      return this.createGrid()
     }
   }
 
   createGrid() {
     var index = 1;
+    var key = 0;
     var tempArray = [];
-    this.state.quote.split('').forEach(function(char){
+    var grid;
+    const Puzzle = this;
+    Puzzle.state.quote.split('').forEach(function(char){
       var letterWithIndex = {};
       if (isLetter(char)) {
         letterWithIndex.letter = char;
@@ -102,8 +107,16 @@ export default class Puzzle extends Component {
         tempArray.push(letterWithIndex);
       }
     });
-    this.setState({indexedQuote:tempArray},function(){
-      console.log(this.state.indexedQuote)
+
+    while (tempArray.length%10 != 0) {
+      tempArray.push({letter:' ',index: null});
+    }
+    Puzzle.setState({indexedQuote:tempArray},function(){
+      grid = tempArray.map(function(obj){
+        key ++;
+        return (<Tile key={key} letter={obj.letter} index={obj.index}/>);
+      });
+      Puzzle.setState({grid:grid});
     });
   }
 
@@ -129,6 +142,7 @@ export default class Puzzle extends Component {
       continueButtonDisabled = true;
       validityConstraintClass = "red";
     }
+
     return (
       <div className="row">
         <div className="col-xs-12 col-lg-8">
@@ -158,6 +172,11 @@ export default class Puzzle extends Component {
             <li className={authorConstraintClass}>Author not empty</li>
             <li className={validityConstraintClass}>Author name can be made up by letters from the quote</li>
           </ul>
+        </div>
+        <div className="col-xs-12">
+          <div className="grid">
+            {this.state.grid}
+          </div>
         </div>
       </div>
     );
