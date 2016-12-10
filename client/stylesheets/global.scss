@@ -4,8 +4,13 @@
 
 body {
   background-color: $yellow;
+
 }
-.quote-input {
-  margin: $space-stack-xl;
-  @extend .form-control;
+
+.initial-inputs {
+  padding: $space-stack-xl;
+  .quote-input, .author-input {
+    @extend .form-control;
+    resize: none;
+  }
 }

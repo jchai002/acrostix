@@ -17,14 +17,26 @@ export default class Puzzle extends Component {
   }
   render() {
     return (
-      <div>
-        <TextArea
-          className="quote-input"
-          cols="40"
-          rows="5"
-          handleQuoteChange={this.handleQuoteChange}
-          />
-      </div>
+      <form className="initial-inputs">
+        <div className="form-group">
+          <label>Please Enter Quote</label>
+          <TextArea
+            className="quote-input"
+            cols="40"
+            rows="5"
+            handleQuoteChange={this.handleQuoteChange}
+            />
+        </div>
+        <div className="form-group">
+          <label>Please Enter Author</label>
+          <TextArea
+            className="author-input"
+            cols="40"
+            rows="1"
+            handleQuoteChange={this.handleQuoteChange}
+            />
+        </div>
+      </form>
     );
   }
 }
