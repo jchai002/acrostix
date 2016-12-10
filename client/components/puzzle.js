@@ -19,6 +19,7 @@ export default class Puzzle extends Component {
     this.handleStepChange = this.handleStepChange.bind(this);
     this.createGrid = this.createGrid.bind(this);
     this.createWordRows = this.createWordRows.bind(this);
+    this.handleWordInput = this.handleWordInput.bind(this);
     this.state = {
       isValid: false,
       quote:'',
@@ -93,14 +94,20 @@ export default class Puzzle extends Component {
     }
   }
 
+  handleWordInput(e) {
+    console.log(e)
+  }
+
   createWordRows() {
     const Alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase().split("");
-    var words = this.state.authorLetters.map(function(char,i){
+    const Puzzle = this;
+    var words = Puzzle.state.authorLetters.map(function(char,i){
       return (
         <Word
           key={i}
           wordId={Alphabet[i]}
           firstLetter={char}
+          handleWordInput={Puzzle.handleWordInput}
         />
       );
     });
