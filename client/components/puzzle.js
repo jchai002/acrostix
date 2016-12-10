@@ -5,6 +5,7 @@ export default class Puzzle extends Component {
   constructor(props) {
     super(props);
     this.handleQuoteChange = this.handleQuoteChange.bind(this);
+    this.handleAuthorChange = this.handleAuthorChange.bind(this);
     this.state = {
       quote:'',
       author:'',
@@ -14,6 +15,10 @@ export default class Puzzle extends Component {
   }
   handleQuoteChange(str) {
     this.setState({quote: str});
+  }
+  handleAuthorChange(str) {
+    this.setState({author: str});
+    console.log(this.state.author)
   }
   render() {
     return (
@@ -33,7 +38,7 @@ export default class Puzzle extends Component {
             className="author-input"
             cols="40"
             rows="1"
-            handleQuoteChange={this.handleQuoteChange}
+            handleQuoteChange={this.handleAuthorChange}
             />
         </div>
       </form>

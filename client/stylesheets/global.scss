@@ -1,10 +1,10 @@
 @import
 "../../node_modules/bootstrap/scss/bootstrap-flex.scss",
-"./variables.scss";
+"./variables.scss",
+"./print.scss";
 
 body {
   background-color: $yellow;
-
 }
 
 .initial-inputs {
