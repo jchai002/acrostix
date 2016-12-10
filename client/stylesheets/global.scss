@@ -44,4 +44,14 @@ body {
     }
   }
 
+  .words {
+    .word {
+      display: flex;
+      align-items: center;
+      .first-letter {
+        text-transform: capitalize;
+        margin-right: $space-xs;
+      }
+    }
+  }
 }

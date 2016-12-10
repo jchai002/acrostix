@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import TextArea from './textArea';
 import Tile from './tile';
+import Word from './word';
 import Update from 'immutability-helper';
 
 function isLetter(char) {
@@ -173,9 +174,14 @@ export default class Puzzle extends Component {
             <li className={validityConstraintClass}>Author name can be made up by letters from the quote</li>
           </ul>
         </div>
-        <div className="col-xs-12 step-2">
+        <div className="col-xs-12 col-lg-8 step-2">
           <div className="grid">
             {this.state.grid}
+          </div>
+        </div>
+        <div className="col-xs-12 col-lg-4 step-2">
+          <div className="words">
+            <Word firstLetter="a" />
           </div>
         </div>
       </div>
