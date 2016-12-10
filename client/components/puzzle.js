@@ -10,8 +10,8 @@ export default class Puzzle extends Component {
     this.validatePuzzle = this.validatePuzzle.bind(this);
     this.state = {
       isValid:false,
-      authorLetters:[],
-      quoteLetters:{}
+      authorLetters:null,
+      quoteLetters:null
     };
   }
   handleQuoteChange(string) {
@@ -53,6 +53,10 @@ export default class Puzzle extends Component {
     this.setState({isValid:puzzleValidity});
   }
   render() {
+    var authorInputClass = 'form-group'
+    if (this.state.authorLetters && this.state.quoteLetters && !this.state.isValid) {
+      authorInputClass = 'form-group has-error';
+    }
     return (
       <form className="initial-inputs">
         <div className="form-group">
@@ -64,7 +68,7 @@ export default class Puzzle extends Component {
             handleQuoteChange={this.handleQuoteChange}
             />
         </div>
-        <div className="form-group">
+        <div className={authorInputClass}>
           <label>Please Enter Author</label>
           <TextArea
             className="author-input"
@@ -72,6 +76,7 @@ export default class Puzzle extends Component {
             rows="1"
             handleQuoteChange={this.handleAuthorChange}
             />
+          <small className="error-message">This puzzle is invalid, the author's name cannot be made up by letters from the quote</small>
         </div>
       </form>
     );
