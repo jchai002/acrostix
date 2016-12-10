@@ -2,6 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import TextArea from './textArea';
 import Update from 'immutability-helper';
 
+function isLetter(char) {
+  return char.match(/^[A-Za-z]+$/);
+}
+
 export default class Puzzle extends Component {
   constructor(props) {
     super(props);
@@ -9,9 +13,12 @@ export default class Puzzle extends Component {
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
     this.validatePuzzle = this.validatePuzzle.bind(this);
     this.continueToNextStep = this.continueToNextStep.bind(this);
+    this.handleStepChange = this.handleStepChange.bind(this);
+    this.createGrid = this.createGrid.bind(this);
     this.state = {
       isValid: false,
       quote:'',
+      indexedQuote: [],
       authorLetters: [],
       quoteLetters: {},
       currentStep: 1
@@ -20,7 +27,7 @@ export default class Puzzle extends Component {
   handleQuoteChange(string) {
     var library = {};
     string.split('').forEach(function(char){
-      if (char.match(/^[A-Za-z]+$/)) {
+      if (isLetter(char)) {
         if (library[char.toLowerCase()]) {
           library[char.toLowerCase()] += 1;
         } else {
@@ -39,7 +46,7 @@ export default class Puzzle extends Component {
     var array = [];
     if (string) {
       string.split('').forEach(function(char){
-        if (char.match(/^[A-Za-z]+$/)) {
+        if (isLetter(char)) {
           array.push(char.toLowerCase());
         }
       });
@@ -65,9 +72,39 @@ export default class Puzzle extends Component {
   }
 
   continueToNextStep(e) {
+    $(e.target).hide();
     e.preventDefault();
     var step = this.state.currentStep + 1;
-    this.setState({currentStep: step});
+    this.setState({currentStep: step}, function(){
+      this.handleStepChange(step);
+    });
+  }
+
+  handleStepChange(step) {
+    if (step == 2) {
+      this.createGrid()
+    }
+  }
+
+  createGrid() {
+    var index = 1;
+    var tempArray = [];
+    this.state.quote.split('').forEach(function(char){
+      var letterWithIndex = {};
+      if (isLetter(char)) {
+        letterWithIndex.letter = char;
+        letterWithIndex.index = index;
+        index ++;
+        tempArray.push(letterWithIndex);
+      } else {
+        letterWithIndex.letter = char;
+        letterWithIndex.index = null;
+        tempArray.push(letterWithIndex);
+      }
+    });
+    this.setState({indexedQuote:tempArray},function(){
+      console.log(this.state.indexedQuote)
+    });
   }
 
   render() {
@@ -92,8 +129,6 @@ export default class Puzzle extends Component {
       continueButtonDisabled = true;
       validityConstraintClass = "red";
     }
-
-
     return (
       <div className="row">
         <div className="col-xs-12 col-lg-8">
@@ -121,7 +156,7 @@ export default class Puzzle extends Component {
           <ul className="constraints">
             <li className={quoteConstraintClass}>Quote not empty</li>
             <li className={authorConstraintClass}>Author not empty</li>
-            <li className={validityConstraintClass}>Author name can be made up by letters from quote</li>
+            <li className={validityConstraintClass}>Author name can be made up by letters from the quote</li>
           </ul>
         </div>
       </div>
