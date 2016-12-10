@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import TextArea from './textArea';
-import update from 'immutability-helper';
+import Update from 'immutability-helper';
 
 export default class Puzzle extends Component {
   constructor(props) {
@@ -8,15 +8,25 @@ export default class Puzzle extends Component {
     this.handleQuoteChange = this.handleQuoteChange.bind(this);
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
     this.state = {
-      quote:'',
       author:'',
       isValid:false,
-      letterStorage:{},
+      quoteLetters:{},
     };
   }
   handleQuoteChange(str) {
-    this.setState({quote: str});
-    this.setState()
+    var lib = {};
+    str.split('').forEach(function(char){
+      if (char.match(/^[A-Za-z]+$/)) {
+        if (lib[char.toLowerCase()]) {
+          lib[char.toLowerCase()] += 1;
+        } else {
+          lib[char.toLowerCase()] = 1;
+        }
+      }
+    });
+    this.setState({quoteLetters: lib},function(){
+      console.log(this.state.quoteLetters)
+    });
   }
   handleAuthorChange(str) {
     this.setState({author: str});
