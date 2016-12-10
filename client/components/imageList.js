@@ -1,5 +1,8 @@
-import React from 'react';
-const ImageList = () => {
+import React, { Component, PropTypes } from 'react';
+export default class ImageList extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
       <ul>
@@ -8,5 +11,5 @@ const ImageList = () => {
     );
   }
 }
-
-export default ImageList
+ImageList.propTypes = {
+};
