@@ -74,7 +74,7 @@ export default class Puzzle extends Component {
   }
 
   continueToNextStep(e) {
-    $(e.target).hide();
+    // $('.step-1').hide();
     e.preventDefault();
     var step = this.state.currentStep + 1;
     this.setState({currentStep: step}, function(){
@@ -145,9 +145,9 @@ export default class Puzzle extends Component {
 
     return (
       <div className="row">
-        <div className="col-xs-12 col-lg-8">
+        <div className="col-xs-12 col-lg-8 step-1">
           <h2>Enter a quote and its author</h2>
-          <form className="initial-inputs">
+          <form>
             <div className="form-group">
               <label>Please Enter Quote</label>
               <TextArea
@@ -165,7 +165,7 @@ export default class Puzzle extends Component {
             <input disabled={continueButtonDisabled} onClick={this.continueToNextStep} className="form-control" type="submit" value="Continue" />
           </form>
         </div>
-        <div className="col-xs-12 col-lg-4">
+        <div className="col-xs-12 col-lg-4 step-1">
           <h2>Constraints</h2>
           <ul className="constraints">
             <li className={quoteConstraintClass}>Quote not empty</li>
@@ -173,7 +173,7 @@ export default class Puzzle extends Component {
             <li className={validityConstraintClass}>Author name can be made up by letters from the quote</li>
           </ul>
         </div>
-        <div className="col-xs-12">
+        <div className="col-xs-12 step-2">
           <div className="grid">
             {this.state.grid}
           </div>

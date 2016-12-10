@@ -10,23 +10,13 @@ body {
 
 .react-top-level {
   padding: $space-stack-xl;
-  .initial-inputs {
-    .has-error {
-      .form-control {
-        border: 1px solid $red;
-        background-color: lighten($red, 50%);
-      }
-      .error-message {
-        display: block;
-        color: $red;
-      }
-    }
+  .step-1 {
     .quote-input, .author-input {
       @extend .form-control;
       resize: none;
     }
   }
-  
+
   .grid {
     display: flex;
     flex-flow: row wrap;
