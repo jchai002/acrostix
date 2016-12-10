@@ -10,7 +10,7 @@ export default class Word extends Component {
 
   handleChange(e) {
     this.setState({value: e.target.value});
-    this.props.handleWordInput(e.target.value);
+    this.props.handleWordInput(e.target.value,this.props.wordId);
   }
 
   render() {

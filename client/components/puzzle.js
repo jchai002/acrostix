@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import TextArea from './textArea';
 import Tile from './tile';
 import Word from './word';
-import Update from 'immutability-helper';
 
 function isLetter(char) {
   return char.match(/^[A-Za-z]+$/);
@@ -19,7 +18,7 @@ export default class Puzzle extends Component {
     this.createGrid = this.createGrid.bind(this);
     this.createWordRows = this.createWordRows.bind(this);
     this.handleWordInput = this.handleWordInput.bind(this);
-    this.updateQuoteLetterTracker = this.updateQuoteLetterTracker.bind(this);
+    this.handleLetterInput = this.handleLetterInput.bind(this);
     this.state = {
       isValid: false,
       quote:'',
@@ -91,24 +90,36 @@ export default class Puzzle extends Component {
   handleStepChange(step) {
     if (step == 2) {
       this.createGrid();
-      this.createWordRows()
+      this.createWordRows();
     }
   }
 
-  handleWordInput(e) {
-    // find out what the input is
-
-    // find out which word is changed
-
-    // decrease number of letters in total storage
-
-    // update grid with info
-    console.log(e)
+  handleWordInput(text,wordId) {
+    // get old state of the word
+    const Puzzle = this;
+    var oldWord = Puzzle.state.indexedWords[wordId];
+    var newWord = oldWord[0] + text;
+    // update that word in Component state
+    Puzzle.state.indexedWords[wordId] = newWord;
+    Puzzle.forceUpdate();
+    // compare oldWord and newWord to figure out if the event is addition or deletion
+    if (newWord.length > oldWord.length) {
+      var newChar = newWord.replace(oldWord,'');
+      this.handleLetterInput(newChar);
+    } else {
+      var deletedChar = oldWord.replace(newWord,'');
+      this.handleLetterRemoval(deletedChar);
+    }
   }
 
-  updateQuoteLetterTracker(letter) {
-    console.log('do something with '+letter)
-    console.log(this.state.quoteLetterTracker)
+  handleLetterInput(char) {
+    console.log('do something with '+char)
+    // console.log(this.state.quoteLetterTracker)
+  }
+
+  handleLetterRemoval(char) {
+    console.log('do something with '+char)
+    // console.log(this.state.quoteLetterTracker)
   }
 
   createWordRows() {
@@ -118,7 +129,7 @@ export default class Puzzle extends Component {
     var words = {};
     Puzzle.state.authorLetters.forEach(function(char,i){
       words[Alphabet[i]] = char;
-      Puzzle.updateQuoteLetterTracker(char);
+      Puzzle.handleLetterInput(char);
     });
     this.setState({indexedWords:words})
 
@@ -133,7 +144,7 @@ export default class Puzzle extends Component {
         />
       );
     });
-    this.setState({wordsComponent:wordsComponent})
+    this.setState({wordsComponent:wordsComponent});
   }
 
   createGrid() {
@@ -142,21 +153,23 @@ export default class Puzzle extends Component {
     var grid;
     const Puzzle = this;
     Puzzle.state.quote.split('').forEach(function(char){
-      var letterWithIndex = {};
+      var letterInfo = {};
       if (isLetter(char)) {
-        letterWithIndex.letter = char;
-        letterWithIndex.index = index;
+        letterInfo.letter = char;
+        letterInfo.index = index;
+        letterInfo.wordId = null;
         index ++;
-        tempArray.push(letterWithIndex);
+        tempArray.push(letterInfo);
       } else {
-        letterWithIndex.letter = char;
-        letterWithIndex.index = null;
-        tempArray.push(letterWithIndex);
+        letterInfo.letter = char;
+        letterInfo.index = null;
+        letterInfo.wordId = null;
+        tempArray.push(letterInfo);
       }
     });
 
     while (tempArray.length%10 != 0) {
-      tempArray.push({letter:' ',index: null});
+      tempArray.push({letter:' '});
     }
     Puzzle.setState({indexedQuoteLetters:tempArray},function(){
       grid = tempArray.map(function(obj,i){
