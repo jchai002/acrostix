@@ -47,9 +47,23 @@ body {
   .words {
     .word {
       display: flex;
-      align-items: center;
-      .first-letter, .label {
+      align-items: flex-end;
+      font-size: 18px;
+      line-height: 18px;
+      padding: $space-stack-sm;
+      input {
+        width: 100%;
+        transform: translateY($space-xs);
+        background-color: $bg-color;
+        border: none;
+        border-bottom: 2px solid $black;
+        text-shadow: none;
+        outline: none;
+      }
+      .first-letter {
         text-transform: capitalize;
+      }
+      .label {
         margin-right: $space-xs;
       }
     }

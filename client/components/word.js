@@ -2,9 +2,14 @@ import React, { Component, PropTypes } from 'react';
 export default class Word extends Component {
   constructor(props) {
     super(props);
+    this.handleChange = this.handleChange.bind(this)
     this.state = {
       value:''
     }
+  }
+
+  handleChange(e) {
+    this.setState({value: e.target.value});
   }
 
   render() {
@@ -15,7 +20,10 @@ export default class Word extends Component {
         <div className="first-letter">
           {this.props.firstLetter}
         </div>
-        <input value={value} />
+        <input
+          value={value}
+          onChange={this.handleChange}
+        />
       </div>
     );
   }
