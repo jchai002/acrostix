@@ -5,14 +5,19 @@ export default class Tile extends Component {
   }
 
   render() {
-    var letterClass;
+    var letterClass, tileClass;
     if (this.props.used) {
       letterClass = 'letter red';
     } else {
       letterClass = 'letter';
     }
+    if (this.props.index) {
+      tileClass = 'tile';
+    } else {
+      tileClass = 'tile white bg-black';
+    }
     return (
-      <div className="tile">
+      <div className={tileClass}>
         <div className="index">{this.props.index}</div>
         <div className={letterClass}>{this.props.letter}</div>
       </div>
