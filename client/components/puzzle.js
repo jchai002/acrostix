@@ -7,29 +7,50 @@ export default class Puzzle extends Component {
     super(props);
     this.handleQuoteChange = this.handleQuoteChange.bind(this);
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
+    this.validatePuzzle = this.validatePuzzle.bind(this);
     this.state = {
-      author:'',
       isValid:false,
-      quoteLetters:{},
+      authorLetters:[],
+      quoteLetters:{}
     };
   }
-  handleQuoteChange(str) {
-    var lib = {};
-    str.split('').forEach(function(char){
+  handleQuoteChange(string) {
+    var library = {};
+    string.split('').forEach(function(char){
       if (char.match(/^[A-Za-z]+$/)) {
-        if (lib[char.toLowerCase()]) {
-          lib[char.toLowerCase()] += 1;
+        if (library[char.toLowerCase()]) {
+          library[char.toLowerCase()] += 1;
         } else {
-          lib[char.toLowerCase()] = 1;
+          library[char.toLowerCase()] = 1;
         }
       }
     });
-    this.setState({quoteLetters: lib},function(){
-      console.log(this.state.quoteLetters)
+    this.setState({quoteLetters: library},function(){
     });
   }
-  handleAuthorChange(str) {
-    this.setState({author: str});
+  handleAuthorChange(string) {
+    var array = [];
+    string.split('').forEach(function(char){
+      if (char.match(/^[A-Za-z]+$/)) {
+        array.push(char.toLowerCase());
+      }
+    });
+    this.setState({authorLetters: array},function(){
+      this.validatePuzzle();
+    });
+  }
+  validatePuzzle() {
+    var quoteLettersClone = Object.assign({}, this.state.quoteLetters);
+    var puzzleValidity = true;
+    this.state.authorLetters.forEach(function(char){
+      if (!quoteLettersClone[char] || quoteLettersClone[char] == 0) {
+        puzzleValidity = false;
+      }
+      if (quoteLettersClone[char]) {
+        quoteLettersClone[char] -= 1;
+      }
+    });
+    this.setState({isValid:puzzleValidity});
   }
   render() {
     return (
