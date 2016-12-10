@@ -1,0 +1,11 @@
+@import
+"../../node_modules/bootstrap/scss/bootstrap-flex.scss",
+"./variables.scss";
+
+body {
+  background-color: $yellow;
+}
+.quote-input {
+  margin: $space-stack-xl;
+  @extend .form-control;
+}

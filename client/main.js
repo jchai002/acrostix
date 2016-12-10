@@ -10,5 +10,5 @@ const App = () => {
 };
 
 Meteor.startup(() => {
-  ReactDOM.render(<App />, document.querySelector('.container'));
+  ReactDOM.render(<App />, document.querySelector('.react-top-level'));
 });

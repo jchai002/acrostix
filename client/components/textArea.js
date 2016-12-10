@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-export default class Input extends Component {
+export default class TextArea extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
@@ -14,12 +14,15 @@ export default class Input extends Component {
   render() {
     const value = this.state.value;
     return (
-      <input
-        className={this.props.className}
+      <textarea
         value={value}
-        onChange={this.handleChange} />
+        className={this.props.className}
+        onChange={this.handleChange}
+        cols={this.props.cols}
+        rows={this.props.rows}
+        />
     );
   }
 }
-Input.propTypes = {
+TextArea.propTypes = {
 };

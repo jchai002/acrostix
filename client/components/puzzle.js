@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Input from './input';
+import TextArea from './textArea';
 
 export default class Puzzle extends Component {
   constructor(props) {
@@ -14,13 +14,14 @@ export default class Puzzle extends Component {
   }
   handleQuoteChange(str) {
     this.setState({quote: str});
-    console.log(this.state.quote);
   }
   render() {
     return (
       <div>
-        <Input
+        <TextArea
           className="quote-input"
+          cols="40"
+          rows="5"
           handleQuoteChange={this.handleQuoteChange}
           />
       </div>
