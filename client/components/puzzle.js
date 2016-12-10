@@ -8,10 +8,12 @@ export default class Puzzle extends Component {
     this.handleQuoteChange = this.handleQuoteChange.bind(this);
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
     this.validatePuzzle = this.validatePuzzle.bind(this);
+    this.continueToNextStep = this.continueToNextStep.bind(this);
     this.state = {
-      isValid:false,
-      authorLetters:null,
-      quoteLetters:null
+      isValid: false,
+      authorLetters: [],
+      quoteLetters: null,
+      currentStep: 1
     };
   }
   handleQuoteChange(string) {
@@ -26,15 +28,18 @@ export default class Puzzle extends Component {
       }
     });
     this.setState({quoteLetters: library},function(){
+      this.validatePuzzle();
     });
   }
   handleAuthorChange(string) {
     var array = [];
-    string.split('').forEach(function(char){
-      if (char.match(/^[A-Za-z]+$/)) {
-        array.push(char.toLowerCase());
-      }
-    });
+    if (string) {
+      string.split('').forEach(function(char){
+        if (char.match(/^[A-Za-z]+$/)) {
+          array.push(char.toLowerCase());
+        }
+      });
+    }
     this.setState({authorLetters: array},function(){
       this.validatePuzzle();
     });
@@ -52,21 +57,23 @@ export default class Puzzle extends Component {
     });
     this.setState({isValid:puzzleValidity});
   }
+
+  continueToNextStep(e) {
+    e.preventDefault();
+    var step = this.state.currentStep + 1;
+    this.setState({currentStep: step});
+  }
+
   render() {
-    var authorInputClass = 'form-group'
-    if (this.state.authorLetters && this.state.quoteLetters && !this.state.isValid) {
+    var authorInputClass = 'form-group';
+    if (this.state.quoteLetters  && this.state.authorLetters && !this.state.isValid) {
       authorInputClass = 'form-group has-error';
     }
     return (
       <form className="initial-inputs">
         <div className="form-group">
           <label>Please Enter Quote</label>
-          <TextArea
-            className="quote-input"
-            cols="40"
-            rows="5"
-            handleQuoteChange={this.handleQuoteChange}
-            />
+          <TextArea className="quote-input" cols="40" rows="5" handleQuoteChange={this.handleQuoteChange} />
         </div>
         <div className={authorInputClass}>
           <label>Please Enter Author</label>
@@ -78,6 +85,7 @@ export default class Puzzle extends Component {
             />
           <small className="error-message">This puzzle is invalid, the author's name cannot be made up by letters from the quote</small>
         </div>
+        <input onClick={this.continueToNextStep} className="form-control" type="submit" value="Continue" />
       </form>
     );
   }
