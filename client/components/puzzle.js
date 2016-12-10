@@ -11,7 +11,7 @@ export default class Puzzle extends Component {
     this.continueToNextStep = this.continueToNextStep.bind(this);
     this.state = {
       isValid: false,
-      authorLetters: [],
+      authorLetters: null,
       quoteLetters: null,
       currentStep: 1
     };
@@ -47,14 +47,16 @@ export default class Puzzle extends Component {
   validatePuzzle() {
     var quoteLettersClone = Object.assign({}, this.state.quoteLetters);
     var puzzleValidity = true;
-    this.state.authorLetters.forEach(function(char){
-      if (!quoteLettersClone[char] || quoteLettersClone[char] == 0) {
-        puzzleValidity = false;
-      }
-      if (quoteLettersClone[char]) {
-        quoteLettersClone[char] -= 1;
-      }
-    });
+    if (this.state.authorLetters) {
+      this.state.authorLetters.forEach(function(char){
+        if (!quoteLettersClone[char] || quoteLettersClone[char] == 0) {
+          puzzleValidity = false;
+        }
+        if (quoteLettersClone[char]) {
+          quoteLettersClone[char] -= 1;
+        }
+      });
+    }
     this.setState({isValid:puzzleValidity});
   }
 
@@ -66,8 +68,13 @@ export default class Puzzle extends Component {
 
   render() {
     var authorInputClass = 'form-group';
-    if (this.state.quoteLetters  && this.state.authorLetters && !this.state.isValid) {
-      authorInputClass = 'form-group has-error';
+    var continueButtonDisabled = true;
+    if (this.state.quoteLetters && this.state.authorLetters) {
+      if (this.state.isValid) {
+        continueButtonDisabled = false;
+      } else {
+        authorInputClass = 'form-group has-error';
+      }
     }
     return (
       <form className="initial-inputs">
@@ -85,7 +92,7 @@ export default class Puzzle extends Component {
             />
           <small className="error-message">This puzzle is invalid, the author's name cannot be made up by letters from the quote</small>
         </div>
-        <input onClick={this.continueToNextStep} className="form-control" type="submit" value="Continue" />
+        <input disabled={continueButtonDisabled} onClick={this.continueToNextStep} className="form-control" type="submit" value="Continue" />
       </form>
     );
   }
