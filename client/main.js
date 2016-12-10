@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ImageList from './components/imageList';
+import Puzzle from './components/puzzle';
 const App = () => {
   return (
     <div>
-      <ImageList />
+      <Puzzle />
     </div>
   );
 };
