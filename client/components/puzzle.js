@@ -4,7 +4,6 @@ import Tile from './tile';
 import Word from './word';
 import Update from 'immutability-helper';
 
-
 function isLetter(char) {
   return char.match(/^[A-Za-z]+$/);
 }
@@ -20,12 +19,14 @@ export default class Puzzle extends Component {
     this.createGrid = this.createGrid.bind(this);
     this.createWordRows = this.createWordRows.bind(this);
     this.handleWordInput = this.handleWordInput.bind(this);
+    this.updateQuoteLetterTracker = this.updateQuoteLetterTracker.bind(this);
     this.state = {
       isValid: false,
       quote:'',
       indexedQuoteLetters: [],
+      indexedWords: {},
       authorLetters: [],
-      quoteLetters: {},
+      quoteLetterTracker: {},
       gridComponent: null,
       wordsComponent:null,
       currentStep: 1,
@@ -44,7 +45,7 @@ export default class Puzzle extends Component {
     });
     this.setState({
       quote: string,
-      quoteLetters: library
+      quoteLetterTracker: library
     },function(){
       this.validatePuzzle();
     });
@@ -63,15 +64,15 @@ export default class Puzzle extends Component {
     });
   }
   validatePuzzle() {
-    var quoteLettersClone = Object.assign({}, this.state.quoteLetters);
+    var quoteLetterTrackerClone = Object.assign({}, this.state.quoteLetterTracker);
     var puzzleValidity = true;
     if (this.state.authorLetters) {
       this.state.authorLetters.forEach(function(char){
-        if (!quoteLettersClone[char] || quoteLettersClone[char] == 0) {
+        if (!quoteLetterTrackerClone[char] || quoteLetterTrackerClone[char] == 0) {
           puzzleValidity = false;
         }
-        if (quoteLettersClone[char]) {
-          quoteLettersClone[char] -= 1;
+        if (quoteLetterTrackerClone[char]) {
+          quoteLetterTrackerClone[char] -= 1;
         }
       });
     }
@@ -95,13 +96,34 @@ export default class Puzzle extends Component {
   }
 
   handleWordInput(e) {
+    // find out what the input is
+
+    // find out which word is changed
+
+    // decrease number of letters in total storage
+
+    // update grid with info
     console.log(e)
+  }
+
+  updateQuoteLetterTracker(letter) {
+    console.log('do something with '+letter)
+    console.log(this.state.quoteLetterTracker)
   }
 
   createWordRows() {
     const Alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase().split("");
     const Puzzle = this;
-    var words = Puzzle.state.authorLetters.map(function(char,i){
+    // create word storage
+    var words = {};
+    Puzzle.state.authorLetters.forEach(function(char,i){
+      words[Alphabet[i]] = char;
+      Puzzle.updateQuoteLetterTracker(char);
+    });
+    this.setState({indexedWords:words})
+
+    // create words Component
+    var wordsComponent = Puzzle.state.authorLetters.map(function(char,i){
       return (
         <Word
           key={i}
@@ -111,7 +133,7 @@ export default class Puzzle extends Component {
         />
       );
     });
-    this.setState({wordsComponent:words})
+    this.setState({wordsComponent:wordsComponent})
   }
 
   createGrid() {
