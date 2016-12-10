@@ -48,7 +48,7 @@ body {
     .word {
       display: flex;
       align-items: center;
-      .first-letter {
+      .first-letter, .label {
         text-transform: capitalize;
         margin-right: $space-xs;
       }

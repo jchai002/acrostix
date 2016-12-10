@@ -4,6 +4,7 @@ import Tile from './tile';
 import Word from './word';
 import Update from 'immutability-helper';
 
+
 function isLetter(char) {
   return char.match(/^[A-Za-z]+$/);
 }
@@ -17,13 +18,15 @@ export default class Puzzle extends Component {
     this.continueToNextStep = this.continueToNextStep.bind(this);
     this.handleStepChange = this.handleStepChange.bind(this);
     this.createGrid = this.createGrid.bind(this);
+    this.createWordRows = this.createWordRows.bind(this);
     this.state = {
       isValid: false,
       quote:'',
-      indexedQuote: [],
-      grid: null,
+      indexedQuoteLetters: [],
       authorLetters: [],
       quoteLetters: {},
+      gridComponent: null,
+      wordsComponent:null,
       currentStep: 1,
     };
   }
@@ -85,13 +88,27 @@ export default class Puzzle extends Component {
 
   handleStepChange(step) {
     if (step == 2) {
-      return this.createGrid()
+      this.createGrid();
+      this.createWordRows()
     }
+  }
+
+  createWordRows() {
+    const Alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase().split("");
+    var words = this.state.authorLetters.map(function(char,i){
+      return (
+        <Word
+          key={i}
+          wordId={Alphabet[i]}
+          firstLetter={char}
+        />
+      );
+    });
+    this.setState({wordsComponent:words})
   }
 
   createGrid() {
     var index = 1;
-    var key = 0;
     var tempArray = [];
     var grid;
     const Puzzle = this;
@@ -112,17 +129,16 @@ export default class Puzzle extends Component {
     while (tempArray.length%10 != 0) {
       tempArray.push({letter:' ',index: null});
     }
-    Puzzle.setState({indexedQuote:tempArray},function(){
-      grid = tempArray.map(function(obj){
-        key ++;
-        return (<Tile key={key} letter={obj.letter} index={obj.index}/>);
+    Puzzle.setState({indexedQuoteLetters:tempArray},function(){
+      grid = tempArray.map(function(obj,i){
+        return (<Tile key={i} letter={obj.letter} index={obj.index}/>);
       });
-      Puzzle.setState({grid:grid});
+      Puzzle.setState({gridComponent:grid});
     });
   }
 
   render() {
-    var continueButtonDisabled, quoteConstraintClass, authorConstraintClass, validityConstraintClass
+    var continueButtonDisabled, quoteConstraintClass, authorConstraintClass, validityConstraintClass;
 
     if (this.state.quote.length) {
       var quoteConstraintClass = "green";
@@ -176,12 +192,12 @@ export default class Puzzle extends Component {
         </div>
         <div className="col-xs-12 col-lg-8 step-2">
           <div className="grid">
-            {this.state.grid}
+            {this.state.gridComponent}
           </div>
         </div>
         <div className="col-xs-12 col-lg-4 step-2">
           <div className="words">
-            <Word firstLetter="a" />
+            {this.state.wordsComponent}
           </div>
         </div>
       </div>

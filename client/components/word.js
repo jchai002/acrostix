@@ -11,10 +11,11 @@ export default class Word extends Component {
     const value = this.state.value;
     return (
       <div className="word">
-        <label className="first-letter">
+        <div className="label">{this.props.wordId}.</div>
+        <div className="first-letter">
           {this.props.firstLetter}
-        </label>
-        <input className="form-control" value={value} />
+        </div>
+        <input value={value} />
       </div>
     );
   }
