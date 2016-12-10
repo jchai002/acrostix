@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import TextArea from './textArea';
+import update from 'immutability-helper';
 
 export default class Puzzle extends Component {
   constructor(props) {
@@ -15,10 +16,10 @@ export default class Puzzle extends Component {
   }
   handleQuoteChange(str) {
     this.setState({quote: str});
+    this.setState()
   }
   handleAuthorChange(str) {
     this.setState({author: str});
-    console.log(this.state.author)
   }
   render() {
     return (
