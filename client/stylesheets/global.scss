@@ -37,6 +37,12 @@ body {
       border-right: none;
       .index {
         position: absolute;
+        left: 2px;
+        top: 0;
+        font-size: 12px;
+      }
+      .word-id {
+        position: absolute;
         right: 2px;
         top: 0;
         font-size: 12px;

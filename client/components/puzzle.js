@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import TextArea from './textArea';
 import Tile from './tile';
 import Word from './word';
+import update from 'immutability-helper';
 
 function isLetter(char) {
   return char.match(/^[A-Za-z]+$/);
@@ -19,6 +20,7 @@ export default class Puzzle extends Component {
     this.createWordRows = this.createWordRows.bind(this);
     this.handleWordInput = this.handleWordInput.bind(this);
     this.handleLetterInput = this.handleLetterInput.bind(this);
+    this.handleLetterRemoval = this.handleLetterRemoval.bind(this);
     this.state = {
       isValid: false,
       quote:'',
@@ -31,6 +33,7 @@ export default class Puzzle extends Component {
       currentStep: 1,
     };
   }
+
   handleQuoteChange(string) {
     var library = {};
     string.split('').forEach(function(char){
@@ -105,16 +108,27 @@ export default class Puzzle extends Component {
     // compare oldWord and newWord to figure out if the event is addition or deletion
     if (newWord.length > oldWord.length) {
       var newChar = newWord.replace(oldWord,'');
-      this.handleLetterInput(newChar);
+      this.handleLetterInput(newChar,wordId);
     } else {
       var deletedChar = oldWord.replace(newWord,'');
-      this.handleLetterRemoval(deletedChar);
+      this.handleLetterRemoval(deletedChar,wordId);
     }
   }
 
-  handleLetterInput(char) {
-    console.log('do something with '+char)
-    // console.log(this.state.quoteLetterTracker)
+  handleLetterInput(char,wordId) {
+    for (i in this.state.indexedQuoteLetters) {
+      var obj = this.state.indexedQuoteLetters[i];
+      if (obj.letter == char && !obj.wordId) {
+        this.state.indexedQuoteLetters[i].wordId = wordId;
+        break
+      }
+    }
+    var grid = this.state.indexedQuoteLetters.map(function(obj,i){
+        return (<Tile key={i} letter={obj.letter} index={obj.index} wordId={obj.wordId} />);
+    })
+    this.setState({gridComponent:grid},function(){
+      console.log(this.state.indexedQuoteLetters)
+    });
   }
 
   handleLetterRemoval(char) {

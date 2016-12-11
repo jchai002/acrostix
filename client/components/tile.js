@@ -6,7 +6,7 @@ export default class Tile extends Component {
 
   render() {
     var letterClass, tileClass;
-    if (this.props.used) {
+    if (this.props.wordId) {
       letterClass = 'letter red';
     } else {
       letterClass = 'letter';
@@ -18,6 +18,7 @@ export default class Tile extends Component {
     }
     return (
       <div className={tileClass}>
+        <div className="word-id">{this.props.wordId}</div>
         <div className="index">{this.props.index}</div>
         <div className={letterClass}>{this.props.letter}</div>
       </div>
