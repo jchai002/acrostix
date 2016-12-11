@@ -60,9 +60,9 @@ body {
       padding: $space-stack-sm;
       input.letter {
         width: 20px;
-        text-align: center; 
+        text-align: center;
         margin: $space-inset-xs;
-        transform: translateY($space-xs);
+        transform: translateY(6px);
         background-color: $bg-color;
         border: none;
         border-bottom: 2px solid $black;

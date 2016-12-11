@@ -7,6 +7,9 @@ export default class Word extends Component {
     super(props);
     this.handleLetterChange = this.handleLetterChange.bind(this);
     this.handleLetterInput = this.handleLetterInput.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleLetterDelete = this.handleLetterDelete.bind(this);
+
     this.state = {
       letters:'',
       letterComponents:null
@@ -16,8 +19,6 @@ export default class Word extends Component {
   handleLetterChange(e) {
     if (e.target.value) {
       this.handleLetterInput(e.target.value);
-    } else {
-      handleLetterDelete()
     }
   }
 
@@ -28,17 +29,43 @@ export default class Word extends Component {
     Word.setState({letters:newLetterState},function(){
       letters = Word.state.letters.split('').map(function(char,i){
         return(
-          <Letter key={i} value={char} handleLetterChange={Word.handleLetterChange} />
+          <Letter
+            key={i}
+            value={char}
+            handleLetterChange={Word.handleLetterChange}
+            handleKeyDown={Word.handleKeyDown}
+          />
         );
       });
-      letters.push(<Letter key='last' value='' handleLetterChange={Word.handleLetterChange} />);
-      console.log(letters)
+      letters.push(<Letter key='last' value='' handleLetterChange={Word.handleLetterChange} handleKeyDown={Word.handleKeyDown}/>);
       this.setState({letterComponents:letters});
     });
   }
 
-  handleLetterDelete(e) {
+  handleKeyDown(e) {
+    if (e.keyCode === 8 || e.keyCode === 46) {
+     this.handleLetterDelete();
+    }
+  }
 
+  handleLetterDelete() {
+    var letters;
+    const Word = this;
+    const newLetterState = Word.state.letters.slice(0, -1);
+    Word.setState({letters:newLetterState},function(){
+      letters = Word.state.letters.split('').map(function(char,i){
+        return(
+          <Letter
+            key={i}
+            value={char}
+            handleLetterChange={Word.handleLetterChange}
+            handleKeyDown={Word.handleKeyDown}
+          />
+        );
+      });
+      letters.push(<Letter key='last' value='' handleLetterChange={Word.handleLetterChange} handleKeyDown={Word.handleKeyDown}/>);
+      this.setState({letterComponents:letters});
+    });
   }
 
   render() {
@@ -47,7 +74,9 @@ export default class Word extends Component {
     if (this.state.letterComponents) {
       letters = this.state.letterComponents;
     } else {
-      letters = <Letter value='' handleLetterChange={this.handleLetterChange} />
+      letters = <Letter
+        value='' handleLetterChange={this.handleLetterChange} handleKeyDown={this.handleKeyDown}
+      />
     }
     return (
       <div className="word">
