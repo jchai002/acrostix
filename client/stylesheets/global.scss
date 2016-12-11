@@ -16,6 +16,18 @@ body {
       @extend .form-control;
       resize: none;
     }
+    .remaining {
+      float: right;
+      color: $gray;
+      margin-top: $space-xs;
+      margin-bottom: $space-md;
+    }
+    .constraints {
+      padding-left: 0;
+      li {
+        list-style: none;
+      }
+    }
   }
 
   .step-2 {

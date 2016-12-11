@@ -13,14 +13,21 @@ export default class TextArea extends Component {
 
   render() {
     const value = this.state.value;
+    if (this.props.maxLength) {
+      var charCount = <small className="remaining">{this.props.maxLength - this.state.value.length} characters remaining</small>
+    }
     return (
-      <textarea
-        value={value}
-        className={this.props.className}
-        onChange={this.handleChange}
-        cols={this.props.cols}
-        rows={this.props.rows}
-        />
+      <div>
+        <textarea
+          value={value}
+          maxLength={this.props.maxLength}
+          className={this.props.className}
+          onChange={this.handleChange}
+          cols={this.props.cols}
+          rows={this.props.rows}
+          />
+        {charCount}
+      </div>
     );
   }
 }

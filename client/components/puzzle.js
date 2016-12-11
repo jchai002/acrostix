@@ -239,13 +239,15 @@ export default class Puzzle extends Component {
               <label>Please Enter Quote</label>
               <TextArea
                 className="quote-input"
-                rows="5" handleChange={this.handleQuoteChange} />
+                rows="5"
+                handleChange={this.handleQuoteChange} />
             </div>
             <div className="form-group">
               <label>Please Enter Author</label>
               <TextArea
                 className="author-input"
                 rows="1"
+                maxLength="26"
                 handleChange={this.handleAuthorChange}
                 />
             </div>
@@ -255,8 +257,8 @@ export default class Puzzle extends Component {
         <div className="col-xs-12 col-lg-4 step-1">
           <h2>Constraints</h2>
           <ul className="constraints">
-            <li className={quoteConstraintClass}>Quote not empty</li>
-            <li className={authorConstraintClass}>Author not empty</li>
+            <li className={quoteConstraintClass}>Quote is not empty</li>
+            <li className={authorConstraintClass}>Author is not empty</li>
             <li className={validityConstraintClass}>Author name can be made up by letters from the quote</li>
           </ul>
         </div>
