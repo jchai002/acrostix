@@ -15,7 +15,7 @@ export default class Puzzle extends Component {
     this.handleQuoteChange = this.handleQuoteChange.bind(this);
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
     this.validatePuzzle = this.validatePuzzle.bind(this);
-    this.continueToNextStep = this.continueToNextStep.bind(this);
+    this.updateStep = this.updateStep.bind(this);
     this.handleStepChange = this.handleStepChange.bind(this);
     this.createGrid = this.createGrid.bind(this);
     this.updateGrid = this.updateGrid.bind(this);
@@ -83,18 +83,18 @@ export default class Puzzle extends Component {
     this.setState({isValid:puzzleValidity});
   }
 
-  continueToNextStep(e) {
+  updateStep(e) {
     e.preventDefault();
-    var step = this.state.currentStep + 1;
-    this.setState({currentStep: step}, function(){
-      this.handleStepChange(step);
+    var newStep = this.state.currentStep + 1;
+    this.setState({currentStep: newStep}, function(){
+      this.handleStepChange(newStep);
     });
   }
 
-  handleStepChange(step) {
-    if (step == 2) {
-      $('.step-1').hide();
-      $('.step-2').show();
+  handleStepChange(stepNumber) {
+    $('.step').hide();
+    $('.step-'+stepNumber).show();
+    if (stepNumber == 2) {
       this.createGrid();
     }
   }
@@ -261,7 +261,7 @@ export default class Puzzle extends Component {
       });
       return (
         <div className="row">
-          <div className="col-xs-12 col-lg-8 step-1">
+          <div className="col-xs-12 col-lg-8 step step-1">
             <h2>Enter a quote and its author</h2>
             <form>
               <div className="form-group">
@@ -280,10 +280,10 @@ export default class Puzzle extends Component {
                   handleChange={this.handleAuthorChange}
                   />
               </div>
-              <input disabled={continueButtonDisabled} onClick={this.continueToNextStep} className="form-control" type="submit" value="Continue" />
+              <input disabled={continueButtonDisabled} onClick={this.updateStep} className="form-control" type="submit" value="Continue" />
             </form>
           </div>
-          <div className="col-xs-12 col-lg-4 step-1">
+          <div className="col-xs-12 col-lg-4 step step-1">
             <h2>Constraints</h2>
             <ul className="constraints">
               <li className={quoteConstraintClass}>Quote is not empty</li>
@@ -291,19 +291,23 @@ export default class Puzzle extends Component {
               <li className={validityConstraintClass}>Author name can be made up by letters from the quote</li>
             </ul>
           </div>
-          <div className="col-xs-12 col-lg-8 step-2">
+          <div className="col-xs-12 col-lg-8 step step-2">
             <div className="grid">
               {this.state.gridComponent}
             </div>
           </div>
-          <div className="col-xs-12 col-lg-4 step-2">
+          <div className="col-xs-12 col-lg-4 step step-2">
             <h2>Letters Remaining</h2>
             <div className="trackers">
               {letterTrackers}
             </div>
+            <a onClick={this.updateStep} className="btn btn-success">Continue</a>
             <div className="words">
               {this.state.wordsComponent}
             </div>
+          </div>
+          <div className="col-xs-12 step step-3">
+            <h2>Enter Clues For Each Word</h2>
           </div>
         </div>
       );
