@@ -19,7 +19,7 @@ export default class Puzzle extends Component {
     this.createGrid = this.createGrid.bind(this);
     this.updateGrid = this.updateGrid.bind(this);
     this.createWordRows = this.createWordRows.bind(this);
-    this.handleWordInput = this.handleWordInput.bind(this);
+    this.handleWordChange = this.handleWordChange.bind(this);
     this.handleLetterInput = this.handleLetterInput.bind(this);
     this.handleLetterRemoval = this.handleLetterRemoval.bind(this);
     this.state = {
@@ -98,7 +98,7 @@ export default class Puzzle extends Component {
     }
   }
 
-  handleWordInput(text,wordId) {
+  handleWordChange(text,wordId) {
     // get old state of the word
     const Puzzle = this;
     var oldWord = Puzzle.state.indexedWords[wordId];
@@ -106,18 +106,18 @@ export default class Puzzle extends Component {
     // update that word in Component state
     Puzzle.state.indexedWords[wordId] = newWord;
     Puzzle.forceUpdate();
-    // // compare oldWord and newWord to figure out if the event is addition or deletion
-    // if (newWord.length > oldWord.length) {
-    //   var newChars = _.difference(newWord.split(''),oldWord.split(''))
-    //   console.log(newChars)
-    //   // Puzzle.handleLetterInput(newChar,wordId);
-    // } else {
-    //   var deletedChars =  _.difference(oldWord.split(''),newWord.split(''))
-    //   console.log(deletedChars)
-    //   // deletedChars.split('').forEach(function(char){
-    //   //   Puzzle.handleLetterRemoval(char,wordId);
-    //   // })
-    // }
+    // compare oldWord and newWord to figure out if the event is addition or deletion
+    if (newWord.length > oldWord.length) {
+      var newChars = _.difference(newWord.split(''),oldWord.split(''))
+      console.log(newChars)
+      // Puzzle.handleLetterInput(newChar,wordId);
+    } else {
+      var deletedChars =  _.difference(oldWord.split(''),newWord.split(''))
+      console.log(deletedChars)
+      // deletedChars.split('').forEach(function(char){
+      //   Puzzle.handleLetterRemoval(char,wordId);
+      // })
+    }
   }
 
   handleLetterInput(char,wordId) {
@@ -160,7 +160,7 @@ export default class Puzzle extends Component {
           key={i}
           wordId={Alphabet[i]}
           firstLetter={char}
-          handleWordInput={Puzzle.handleWordInput}
+          handleWordChange={Puzzle.handleWordChange}
         />
       );
     });
@@ -242,14 +242,14 @@ export default class Puzzle extends Component {
               <label>Please Enter Quote</label>
               <TextArea
                 className="quote-input"
-                rows="5" handleQuoteChange={this.handleQuoteChange} />
+                rows="5" handleChange={this.handleQuoteChange} />
             </div>
             <div className="form-group">
               <label>Please Enter Author</label>
               <TextArea
                 className="author-input"
                 rows="1"
-                handleQuoteChange={this.handleAuthorChange}
+                handleChange={this.handleAuthorChange}
                 />
             </div>
             <input disabled={continueButtonDisabled} onClick={this.continueToNextStep} className="form-control" type="submit" value="Continue" />
