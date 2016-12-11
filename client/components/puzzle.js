@@ -115,6 +115,7 @@ export default class Puzzle extends Component {
   }
 
   handleLetterInput(char,wordId) {
+    this.state.quoteLetterTracker[char] --;
     for (i in this.state.quoteLetterStorage) {
       var pointer = this.state.quoteLetterStorage[i];
       if (pointer.letter == char && !pointer.wordId) {
@@ -126,6 +127,7 @@ export default class Puzzle extends Component {
   }
 
   handleLetterRemoval(char,wordId) {
+    this.state.quoteLetterTracker[char] ++;
     for (var i = this.state.quoteLetterStorage.length - 1; i >= 0;i--) {
       var pointer = this.state.quoteLetterStorage[i];
       if (pointer.letter == char && pointer.wordId == wordId) {
@@ -155,8 +157,10 @@ export default class Puzzle extends Component {
           key={i}
           wordId={Alphabet[i]}
           firstLetter={char}
+          outOfLetter = {Puzzle.outOfLetter}
+          letterTracker = {Puzzle.state.quoteLetterTracker}
           handleWordChange={Puzzle.handleWordChange}
-        />
+          />
       );
     });
     this.setState({wordsComponent:wordsComponent});
@@ -201,10 +205,18 @@ export default class Puzzle extends Component {
           letter={obj.letter}
           index={obj.index}
           wordId={obj.wordId}
-        />
+          />
       );
     });
     this.setState({gridComponent:grid});
+  }
+
+  outOfLetter(char) {
+    var $tracker = $('.letter-'+char).parent();
+    $tracker.addClass('animated rubberBand');
+    setTimeout(function(){
+      $tracker.removeClass('animated rubberBand');
+    },2000);
   }
 
   render() {
@@ -231,66 +243,69 @@ export default class Puzzle extends Component {
     }
 
     var letterTrackers = Object.keys(this.state.quoteLetterTracker).sort().map(function(key) {
-      var letterClass, numberClass;
+      var letterClass = 'letter-'+key;
       if (/[aeiou]/.test(key)) {
-        letterClass = "vowels"
+        letterClass += " vowels"
+      }
+      if (Puzzle.state.quoteLetterTracker[key] == 0) {
+        var numberClass = "red"
       }
       return (
-        <div className="tracker">
+        <div key={key} className="tracker">
           <span className={letterClass}>{key}</span>:
-          <span className={numberClass}>{Puzzle.state.quoteLetterTracker[key]}</span>
-        </div>
-      )
-    });
-    return (
-      <div className="row">
-        <div className="col-xs-12 col-lg-8 step-1">
-          <h2>Enter a quote and its author</h2>
-          <form>
-            <div className="form-group">
-              <label>Please Enter Quote</label>
-              <TextArea
-                className="quote-input"
-                rows="5"
-                handleChange={this.handleQuoteChange} />
+            <span className={numberClass}>{Puzzle.state.quoteLetterTracker[key]}</span>
+          </div>
+        )
+      });
+      return (
+        <div className="row">
+          <div className="col-xs-12 col-lg-8 step-1">
+            <h2>Enter a quote and its author</h2>
+            <form>
+              <div className="form-group">
+                <label>Please Enter Quote</label>
+                <TextArea
+                  className="quote-input"
+                  rows="5"
+                  handleChange={this.handleQuoteChange} />
+              </div>
+              <div className="form-group">
+                <label>Please Enter Author</label>
+                <TextArea
+                  className="author-input"
+                  rows="1"
+                  maxLength="26"
+                  handleChange={this.handleAuthorChange}
+                  />
+              </div>
+              <input disabled={continueButtonDisabled} onClick={this.continueToNextStep} className="form-control" type="submit" value="Continue" />
+            </form>
+          </div>
+          <div className="col-xs-12 col-lg-4 step-1">
+            <h2>Constraints</h2>
+            <ul className="constraints">
+              <li className={quoteConstraintClass}>Quote is not empty</li>
+              <li className={authorConstraintClass}>Author is not empty</li>
+              <li className={validityConstraintClass}>Author name can be made up by letters from the quote</li>
+            </ul>
+          </div>
+          <div className="col-xs-12 col-lg-8 step-2">
+            <div className="grid">
+              {this.state.gridComponent}
             </div>
-            <div className="form-group">
-              <label>Please Enter Author</label>
-              <TextArea
-                className="author-input"
-                rows="1"
-                maxLength="26"
-                handleChange={this.handleAuthorChange}
-                />
+          </div>
+          <div className="col-xs-12 col-lg-4 step-2">
+            <h2>Letters Remaining</h2>
+            <div className="trackers">
+              {letterTrackers}
             </div>
-            <input disabled={continueButtonDisabled} onClick={this.continueToNextStep} className="form-control" type="submit" value="Continue" />
-          </form>
-        </div>
-        <div className="col-xs-12 col-lg-4 step-1">
-          <h2>Constraints</h2>
-          <ul className="constraints">
-            <li className={quoteConstraintClass}>Quote is not empty</li>
-            <li className={authorConstraintClass}>Author is not empty</li>
-            <li className={validityConstraintClass}>Author name can be made up by letters from the quote</li>
-          </ul>
-        </div>
-        <div className="col-xs-12 col-lg-8 step-2">
-          <div className="grid">
-            {this.state.gridComponent}
+            <div className="words">
+              {this.state.wordsComponent}
+            </div>
           </div>
         </div>
-        <div className="col-xs-12 col-lg-4 step-2">
-          <h2>Letters Remaining</h2>
-          <div className="trackers">
-            {letterTrackers}
-          </div>
-          <div className="words">
-            {this.state.wordsComponent}
-          </div>
-        </div>
-      </div>
-    );
+      );
+    }
   }
-}
-Puzzle.propTypes = {
-};
+  Puzzle.propTypes = {
+  };

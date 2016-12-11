@@ -17,8 +17,10 @@ export default class Word extends Component {
 
   handleLetterChange(e) {
     var char = e.target.value;
-    if (char) {
+    if (char && this.props.letterTracker[char] > 0) {
       this.handleLetterInput(char);
+    } else {
+      this.props.outOfLetter(char);
     }
   }
 
@@ -38,8 +40,8 @@ export default class Word extends Component {
         );
       });
       letters.push(<Letter key='last' value='' handleLetterChange={Word.handleLetterChange} handleKeyDown={Word.handleKeyDown}/>);
-      Word.setState({letterComponents:letters});
       Word.props.handleWordChange(char,Word.props.wordId,'input');
+      Word.setState({letterComponents:letters});
     });
   }
 
