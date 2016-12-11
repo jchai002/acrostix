@@ -89,6 +89,8 @@ body {
 
     .words {
       .word {
+        max-width: 100%;
+        flex-wrap: wrap;
         display: flex;
         align-items: flex-end;
         font-size: 18px;
