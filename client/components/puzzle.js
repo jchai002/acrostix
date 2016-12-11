@@ -82,7 +82,6 @@ export default class Puzzle extends Component {
   }
 
   continueToNextStep(e) {
-    $('.step-1').hide();
     e.preventDefault();
     var step = this.state.currentStep + 1;
     this.setState({currentStep: step}, function(){
@@ -92,6 +91,8 @@ export default class Puzzle extends Component {
 
   handleStepChange(step) {
     if (step == 2) {
+      $('.step-1').hide();
+      $('.step-2').show();
       this.createGrid();
     }
   }
@@ -265,6 +266,9 @@ export default class Puzzle extends Component {
           </div>
         </div>
         <div className="col-xs-12 col-lg-4 step-2">
+          <h2>Letters Remaining</h2>
+          <div className="tracker">
+          </div>
           <div className="words">
             {this.state.wordsComponent}
           </div>
