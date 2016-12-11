@@ -9,7 +9,6 @@ export default class Word extends Component {
     this.handleLetterInput = this.handleLetterInput.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleLetterDelete = this.handleLetterDelete.bind(this);
-
     this.state = {
       letters:'',
       letterComponents:null
@@ -17,8 +16,9 @@ export default class Word extends Component {
   }
 
   handleLetterChange(e) {
-    if (e.target.value) {
-      this.handleLetterInput(e.target.value);
+    var char = e.target.value;
+    if (char) {
+      this.handleLetterInput(char);
     }
   }
 
@@ -38,7 +38,8 @@ export default class Word extends Component {
         );
       });
       letters.push(<Letter key='last' value='' handleLetterChange={Word.handleLetterChange} handleKeyDown={Word.handleKeyDown}/>);
-      this.setState({letterComponents:letters});
+      Word.setState({letterComponents:letters});
+      Word.props.handleWordChange(char,Word.props.wordId,'input');
     });
   }
 
@@ -51,6 +52,7 @@ export default class Word extends Component {
   handleLetterDelete() {
     var letters;
     const Word = this;
+    const deletedChar = Word.state.letters.split('').pop();
     const newLetterState = Word.state.letters.slice(0, -1);
     Word.setState({letters:newLetterState},function(){
       letters = Word.state.letters.split('').map(function(char,i){
@@ -64,7 +66,8 @@ export default class Word extends Component {
         );
       });
       letters.push(<Letter key='last' value='' handleLetterChange={Word.handleLetterChange} handleKeyDown={Word.handleKeyDown}/>);
-      this.setState({letterComponents:letters});
+      Word.setState({letterComponents:letters});
+      Word.props.handleWordChange(deletedChar,Word.props.wordId,'delete');
     });
   }
 

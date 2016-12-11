@@ -83,7 +83,7 @@ export default class Puzzle extends Component {
   }
 
   continueToNextStep(e) {
-    // $('.step-1').hide();
+    $('.step-1').hide();
     e.preventDefault();
     var step = this.state.currentStep + 1;
     this.setState({currentStep: step}, function(){
@@ -98,26 +98,16 @@ export default class Puzzle extends Component {
     }
   }
 
-  handleWordChange(text,wordId) {
+  handleWordChange(char,wordId,eventType) {
+    console.log(char,wordId,eventType)
     // get old state of the word
-    const Puzzle = this;
-    var oldWord = Puzzle.state.indexedWords[wordId];
-    var newWord = oldWord[0] + text;
-    // update that word in Component state
-    Puzzle.state.indexedWords[wordId] = newWord;
-    Puzzle.forceUpdate();
-    // compare oldWord and newWord to figure out if the event is addition or deletion
-    if (newWord.length > oldWord.length) {
-      var newChars = _.difference(newWord.split(''),oldWord.split(''))
-      console.log(newChars)
-      // Puzzle.handleLetterInput(newChar,wordId);
-    } else {
-      var deletedChars =  _.difference(oldWord.split(''),newWord.split(''))
-      console.log(deletedChars)
-      // deletedChars.split('').forEach(function(char){
-      //   Puzzle.handleLetterRemoval(char,wordId);
-      // })
-    }
+    // const Puzzle = this;
+    // var oldWord = Puzzle.state.indexedWords[wordId];
+    // var newWord = oldWord[0] + text;
+    // // update that word in Component state
+    // Puzzle.state.indexedWords[wordId] = newWord;
+    // Puzzle.forceUpdate();
+
   }
 
   handleLetterInput(char,wordId) {
