@@ -106,14 +106,18 @@ export default class Puzzle extends Component {
     // update that word in Component state
     Puzzle.state.indexedWords[wordId] = newWord;
     Puzzle.forceUpdate();
-    // compare oldWord and newWord to figure out if the event is addition or deletion
-    if (newWord.length > oldWord.length) {
-      var newChar = newWord.replace(oldWord,'');
-      this.handleLetterInput(newChar,wordId);
-    } else {
-      var deletedChar = oldWord.replace(newWord,'');
-      this.handleLetterRemoval(deletedChar,wordId);
-    }
+    // // compare oldWord and newWord to figure out if the event is addition or deletion
+    // if (newWord.length > oldWord.length) {
+    //   var newChars = _.difference(newWord.split(''),oldWord.split(''))
+    //   console.log(newChars)
+    //   // Puzzle.handleLetterInput(newChar,wordId);
+    // } else {
+    //   var deletedChars =  _.difference(oldWord.split(''),newWord.split(''))
+    //   console.log(deletedChars)
+    //   // deletedChars.split('').forEach(function(char){
+    //   //   Puzzle.handleLetterRemoval(char,wordId);
+    //   // })
+    // }
   }
 
   handleLetterInput(char,wordId) {

@@ -6,6 +6,7 @@
 
 body {
   background-color: $bg-color;
+  font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
 .react-top-level {
@@ -57,8 +58,10 @@ body {
       font-size: 18px;
       line-height: 18px;
       padding: $space-stack-sm;
-      input {
-        width: 100%;
+      input.letter {
+        width: 20px;
+        text-align: center; 
+        margin: $space-inset-xs;
         transform: translateY($space-xs);
         background-color: $bg-color;
         border: none;
