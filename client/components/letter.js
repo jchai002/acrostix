@@ -5,12 +5,12 @@ export default class Letter extends Component {
     super(props);
     this.handleChange = this.handleChange.bind(this)
     this.state = {
-      value:''
+      value:this.props.value
     }
   }
 
   handleChange(e) {
-    this.setState({value: e.target.value});
+    this.props.handleLetterChange(e);
   }
 
   render() {
