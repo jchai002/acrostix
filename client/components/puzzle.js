@@ -17,6 +17,7 @@ export default class Puzzle extends Component {
     this.continueToNextStep = this.continueToNextStep.bind(this);
     this.handleStepChange = this.handleStepChange.bind(this);
     this.createGrid = this.createGrid.bind(this);
+    this.updateGrid = this.updateGrid.bind(this);
     this.createWordRows = this.createWordRows.bind(this);
     this.handleWordInput = this.handleWordInput.bind(this);
     this.handleLetterInput = this.handleLetterInput.bind(this);
@@ -120,15 +121,10 @@ export default class Puzzle extends Component {
       var obj = this.state.indexedQuoteLetters[i];
       if (obj.letter == char && !obj.wordId) {
         this.state.indexedQuoteLetters[i].wordId = wordId;
-        break
+        this.updateGrid(this.state.indexedQuoteLetters);
+        return
       }
     }
-    var grid = this.state.indexedQuoteLetters.map(function(obj,i){
-        return (<Tile key={i} letter={obj.letter} index={obj.index} wordId={obj.wordId} />);
-    })
-    this.setState({gridComponent:grid},function(){
-      console.log(this.state.indexedQuoteLetters)
-    });
   }
 
   handleLetterRemoval(char) {
@@ -186,11 +182,22 @@ export default class Puzzle extends Component {
       tempArray.push({letter:' '});
     }
     Puzzle.setState({indexedQuoteLetters:tempArray},function(){
-      grid = tempArray.map(function(obj,i){
-        return (<Tile key={i} letter={obj.letter} index={obj.index}/>);
-      });
-      Puzzle.setState({gridComponent:grid});
+      Puzzle.updateGrid(Puzzle.state.indexedQuoteLetters);
     });
+  }
+
+  updateGrid(indexedLetters) {
+    grid = indexedLetters.map(function(obj,i){
+      return (
+        <Tile
+          key={i}
+          letter={obj.letter}
+          index={obj.index}
+          wordId={obj.wordId}
+        />
+      );
+    });
+    this.setState({gridComponent:grid});
   }
 
   render() {
