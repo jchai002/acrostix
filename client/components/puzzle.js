@@ -118,18 +118,24 @@ export default class Puzzle extends Component {
 
   handleLetterInput(char,wordId) {
     for (i in this.state.indexedQuoteLetters) {
-      var obj = this.state.indexedQuoteLetters[i];
-      if (obj.letter == char && !obj.wordId) {
-        this.state.indexedQuoteLetters[i].wordId = wordId;
+      var pointer = this.state.indexedQuoteLetters[i];
+      if (pointer.letter == char && !pointer.wordId) {
+        pointer.wordId = wordId;
         this.updateGrid(this.state.indexedQuoteLetters);
         return
       }
     }
   }
 
-  handleLetterRemoval(char) {
-    console.log('do something with '+char)
-    // console.log(this.state.quoteLetterTracker)
+  handleLetterRemoval(char,wordId) {
+    for (var i = this.state.indexedQuoteLetters.length - 1; i >= 0;i--) {
+      var pointer = this.state.indexedQuoteLetters[i];
+      if (pointer.letter == char && pointer.wordId == wordId) {
+        pointer.wordId = null;
+        this.updateGrid(this.state.indexedQuoteLetters);
+        return
+      }
+    }
   }
 
   createWordRows() {
