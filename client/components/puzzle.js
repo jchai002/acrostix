@@ -7,6 +7,8 @@ function isLetter(char) {
   return char.match(/^[A-Za-z]+$/);
 }
 
+const Alphabet = "abcdefghijklmnopqrstuvwxyz";
+
 export default class Puzzle extends Component {
   constructor(props) {
     super(props);
@@ -139,12 +141,12 @@ export default class Puzzle extends Component {
   }
 
   createWordRows() {
-    const Alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase().split("");
+    const AlphabetArray = Alphabet.toUpperCase().split("");
     const Puzzle = this;
     // create word storage
     var words = {};
     Puzzle.state.authorLetters.forEach(function(char,i){
-      var wordId = Alphabet[i];
+      var wordId = AlphabetArray[i];
       words[wordId] = char;
       Puzzle.handleLetterInput(char,wordId);
     });
@@ -155,7 +157,7 @@ export default class Puzzle extends Component {
       return (
         <Word
           key={i}
-          wordId={Alphabet[i]}
+          wordId={AlphabetArray[i]}
           firstLetter={char}
           outOfLetter = {Puzzle.outOfLetter}
           letterTracker = {Puzzle.state.quoteLetterTracker}
@@ -242,18 +244,18 @@ export default class Puzzle extends Component {
       validityConstraintClass = "red";
     }
 
-    var letterTrackers = Object.keys(this.state.quoteLetterTracker).sort().map(function(key) {
+    var letterTrackers = Alphabet.split('').map(function(key) {
       var letterClass = 'letter-'+key;
       if (/[aeiou]/.test(key)) {
         letterClass += " vowels"
       }
-      if (Puzzle.state.quoteLetterTracker[key] == 0) {
+      if (!Puzzle.state.quoteLetterTracker[key]) {
         var numberClass = "red"
       }
       return (
         <div key={key} className="tracker">
           <span className={letterClass}>{key}</span>:
-            <span className={numberClass}>{Puzzle.state.quoteLetterTracker[key]}</span>
+            <span className={numberClass}>{Puzzle.state.quoteLetterTracker[key] || 0}</span>
           </div>
         )
       });
