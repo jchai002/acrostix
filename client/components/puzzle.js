@@ -24,10 +24,10 @@ export default class Puzzle extends Component {
     this.state = {
       isValid: false,
       quote:'',
-      indexedQuoteLetters: [],
-      indexedWords: {},
-      authorLetters: [],
+      quoteLetterStorage: [],
       quoteLetterTracker: {},
+      authorLetters: [],
+      wordStorage: {},
       gridComponent: null,
       wordsComponent:null,
       currentStep: 1,
@@ -93,48 +93,43 @@ export default class Puzzle extends Component {
   handleStepChange(step) {
     if (step == 2) {
       this.createGrid();
-      this.createWordRows();
     }
   }
 
   handleWordChange(char,wordId,action) {
     if (action === 'input') {
-      var oldWord = this.state.indexedWords[wordId];
+      var oldWord = this.state.wordStorage[wordId];
       var newWord = oldWord + char;
-      this.state.indexedWords[wordId] = newWord;
+      this.state.wordStorage[wordId] = newWord;
       this.handleLetterInput(char,wordId);
     }
     if (action === 'delete') {
-      var oldWord = this.state.indexedWords[wordId];
+      var oldWord = this.state.wordStorage[wordId];
       if (oldWord.length > 1){
         var newWord = oldWord.slice(0,-1);
-        this.state.indexedWords[wordId] = newWord;
+        this.state.wordStorage[wordId] = newWord;
         this.handleLetterRemoval(char,wordId);
       }
     }
-
-    // // update that word in Component state
-    // Puzzle.state.indexedWords[wordId] = newWord;
-    // Puzzle.
   }
 
   handleLetterInput(char,wordId) {
-    for (i in this.state.indexedQuoteLetters) {
-      var pointer = this.state.indexedQuoteLetters[i];
+    for (i in this.state.quoteLetterStorage) {
+      var pointer = this.state.quoteLetterStorage[i];
       if (pointer.letter == char && !pointer.wordId) {
         pointer.wordId = wordId;
-        this.updateGrid(this.state.indexedQuoteLetters);
-        return
+        this.updateGrid(this.state.quoteLetterStorage);
+        break
       }
     }
   }
 
   handleLetterRemoval(char,wordId) {
-    for (var i = this.state.indexedQuoteLetters.length - 1; i >= 0;i--) {
-      var pointer = this.state.indexedQuoteLetters[i];
+    for (var i = this.state.quoteLetterStorage.length - 1; i >= 0;i--) {
+      var pointer = this.state.quoteLetterStorage[i];
       if (pointer.letter == char && pointer.wordId == wordId) {
         pointer.wordId = null;
-        this.updateGrid(this.state.indexedQuoteLetters);
+        this.updateGrid(this.state.quoteLetterStorage);
         return
       }
     }
@@ -146,10 +141,11 @@ export default class Puzzle extends Component {
     // create word storage
     var words = {};
     Puzzle.state.authorLetters.forEach(function(char,i){
-      words[Alphabet[i]] = char;
-      Puzzle.handleLetterInput(char);
+      var wordId = Alphabet[i];
+      words[wordId] = char;
+      Puzzle.handleLetterInput(char,wordId);
     });
-    this.setState({indexedWords:words})
+    this.setState({wordStorage:words})
 
     // create words Component
     var wordsComponent = Puzzle.state.authorLetters.map(function(char,i){
@@ -189,8 +185,10 @@ export default class Puzzle extends Component {
     while (tempArray.length%10 != 0) {
       tempArray.push({letter:' '});
     }
-    Puzzle.setState({indexedQuoteLetters:tempArray},function(){
-      Puzzle.updateGrid(Puzzle.state.indexedQuoteLetters);
+    Puzzle.setState({quoteLetterStorage:tempArray},function(){
+      Puzzle.updateGrid(Puzzle.state.quoteLetterStorage);
+      // create word rows after the quoteLetterStorage is set
+      Puzzle.createWordRows();
     });
   }
 
