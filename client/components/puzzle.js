@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import TextArea from './textArea';
 import Tile from './tile';
 import Word from './word';
-import update from 'immutability-helper';
 
 function isLetter(char) {
   return char.match(/^[A-Za-z]+$/);
@@ -98,16 +97,25 @@ export default class Puzzle extends Component {
     }
   }
 
-  handleWordChange(char,wordId,eventType) {
-    console.log(char,wordId,eventType)
-    // get old state of the word
-    // const Puzzle = this;
-    // var oldWord = Puzzle.state.indexedWords[wordId];
-    // var newWord = oldWord[0] + text;
+  handleWordChange(char,wordId,action) {
+    if (action === 'input') {
+      var oldWord = this.state.indexedWords[wordId];
+      var newWord = oldWord + char;
+      this.state.indexedWords[wordId] = newWord;
+      this.handleLetterInput(char,wordId);
+    }
+    if (action === 'delete') {
+      var oldWord = this.state.indexedWords[wordId];
+      if (oldWord.length > 1){
+        var newWord = oldWord.slice(0,-1);
+        this.state.indexedWords[wordId] = newWord;
+        this.handleLetterRemoval(char,wordId);
+      }
+    }
+
     // // update that word in Component state
     // Puzzle.state.indexedWords[wordId] = newWord;
-    // Puzzle.forceUpdate();
-
+    // Puzzle.
   }
 
   handleLetterInput(char,wordId) {
