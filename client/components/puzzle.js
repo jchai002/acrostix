@@ -209,20 +209,20 @@ export default class Puzzle extends Component {
 
   render() {
     var continueButtonDisabled, quoteConstraintClass, authorConstraintClass, validityConstraintClass;
-
-    if (this.state.quote.length) {
+    const Puzzle = this;
+    if (Puzzle.state.quote.length) {
       var quoteConstraintClass = "green";
     } else {
       var quoteConstraintClass = "red";
     }
 
-    if (this.state.authorLetters.length) {
+    if (Puzzle.state.authorLetters.length) {
       authorConstraintClass = "green";
     } else {
       authorConstraintClass = "red";
     }
 
-    if (this.state.quote.length && this.state.authorLetters.length && this.state.isValid) {
+    if (Puzzle.state.quote.length && Puzzle.state.authorLetters.length && Puzzle.state.isValid) {
       continueButtonDisabled = false;
       validityConstraintClass = "green";
     } else {
@@ -230,6 +230,18 @@ export default class Puzzle extends Component {
       validityConstraintClass = "red";
     }
 
+    var letterTrackers = Object.keys(this.state.quoteLetterTracker).sort().map(function(key) {
+      var letterClass, numberClass;
+      if (/[aeiou]/.test(key)) {
+        letterClass = "vowels"
+      }
+      return (
+        <div className="tracker">
+          <span className={letterClass}>{key}</span>:
+          <span className={numberClass}>{Puzzle.state.quoteLetterTracker[key]}</span>
+        </div>
+      )
+    });
     return (
       <div className="row">
         <div className="col-xs-12 col-lg-8 step-1">
@@ -269,7 +281,8 @@ export default class Puzzle extends Component {
         </div>
         <div className="col-xs-12 col-lg-4 step-2">
           <h2>Letters Remaining</h2>
-          <div className="tracker">
+          <div className="trackers">
+            {letterTrackers}
           </div>
           <div className="words">
             {this.state.wordsComponent}
