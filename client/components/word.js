@@ -17,7 +17,7 @@ export default class Word extends Component {
 
   handleLetterChange(e) {
     var char = e.target.value;
-    if (char && this.props.letterTracker[char] > 0) {
+    if (char && this.props.letterCounters[char] > 0) {
       this.handleLetterInput(char);
     } else {
       this.props.outOfLetter(char);
