@@ -11,6 +11,7 @@ export default class Word extends Component {
     this.handleLetterDelete = this.handleLetterDelete.bind(this);
     this.state = {
       letters:'',
+      lastLetterIndex:null,
       letterComponents:null
     }
   }

@@ -28,6 +28,7 @@ export default class Puzzle extends Component {
       quote:'',
       quoteLetterStorage: [],
       quoteLetterTracker: {},
+      lastLetterIndex:null,
       authorLetters: [],
       wordStorage: {},
       gridComponent: null,
@@ -217,10 +218,11 @@ export default class Puzzle extends Component {
     handleLetterInput(char,wordId) {
       this.state.quoteLetterTracker[char] --;
       for (i in this.state.quoteLetterStorage) {
-        var pointer = this.state.quoteLetterStorage[i];
-        if (pointer.letter == char && !pointer.wordId) {
-          pointer.wordId = wordId;
+        var obj = this.state.quoteLetterStorage[i];
+        if (obj.letter == char && !obj.wordId) {
+          obj.wordId = wordId;
           this.updateGrid(this.state.quoteLetterStorage);
+          this.setState({lastLetterIndex:          obj.index});
           break
         }
       }
@@ -229,13 +231,18 @@ export default class Puzzle extends Component {
     handleLetterRemoval(char,wordId) {
       this.state.quoteLetterTracker[char] ++;
       for (var i = this.state.quoteLetterStorage.length - 1; i >= 0;i--) {
-        var pointer = this.state.quoteLetterStorage[i];
-        if (pointer.letter == char && pointer.wordId == wordId) {
-          pointer.wordId = null;
+        var obj = this.state.quoteLetterStorage[i];
+        if (obj.letter == char && obj.wordId == wordId) {
+          obj.wordId = null;
           this.updateGrid(this.state.quoteLetterStorage);
+          this.setState({lastLetterIndex:          obj.index});
           return
         }
       }
+    }
+
+    componentDidUpdate() {
+      console.log(this.state.lastLetterIndex)
     }
 
     createWordRows() {
@@ -257,6 +264,7 @@ export default class Puzzle extends Component {
             key={i}
             wordId={AlphabetArray[i]}
             firstLetter={char}
+            lastLetterIndex={Puzzle.state.lastLetterIndex}
             outOfLetter = {Puzzle.outOfLetter}
             letterTracker = {Puzzle.state.quoteLetterTracker}
             handleWordChange={Puzzle.handleWordChange}
