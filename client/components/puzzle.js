@@ -15,8 +15,8 @@ export default class Puzzle extends Component {
     this.handleQuoteChange = this.handleQuoteChange.bind(this);
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
     this.validatePuzzle = this.validatePuzzle.bind(this);
-    this.updateStep = this.updateStep.bind(this);
-    this.handleStepChange = this.handleStepChange.bind(this);
+    this.nextStep = this.nextStep.bind(this);
+    this.assignView = this.assignView.bind(this);
     this.createGrid = this.createGrid.bind(this);
     this.updateGrid = this.updateGrid.bind(this);
     this.createWordRows = this.createWordRows.bind(this);
@@ -83,182 +83,39 @@ export default class Puzzle extends Component {
     this.setState({isValid:puzzleValidity});
   }
 
-  updateStep(e) {
+  nextStep(e) {
     e.preventDefault();
     var newStep = this.state.currentStep + 1;
-    this.setState({currentStep: newStep}, function(){
-      this.handleStepChange(newStep);
-    });
-  }
-
-  handleStepChange(stepNumber) {
-    $('.step').hide();
-    $('.step-'+stepNumber).show();
-    if (stepNumber == 2) {
+    if (newStep == 2) {
       this.createGrid();
     }
+    this.setState({currentStep: newStep});
   }
 
-  handleWordChange(char,wordId,action) {
-    if (action === 'input') {
-      var oldWord = this.state.wordStorage[wordId];
-      var newWord = oldWord + char;
-      this.state.wordStorage[wordId] = newWord;
-      this.handleLetterInput(char,wordId);
-    }
-    if (action === 'delete') {
-      var oldWord = this.state.wordStorage[wordId];
-      if (oldWord.length > 1){
-        var newWord = oldWord.slice(0,-1);
-        this.state.wordStorage[wordId] = newWord;
-        this.handleLetterRemoval(char,wordId);
-      }
-    }
-  }
-
-  handleLetterInput(char,wordId) {
-    this.state.quoteLetterTracker[char] --;
-    for (i in this.state.quoteLetterStorage) {
-      var pointer = this.state.quoteLetterStorage[i];
-      if (pointer.letter == char && !pointer.wordId) {
-        pointer.wordId = wordId;
-        this.updateGrid(this.state.quoteLetterStorage);
-        break
-      }
-    }
-  }
-
-  handleLetterRemoval(char,wordId) {
-    this.state.quoteLetterTracker[char] ++;
-    for (var i = this.state.quoteLetterStorage.length - 1; i >= 0;i--) {
-      var pointer = this.state.quoteLetterStorage[i];
-      if (pointer.letter == char && pointer.wordId == wordId) {
-        pointer.wordId = null;
-        this.updateGrid(this.state.quoteLetterStorage);
-        return
-      }
-    }
-  }
-
-  createWordRows() {
-    const AlphabetArray = Alphabet.toUpperCase().split("");
+  assignView() {
     const Puzzle = this;
-    // create word storage
-    var words = {};
-    Puzzle.state.authorLetters.forEach(function(char,i){
-      var wordId = AlphabetArray[i];
-      words[wordId] = char;
-      Puzzle.handleLetterInput(char,wordId);
-    });
-    this.setState({wordStorage:words})
-
-    // create words Component
-    var wordsComponent = Puzzle.state.authorLetters.map(function(char,i){
-      return (
-        <Word
-          key={i}
-          wordId={AlphabetArray[i]}
-          firstLetter={char}
-          outOfLetter = {Puzzle.outOfLetter}
-          letterTracker = {Puzzle.state.quoteLetterTracker}
-          handleWordChange={Puzzle.handleWordChange}
-          />
-      );
-    });
-    this.setState({wordsComponent:wordsComponent});
-  }
-
-  createGrid() {
-    var index = 1;
-    var tempArray = [];
-    var grid;
-    const Puzzle = this;
-    Puzzle.state.quote.split('').forEach(function(char){
-      var letterInfo = {};
-      if (isLetter(char)) {
-        letterInfo.letter = char;
-        letterInfo.index = index;
-        letterInfo.wordId = null;
-        index ++;
-        tempArray.push(letterInfo);
+    switch(Puzzle.state.currentStep) {
+      case 1:
+      var continueButtonDisabled, quoteConstraintClass, authorConstraintClass, validityConstraintClass;
+      if (Puzzle.state.quote.length) {
+        var quoteConstraintClass = "green";
       } else {
-        letterInfo.letter = char;
-        letterInfo.index = null;
-        letterInfo.wordId = null;
-        tempArray.push(letterInfo);
+        var quoteConstraintClass = "red";
       }
-    });
 
-    while (tempArray.length%10 != 0) {
-      tempArray.push({letter:' '});
-    }
-    Puzzle.setState({quoteLetterStorage:tempArray},function(){
-      Puzzle.updateGrid(Puzzle.state.quoteLetterStorage);
-      // create word rows after the quoteLetterStorage is set
-      Puzzle.createWordRows();
-    });
-  }
-
-  updateGrid(indexedLetters) {
-    grid = indexedLetters.map(function(obj,i){
-      return (
-        <Tile
-          key={i}
-          letter={obj.letter}
-          index={obj.index}
-          wordId={obj.wordId}
-          />
-      );
-    });
-    this.setState({gridComponent:grid});
-  }
-
-  outOfLetter(char) {
-    var $tracker = $('.letter-'+char).parent();
-    $tracker.addClass('animated rubberBand');
-    setTimeout(function(){
-      $tracker.removeClass('animated rubberBand');
-    },2000);
-  }
-
-  render() {
-    var continueButtonDisabled, quoteConstraintClass, authorConstraintClass, validityConstraintClass;
-    const Puzzle = this;
-    if (Puzzle.state.quote.length) {
-      var quoteConstraintClass = "green";
-    } else {
-      var quoteConstraintClass = "red";
-    }
-
-    if (Puzzle.state.authorLetters.length) {
-      authorConstraintClass = "green";
-    } else {
-      authorConstraintClass = "red";
-    }
-
-    if (Puzzle.state.quote.length && Puzzle.state.authorLetters.length && Puzzle.state.isValid) {
-      continueButtonDisabled = false;
-      validityConstraintClass = "green";
-    } else {
-      continueButtonDisabled = true;
-      validityConstraintClass = "red";
-    }
-
-    var letterTrackers = Alphabet.split('').map(function(key) {
-      var letterClass = 'letter-'+key;
-      if (/[aeiou]/.test(key)) {
-        letterClass += " vowels"
+      if (Puzzle.state.authorLetters.length) {
+        authorConstraintClass = "green";
+      } else {
+        authorConstraintClass = "red";
       }
-      if (!Puzzle.state.quoteLetterTracker[key]) {
-        var numberClass = "red"
+
+      if (Puzzle.state.quote.length && Puzzle.state.authorLetters.length && Puzzle.state.isValid) {
+        continueButtonDisabled = false;
+        validityConstraintClass = "green";
+      } else {
+        continueButtonDisabled = true;
+        validityConstraintClass = "red";
       }
-      return (
-        <div key={key} className="tracker">
-          <span className={letterClass}>{key}</span>:
-            <span className={numberClass}>{Puzzle.state.quoteLetterTracker[key] || 0}</span>
-          </div>
-        )
-      });
       return (
         <div className="row">
           <div className="col-xs-12 col-lg-8 step step-1">
@@ -280,7 +137,7 @@ export default class Puzzle extends Component {
                   handleChange={this.handleAuthorChange}
                   />
               </div>
-              <input disabled={continueButtonDisabled} onClick={this.updateStep} className="form-control" type="submit" value="Continue" />
+              <input disabled={continueButtonDisabled} onClick={this.nextStep} className="form-control" type="submit" value="Continue" />
             </form>
           </div>
           <div className="col-xs-12 col-lg-4 step step-1">
@@ -291,24 +148,182 @@ export default class Puzzle extends Component {
               <li className={validityConstraintClass}>Author name can be made up by letters from the quote</li>
             </ul>
           </div>
-          <div className="col-xs-12 col-lg-8 step step-2">
-            <div className="grid">
-              {this.state.gridComponent}
+        </div>
+      );
+      case 2:
+      var letterTrackers = Alphabet.split('').map(function(key) {
+        var letterClass = 'letter-'+key;
+        if (/[aeiou]/.test(key)) {
+          letterClass += " vowels"
+        }
+        if (!Puzzle.state.quoteLetterTracker[key]) {
+          var numberClass = "red"
+        }
+        return (
+          <div key={key} className="tracker">
+            <span className={letterClass}>{key}</span>:
+              <span className={numberClass}>{Puzzle.state.quoteLetterTracker[key] || 0}</span>
+            </div>
+          )
+        });
+        return (
+          <div className="row step-2">
+            <div className="col-xs-12 col-lg-8 step step-2">
+              <div className="grid">
+                {this.state.gridComponent}
+              </div>
+            </div>
+            <div className="col-xs-12 col-lg-4 step step-2">
+              <h2>Letters Remaining</h2>
+              <div className="trackers">
+                {letterTrackers}
+              </div>
+              <a onClick={this.nextStep} className="btn btn-success">Continue</a>
+              <div className="words">
+                {this.state.wordsComponent}
+              </div>
             </div>
           </div>
-          <div className="col-xs-12 col-lg-4 step step-2">
-            <h2>Letters Remaining</h2>
-            <div className="trackers">
-              {letterTrackers}
-            </div>
-            <a onClick={this.updateStep} className="btn btn-success">Continue</a>
-            <div className="words">
-              {this.state.wordsComponent}
+        );
+
+        case 3:
+        return (
+          <div className="row step-3">
+            <div className="col-xs-12">
+              <h2>Enter Clues For Each Word</h2>
             </div>
           </div>
-          <div className="col-xs-12 step step-3">
-            <h2>Enter Clues For Each Word</h2>
-          </div>
+        );
+      }
+    }
+
+    handleWordChange(char,wordId,action) {
+      if (action === 'input') {
+        var oldWord = this.state.wordStorage[wordId];
+        var newWord = oldWord + char;
+        this.state.wordStorage[wordId] = newWord;
+        this.handleLetterInput(char,wordId);
+      }
+      if (action === 'delete') {
+        var oldWord = this.state.wordStorage[wordId];
+        if (oldWord.length > 1){
+          var newWord = oldWord.slice(0,-1);
+          this.state.wordStorage[wordId] = newWord;
+          this.handleLetterRemoval(char,wordId);
+        }
+      }
+    }
+
+    handleLetterInput(char,wordId) {
+      this.state.quoteLetterTracker[char] --;
+      for (i in this.state.quoteLetterStorage) {
+        var pointer = this.state.quoteLetterStorage[i];
+        if (pointer.letter == char && !pointer.wordId) {
+          pointer.wordId = wordId;
+          this.updateGrid(this.state.quoteLetterStorage);
+          break
+        }
+      }
+    }
+
+    handleLetterRemoval(char,wordId) {
+      this.state.quoteLetterTracker[char] ++;
+      for (var i = this.state.quoteLetterStorage.length - 1; i >= 0;i--) {
+        var pointer = this.state.quoteLetterStorage[i];
+        if (pointer.letter == char && pointer.wordId == wordId) {
+          pointer.wordId = null;
+          this.updateGrid(this.state.quoteLetterStorage);
+          return
+        }
+      }
+    }
+
+    createWordRows() {
+      const AlphabetArray = Alphabet.toUpperCase().split("");
+      const Puzzle = this;
+      // create word storage
+      var words = {};
+      Puzzle.state.authorLetters.forEach(function(char,i){
+        var wordId = AlphabetArray[i];
+        words[wordId] = char;
+        Puzzle.handleLetterInput(char,wordId);
+      });
+      this.setState({wordStorage:words})
+
+      // create words Component
+      var wordsComponent = Puzzle.state.authorLetters.map(function(char,i){
+        return (
+          <Word
+            key={i}
+            wordId={AlphabetArray[i]}
+            firstLetter={char}
+            outOfLetter = {Puzzle.outOfLetter}
+            letterTracker = {Puzzle.state.quoteLetterTracker}
+            handleWordChange={Puzzle.handleWordChange}
+            />
+        );
+      });
+      this.setState({wordsComponent:wordsComponent});
+    }
+
+    createGrid() {
+      var index = 1;
+      var tempArray = [];
+      var grid;
+      const Puzzle = this;
+      Puzzle.state.quote.split('').forEach(function(char){
+        var letterInfo = {};
+        if (isLetter(char)) {
+          letterInfo.letter = char;
+          letterInfo.index = index;
+          letterInfo.wordId = null;
+          index ++;
+          tempArray.push(letterInfo);
+        } else {
+          letterInfo.letter = char;
+          letterInfo.index = null;
+          letterInfo.wordId = null;
+          tempArray.push(letterInfo);
+        }
+      });
+
+      while (tempArray.length%10 != 0) {
+        tempArray.push({letter:' '});
+      }
+      Puzzle.setState({quoteLetterStorage:tempArray},function(){
+        Puzzle.updateGrid(Puzzle.state.quoteLetterStorage);
+        // create word rows after the quoteLetterStorage is set
+        Puzzle.createWordRows();
+      });
+    }
+
+    updateGrid(indexedLetters) {
+      grid = indexedLetters.map(function(obj,i){
+        return (
+          <Tile
+            key={i}
+            letter={obj.letter}
+            index={obj.index}
+            wordId={obj.wordId}
+            />
+        );
+      });
+      this.setState({gridComponent:grid});
+    }
+
+    outOfLetter(char) {
+      var $tracker = $('.letter-'+char).parent();
+      $tracker.addClass('animated rubberBand');
+      setTimeout(function(){
+        $tracker.removeClass('animated rubberBand');
+      },2000);
+    }
+
+    render() {
+      var view = this.assignView();
+      return (
+        <div className="container">
+          {view}
         </div>
       );
     }
