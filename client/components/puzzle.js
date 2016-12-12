@@ -203,19 +203,19 @@ export default class Puzzle extends Component {
         var oldWord = this.state.wordsTracker[wordId];
         var newWord = oldWord + char;
         this.state.wordsTracker[wordId] = newWord;
-        this.handleLetterInput(char,wordId,wordComponent);
+        this.handleLetterInput(char,wordId);
       }
       if (action === 'delete') {
         var oldWord = this.state.wordsTracker[wordId];
         if (oldWord.length > 1){
           var newWord = oldWord.slice(0,-1);
           this.state.wordsTracker[wordId] = newWord;
-          this.handleLetterRemoval(char,wordId,wordComponent);
+          this.handleLetterRemoval(char,wordId);
         }
       }
     }
 
-    handleLetterInput(char,wordId,wordComponent) {
+    handleLetterInput(char,wordId) {
       this.state.quoteLetterTracker[char] --;
       for (i in this.state.quoteLetterStorage) {
         var matched = this.state.quoteLetterStorage[i];
@@ -228,7 +228,7 @@ export default class Puzzle extends Component {
       }
     }
 
-    handleLetterRemoval(char,wordId,wordComponent) {
+    handleLetterRemoval(char,wordId) {
       this.state.quoteLetterTracker[char] ++;
       for (var i = this.state.quoteLetterStorage.length - 1; i >= 0;i--) {
         var matched = this.state.quoteLetterStorage[i];
