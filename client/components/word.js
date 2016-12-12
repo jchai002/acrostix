@@ -30,22 +30,11 @@ export default class Word extends Component {
     var letters;
     const Word = this;
     const newLetterState = Word.state.letters + char;
+    console.log('entered letter n',this.props.letterNumber)
+
     Word.setState({letters:newLetterState},function(){
-      letters = Word.state.letters.split('').map(function(char,i){
-        console.log(char)
-        return(
-          <Letter
-            key={i}
-            value={char}
-            index={Word.state.lastLetterIndex}
-            handleLetterChange={Word.handleLetterChange}
-            handleKeyDown={Word.handleKeyDown}
-            />
-        );
-      });
-      letters.push(<Letter key='last' value='' index={Word.state.lastLetterIndex} handleLetterChange={Word.handleLetterChange} handleKeyDown={Word.handleKeyDown}/>);
+      this.updateLetters();
       Word.props.handleWordChange(char,Word.props.wordId,'input',Word);
-      Word.setState({letterComponents:letters});
     });
   }
 
@@ -79,7 +68,7 @@ export default class Word extends Component {
         <Letter
           key={i}
           value={char}
-          index={Word.props.lastLetterIndex}
+          letterNumber={Word.props.letterNumber}
           handleLetterChange={Word.handleLetterChange}
           handleKeyDown={Word.handleKeyDown}
           />

@@ -17,9 +17,9 @@ export default class Puzzle extends Component {
     this.validatePuzzle = this.validatePuzzle.bind(this);
     this.nextStep = this.nextStep.bind(this);
     this.assignView = this.assignView.bind(this);
-    this.createGrid = this.createGrid.bind(this);
+    this.createQuoteLetterStorage = this.createQuoteLetterStorage.bind(this);
     this.updateGrid = this.updateGrid.bind(this);
-    this.createWordStorage = this.createWordStorage.bind(this);
+    this.createWordsTracker = this.createWordsTracker.bind(this);
     this.updateWordComponents = this.updateWordComponents.bind(this);
     this.handleWordChange = this.handleWordChange.bind(this);
     this.handleLetterInput = this.handleLetterInput.bind(this);
@@ -29,9 +29,8 @@ export default class Puzzle extends Component {
       quote:'',
       quoteLetterStorage: [],
       quoteLetterTracker: {},
-      lastEntryIndex:null,
       authorLetters: [],
-      wordStorage: {},
+      wordsTracker: {},
       gridComponent: null,
       wordComponents:null,
       currentStep: 1,
@@ -89,7 +88,7 @@ export default class Puzzle extends Component {
     e.preventDefault();
     var newStep = this.state.currentStep + 1;
     if (newStep == 2) {
-      this.createGrid();
+      this.createQuoteLetterStorage();
     }
     this.setState({currentStep: newStep});
   }
@@ -201,16 +200,16 @@ export default class Puzzle extends Component {
 
     handleWordChange(char,wordId,action,wordComponent) {
       if (action === 'input') {
-        var oldWord = this.state.wordStorage[wordId];
+        var oldWord = this.state.wordsTracker[wordId];
         var newWord = oldWord + char;
-        this.state.wordStorage[wordId] = newWord;
+        this.state.wordsTracker[wordId] = newWord;
         this.handleLetterInput(char,wordId,wordComponent);
       }
       if (action === 'delete') {
-        var oldWord = this.state.wordStorage[wordId];
+        var oldWord = this.state.wordsTracker[wordId];
         if (oldWord.length > 1){
           var newWord = oldWord.slice(0,-1);
-          this.state.wordStorage[wordId] = newWord;
+          this.state.wordsTracker[wordId] = newWord;
           this.handleLetterRemoval(char,wordId,wordComponent);
         }
       }
@@ -219,10 +218,10 @@ export default class Puzzle extends Component {
     handleLetterInput(char,wordId,wordComponent) {
       this.state.quoteLetterTracker[char] --;
       for (i in this.state.quoteLetterStorage) {
-        var obj = this.state.quoteLetterStorage[i];
-        if (obj.letter == char && !obj.wordId) {
-          obj.wordId = wordId;
-          this.setState({lastEntryIndex:obj.index})
+        var matched = this.state.quoteLetterStorage[i];
+        if (matched.letter == char && !matched.wordId) {
+          matched.wordId = wordId;
+          this.updateWordComponents(matched.index);
           this.updateGrid(this.state.quoteLetterStorage);
           break
         }
@@ -232,16 +231,16 @@ export default class Puzzle extends Component {
     handleLetterRemoval(char,wordId,wordComponent) {
       this.state.quoteLetterTracker[char] ++;
       for (var i = this.state.quoteLetterStorage.length - 1; i >= 0;i--) {
-        var obj = this.state.quoteLetterStorage[i];
-        if (obj.letter == char && obj.wordId == wordId) {
-          obj.wordId = null;
+        var matched = this.state.quoteLetterStorage[i];
+        if (matched.letter == char && matched.wordId == wordId) {
+          matched.wordId = null;
           this.updateGrid(this.state.quoteLetterStorage);
           return
         }
       }
     }
 
-    createWordStorage() {
+    createWordsTracker() {
       const AlphabetArray = Alphabet.toUpperCase().split("");
       const Puzzle = this;
       // create word storage
@@ -249,23 +248,22 @@ export default class Puzzle extends Component {
       Puzzle.state.authorLetters.forEach(function(char,i){
         var wordId = AlphabetArray[i];
         words[wordId] = char;
+        //input the first letter in word
         Puzzle.handleLetterInput(char,wordId);
       });
-      this.setState({wordStorage:words},function(){
-        Puzzle.updateWordComponents();
-      });
+      this.setState({wordsTracker:words});
     }
 
-    updateWordComponents() {
+    updateWordComponents(letterNumber) {
       const Puzzle = this;
-      var wordComponents = Object.keys(Puzzle.state.wordStorage).map(function(wordId,i){
+      var wordComponents = Object.keys(Puzzle.state.wordsTracker).map(function(wordId,i){
         return (
           <Word
             key={i}
             wordId={wordId}
-            firstLetter = {Puzzle.state.wordStorage[wordId][0]}
+            firstLetter = {Puzzle.state.wordsTracker[wordId][0]}
             outOfLetter = {Puzzle.outOfLetter}
-            lastEntryIndex={Puzzle.state.lastEntryIndex}
+            letterNumber={letterNumber}
             letterTracker = {Puzzle.state.quoteLetterTracker}
             handleWordChange={Puzzle.handleWordChange}
             />
@@ -274,10 +272,9 @@ export default class Puzzle extends Component {
       this.setState({wordComponents:wordComponents});
     }
 
-    createGrid() {
+    createQuoteLetterStorage() {
       var index = 1;
       var tempArray = [];
-      var grid;
       const Puzzle = this;
       Puzzle.state.quote.split('').forEach(function(char){
         var letterInfo = {};
@@ -299,9 +296,8 @@ export default class Puzzle extends Component {
         tempArray.push({letter:' '});
       }
       Puzzle.setState({quoteLetterStorage:tempArray},function(){
+        this.createWordsTracker();
         Puzzle.updateGrid(Puzzle.state.quoteLetterStorage);
-        // create word rows after the quoteLetterStorage is set
-        Puzzle.createWordStorage();
       });
     }
 

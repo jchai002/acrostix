@@ -11,14 +11,17 @@ export default class Letter extends Component {
   render() {
     const value = this.state.value;
     return (
-      <input
-        onChange={this.props.handleLetterChange}
-        onKeyDown={this.props.handleKeyDown}
-        className="letter"
-        maxLength='1'
-        value={value}
-        disabled={value}
-        />
+      <div>
+        <input
+          onChange={this.props.handleLetterChange}
+          onKeyDown={this.props.handleKeyDown}
+          className="letter"
+          maxLength='1'
+          value={value}
+          disabled={value}
+          />
+        <small>{this.props.letterNumber}</small>
+      </div>
     );
   }
 }
