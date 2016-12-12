@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import Letter from './letter';
-import _ from 'underscore';
 
 export default class Word extends Component {
   constructor(props) {
@@ -10,7 +9,6 @@ export default class Word extends Component {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleLetterDelete = this.handleLetterDelete.bind(this);
     this.updateLetters = this.updateLetters.bind(this);
-
     this.state = {
       letters:this.props.firstLetter.toUpperCase(),
       letterComponents:null
@@ -30,11 +28,9 @@ export default class Word extends Component {
     var letters;
     const Word = this;
     const newLetterState = Word.state.letters + char;
-    console.log('entered letter n',this.props.letterNumber)
-
     Word.setState({letters:newLetterState},function(){
+      Word.props.handleWordChange(char,Word.props.wordId,'input');
       this.updateLetters();
-      Word.props.handleWordChange(char,Word.props.wordId,'input',Word);
     });
   }
 
@@ -52,8 +48,8 @@ export default class Word extends Component {
     const deletedChar = Word.state.letters.split('').pop();
     const newLetterState = Word.state.letters.slice(0, -1);
     Word.setState({letters:newLetterState},function(){
+      Word.props.handleWordChange(deletedChar,Word.props.wordId,'delete');
       Word.updateLetters();
-      Word.props.handleWordChange(deletedChar,Word.props.wordId,'delete',Word);
     });
   }
 
@@ -63,19 +59,23 @@ export default class Word extends Component {
 
   updateLetters() {
     const Word = this;
+    console.log(Word.props)
+    // todo figure out how to do give unique letter numbers to each letter
     var letters = Word.state.letters.split('').map(function(char,i){
+      var letterNumber =
+      Word.props.letterStorage
       return(
         <Letter
           key={i}
           value={char}
-          letterNumber={Word.props.letterNumber}
+          letterNumber={letterNumber}
           handleLetterChange={Word.handleLetterChange}
           handleKeyDown={Word.handleKeyDown}
           />
       );
     });
     letters.push(<Letter key='last' value='' handleLetterChange={Word.handleLetterChange} handleKeyDown={Word.handleKeyDown}/>);
-    this.setState({letterComponents:letters})
+    this.setState({letterComponents:letters});
   }
 
   render() {
