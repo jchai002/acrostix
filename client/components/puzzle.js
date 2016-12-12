@@ -248,10 +248,15 @@ export default class Puzzle extends Component {
       Puzzle.state.authorLetters.forEach(function(char,i){
         var wordId = AlphabetArray[i];
         words[wordId] = char;
-        //input the first letter in word
-        Puzzle.handleLetterInput(char,wordId);
       });
-      this.setState({wordsTracker:words});
+      this.setState({wordsTracker:words},function(){
+        //input the first letter in word again after word tracker is created
+        Puzzle.state.authorLetters.forEach(function(char,i){
+          var wordId = AlphabetArray[i];
+          words[wordId] = char;
+          Puzzle.handleLetterInput(char,wordId);
+        });
+      });
     }
 
     updateWordComponents(letterNumber) {
