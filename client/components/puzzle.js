@@ -269,6 +269,7 @@ export default class Puzzle extends Component {
             firstLetter = {Puzzle.state.wordsTracker[wordId][0]}
             outOfLetter = {Puzzle.outOfLetter}
             letterTracker = {Puzzle.state.quoteLetterTracker}
+            letterStorage = {Puzzle.state.quoteLetterStorage}
             handleWordChange={Puzzle.handleWordChange}
             />
         );
@@ -284,13 +285,13 @@ export default class Puzzle extends Component {
         var letterInfo = {};
         if (isLetter(char)) {
           letterInfo.letter = char;
-          letterInfo.index = index;
+          letterInfo.letterNumber = index;
           letterInfo.wordId = null;
           index ++;
           tempArray.push(letterInfo);
         } else {
           letterInfo.letter = char;
-          letterInfo.index = null;
+          letterInfo.letterNumber = null;
           letterInfo.wordId = null;
           tempArray.push(letterInfo);
         }
@@ -311,7 +312,7 @@ export default class Puzzle extends Component {
           <Tile
             key={i}
             letter={obj.letter}
-            index={obj.index}
+            letterNumber={obj.letterNumber}
             wordId={obj.wordId}
             />
         );

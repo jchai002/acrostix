@@ -11,7 +11,7 @@ export default class Tile extends Component {
     } else {
       letterClass = 'letter';
     }
-    if (this.props.index) {
+    if (this.props.letterNumber) {
       tileClass = 'tile';
     } else {
       tileClass = 'tile white bg-black';
@@ -19,7 +19,7 @@ export default class Tile extends Component {
     return (
       <div className={tileClass}>
         <div className="word-id">{this.props.wordId}</div>
-        <div className="index">{this.props.index}</div>
+        <div className="letter-number">{this.props.letterNumber}</div>
         <div className={letterClass}>{this.props.letter}</div>
       </div>
     );

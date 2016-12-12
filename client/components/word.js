@@ -59,16 +59,19 @@ export default class Word extends Component {
 
   updateLetters() {
     const Word = this;
-    console.log(Word.props)
-    // todo figure out how to do give unique letter numbers to each letter
+    letterNumbers =[];
+     for (var i in Word.props.letterStorage) {
+       if (Word.props.letterStorage[i].wordId == Word.props.wordId) {
+         letterNumbers.push(Word.props.letterStorage[i].letterNumber)
+       }
+     }
+    console.log(letterNumbers)
     var letters = Word.state.letters.split('').map(function(char,i){
-      var letterNumber =
-      Word.props.letterStorage
       return(
         <Letter
           key={i}
           value={char}
-          letterNumber={letterNumber}
+          letterNumber={letterNumbers[i]}
           handleLetterChange={Word.handleLetterChange}
           handleKeyDown={Word.handleKeyDown}
           />
