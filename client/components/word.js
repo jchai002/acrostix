@@ -58,20 +58,13 @@ export default class Word extends Component {
   }
 
   updateLetters() {
+    console.log('new letter in word',this.props.wordId, 'it is', this.props.newChar);
     const Word = this;
-    letterNumbers =[];
-     for (var i in Word.props.letterStorage) {
-       if (Word.props.letterStorage[i].wordId == Word.props.wordId) {
-         letterNumbers.push(Word.props.letterStorage[i].letterNumber)
-       }
-     }
-    console.log(letterNumbers)
     var letters = Word.state.letters.split('').map(function(char,i){
       return(
         <Letter
           key={i}
           value={char}
-          letterNumber={letterNumbers[i]}
           handleLetterChange={Word.handleLetterChange}
           handleKeyDown={Word.handleKeyDown}
           />

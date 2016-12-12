@@ -221,7 +221,7 @@ export default class Puzzle extends Component {
         var matched = this.state.quoteLetterStorage[i];
         if (matched.letter == char && !matched.wordId) {
           matched.wordId = wordId;
-          this.updateWordComponents();
+          this.updateWordComponents(char,matched.letterNumber,wordId);
           this.updateGrid(this.state.quoteLetterStorage);
           break
         }
@@ -259,17 +259,20 @@ export default class Puzzle extends Component {
       });
     }
 
-    updateWordComponents() {
+    updateWordComponents(letter,letterNumber,wordId) {
       const Puzzle = this;
-      var wordComponents = Object.keys(Puzzle.state.wordsTracker).map(function(wordId,i){
+      var wordComponents = Object.keys(Puzzle.state.wordsTracker).map(function(id,i){
+        if (wordId == id) {
+          var newChar = {letter:letter,letterNumber:letterNumber,wordId:wordId}
+        }
         return (
           <Word
-            key={i}
-            wordId={wordId}
+            key={id}
+            wordId={id}
             firstLetter = {Puzzle.state.wordsTracker[wordId][0]}
             outOfLetter = {Puzzle.outOfLetter}
             letterTracker = {Puzzle.state.quoteLetterTracker}
-            letterStorage = {Puzzle.state.quoteLetterStorage}
+            newChar = {newChar}
             handleWordChange={Puzzle.handleWordChange}
             />
         );
