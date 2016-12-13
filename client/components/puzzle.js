@@ -87,8 +87,7 @@ class Puzzle extends Component {
     this.setState({isValid:puzzleValidity});
   }
 
-  nextStep(e) {
-    e.preventDefault();
+  nextStep() {
     var newStep = this.state.currentStep + 1;
     if (newStep == 2) {
       this.createQuoteLetterStorage();
@@ -141,7 +140,7 @@ class Puzzle extends Component {
                   handleChange={this.handleAuthorChange}
                   />
               </div>
-              <input disabled={continueButtonDisabled} onClick={this.nextStep} className="form-control" type="submit" value="Continue" />
+              <a disabled={continueButtonDisabled} onClick={this.nextStep} className="btn btn-primary" > Continue</a>
             </form>
           </div>
           <div className="col-xs-12 col-lg-4 step step-1">
@@ -199,6 +198,10 @@ class Puzzle extends Component {
           </div>
         );
       }
+    }
+
+    componentDidUpdate() {
+      console.log(this.props)
     }
 
     handleWordChange(char,wordId,action,wordComponent) {
@@ -289,10 +292,14 @@ class Puzzle extends Component {
         if (isLetter(char)) {
           letterInfo.letter = char;
           letterInfo.letterNumber = index;
+
+          Puzzle.props.dispatch(letterActions.addLetter({char:char,letterNumber:index,wordId:null,used:false}))
+
           letterInfo.wordId = null;
           index ++;
           tempArray.push(letterInfo);
-        } else {
+        } else if (char===' ') {
+          Puzzle.props.dispatch(letterActions.addLetter({char:char,letterNumber:null,wordId:null,used:false}));
           letterInfo.letter = char;
           letterInfo.letterNumber = null;
           letterInfo.wordId = null;
@@ -341,6 +348,8 @@ class Puzzle extends Component {
     }
   }
   Puzzle.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    letters: PropTypes.array.isRequired
   };
 
 function mapStateToProps(state, ownProps) {

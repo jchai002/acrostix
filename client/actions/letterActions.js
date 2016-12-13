@@ -1,3 +1,3 @@
-export function inputLetter(letter) {
+export function addLetter(letter) {
   return {type: "ADD", letter}
 }
