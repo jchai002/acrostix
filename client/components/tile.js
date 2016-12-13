@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+
+// should be stateless Component
 export default class Tile extends Component {
   constructor(props) {
     super(props);
