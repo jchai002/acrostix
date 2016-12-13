@@ -31,7 +31,7 @@ class Puzzle extends Component {
       isValid: false,
       quote:'',
       quoteLetterStorage: [],
-      quoteLetterTracker: {},
+      quoteLetterCounter: {},
       authorLetters: [],
       wordsTracker: {},
       gridComponent: null,
@@ -53,7 +53,7 @@ class Puzzle extends Component {
     });
     this.setState({
       quote: string,
-      quoteLetterTracker: library
+      quoteLetterCounter: library
     },function(){
       this.validatePuzzle();
     });
@@ -72,15 +72,15 @@ class Puzzle extends Component {
     });
   }
   validatePuzzle() {
-    var quoteLetterTrackerClone = Object.assign({}, this.state.quoteLetterTracker);
+    var quoteLetterCounterClone = Object.assign({}, this.state.quoteLetterCounter);
     var puzzleValidity = true;
     if (this.state.authorLetters) {
       this.state.authorLetters.forEach(function(char){
-        if (!quoteLetterTrackerClone[char] || quoteLetterTrackerClone[char] == 0) {
+        if (!quoteLetterCounterClone[char] || quoteLetterCounterClone[char] == 0) {
           puzzleValidity = false;
         }
-        if (quoteLetterTrackerClone[char]) {
-          quoteLetterTrackerClone[char] -= 1;
+        if (quoteLetterCounterClone[char]) {
+          quoteLetterCounterClone[char] -= 1;
         }
       });
     }
@@ -154,18 +154,18 @@ class Puzzle extends Component {
         </div>
       );
       case 2:
-      var letterTrackers = Alphabet.split('').map(function(key) {
+      var letterCounters = Alphabet.split('').map(function(key) {
         var letterClass = 'letter-'+key;
         if (/[aeiou]/.test(key)) {
           letterClass += " vowels"
         }
-        if (!Puzzle.state.quoteLetterTracker[key]) {
+        if (!Puzzle.state.quoteLetterCounter[key]) {
           var numberClass = "red"
         }
         return (
           <div key={key} className="tracker">
             <span className={letterClass}>{key}</span>:
-              <span className={numberClass}>{Puzzle.state.quoteLetterTracker[key] || 0}</span>
+              <span className={numberClass}>{Puzzle.state.quoteLetterCounter[key] || 0}</span>
             </div>
           )
         });
@@ -179,7 +179,7 @@ class Puzzle extends Component {
             <div className="col-xs-12 col-lg-4 step step-2">
               <h2>Letters Remaining</h2>
               <div className="trackers">
-                {letterTrackers}
+                {letterCounters}
               </div>
               <a onClick={this.nextStep} className="btn btn-success">Continue</a>
               <div className="words">
@@ -222,12 +222,12 @@ class Puzzle extends Component {
     }
 
     handleLetterInput(char,wordId) {
-      this.state.quoteLetterTracker[char] --;
+      this.state.quoteLetterCounter[char] --;
       for (i in this.state.quoteLetterStorage) {
         var matched = this.state.quoteLetterStorage[i];
         if (matched.letter == char && !matched.wordId) {
           matched.wordId = wordId;
-          this.updateWordComponents();
+          this.updateWordComponents(char,matched.letterNumber,wordId);
           this.updateGrid(this.state.quoteLetterStorage);
           break
         }
@@ -235,7 +235,7 @@ class Puzzle extends Component {
     }
 
     handleLetterRemoval(char,wordId) {
-      this.state.quoteLetterTracker[char] ++;
+      this.state.quoteLetterCounter[char] ++;
       for (var i = this.state.quoteLetterStorage.length - 1; i >= 0;i--) {
         var matched = this.state.quoteLetterStorage[i];
         if (matched.letter == char && matched.wordId == wordId) {
@@ -265,17 +265,20 @@ class Puzzle extends Component {
       });
     }
 
-    updateWordComponents() {
+    updateWordComponents(letter,letterNumber,wordId) {
       const Puzzle = this;
-      var wordComponents = Object.keys(Puzzle.state.wordsTracker).map(function(wordId,i){
+      var wordComponents = Object.keys(Puzzle.state.wordsTracker).map(function(id,i){
+        if (wordId == id) {
+          var newChar = {letter:letter,letterNumber:letterNumber,wordId:wordId}
+        }
         return (
           <Word
-            key={i}
-            wordId={wordId}
+            key={id}
+            wordId={id}
             firstLetter = {Puzzle.state.wordsTracker[wordId][0]}
             outOfLetter = {Puzzle.outOfLetter}
-            letterTracker = {Puzzle.state.quoteLetterTracker}
-            letterStorage = {Puzzle.state.quoteLetterStorage}
+            letterCounters = {Puzzle.state.quoteLetterCounter}
+            newChar = {newChar}
             handleWordChange={Puzzle.handleWordChange}
             />
         );
