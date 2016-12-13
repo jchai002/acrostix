@@ -1,8 +1,6 @@
 import {combineReducers} from 'redux';
-import letters from './letterReduder';
+import letters from './letterReducer';
 
-const rootReducer = combineReducers({
-  letters
-});
+const rootReducer = combineReducers({letters});
 
-export defualt rootReducer;
+export default rootReducer;
