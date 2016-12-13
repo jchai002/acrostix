@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
-
+import {bindActionCreators} from 'redux';
 import * as letterActions from '../actions/letterActions'
 import TextArea from './textArea';
 import Tile from './tile';
@@ -295,14 +295,12 @@ class Puzzle extends Component {
         if (isLetter(char)) {
           letterInfo.letter = char;
           letterInfo.letterNumber = index;
-
-          Puzzle.props.dispatch(letterActions.addLetter({char:char,letterNumber:index,wordId:null,used:false}))
-
+          Puzzle.props.actions.addLetter({char:char,letterNumber:index,wordId:null,used:false});
           letterInfo.wordId = null;
           index ++;
           tempArray.push(letterInfo);
         } else if (char===' ') {
-          Puzzle.props.dispatch(letterActions.addLetter({char:char,letterNumber:null,wordId:null,used:false}));
+          Puzzle.props.actions.addLetter({char:char,letterNumber:index,wordId:null,used:false});
           letterInfo.letter = char;
           letterInfo.letterNumber = null;
           letterInfo.wordId = null;
@@ -351,7 +349,6 @@ class Puzzle extends Component {
     }
   }
   Puzzle.propTypes = {
-    dispatch: PropTypes.func.isRequired,
     letters: PropTypes.array.isRequired
   };
 
@@ -361,4 +358,9 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps)(Puzzle);
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(letterActions,dispatch)
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Puzzle);

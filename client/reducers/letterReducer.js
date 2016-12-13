@@ -1,6 +1,8 @@
+import * as types from '../actions/acttionTypes.js'
+
 export default function letterReduder(state =[],action) {
   switch (action.type) {
-    case 'ADD':
+    case types.ADD_LETTER:
       return [...state,
         Object.assign({}, action.letter)
       ]
