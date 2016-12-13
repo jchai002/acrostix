@@ -3,7 +3,9 @@ import rootReducer from '../reducers';
 import invariant from 'redux-immutable-state-invariant'
 
 export default function configureStore(initialState) {
-  rootReducer,
-  initialState,
-  applyMiddleware(invariant);
+  return createStore(
+    rootReducer,
+    initialState,
+    applyMiddleware(invariant())
+  );
 }

@@ -10,7 +10,7 @@ body {
   font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
-.react-top-level {
+#root {
   padding: $space-stack-xl;
   .step-1 {
     .quote-input, .author-input {

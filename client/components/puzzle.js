@@ -1,4 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import {connect} from 'react-redux';
+
+import * as letterActions from '../actions/letterActions'
 import TextArea from './textArea';
 import Tile from './tile';
 import Word from './word';
@@ -9,7 +12,7 @@ function isLetter(char) {
 
 const Alphabet = "abcdefghijklmnopqrstuvwxyz";
 
-export default class Puzzle extends Component {
+class Puzzle extends Component {
   constructor(props) {
     super(props);
     this.handleQuoteChange = this.handleQuoteChange.bind(this);
@@ -339,3 +342,11 @@ export default class Puzzle extends Component {
   }
   Puzzle.propTypes = {
   };
+
+function mapStateToProps(state, ownProps) {
+  return {
+    letters: state.letters
+  };
+}
+
+export default connect(mapStateToProps)(Puzzle);
