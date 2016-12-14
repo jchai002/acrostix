@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import Letter from './letter';
+import LetterInput from './letterInput';
 
-export default class Word extends Component {
+class Word extends Component {
   constructor(props) {
     super(props);
     this.handleLetterChange = this.handleLetterChange.bind(this);
@@ -53,15 +53,12 @@ export default class Word extends Component {
     });
   }
 
-  componentDidMount() {
-    this.updateLetters();
-  }
-
   updateLetters() {
     const Word = this;
     var letters = Word.state.letters.split('').map(function(char,i){
       return(
-        <Letter
+        <LetterInput
+          wordId={Word.wordId}
           key={i}
           value={char}
           handleLetterChange={Word.handleLetterChange}
@@ -69,7 +66,8 @@ export default class Word extends Component {
           />
       );
     });
-    letters.push(<Letter key='last' value='' handleLetterChange={Word.handleLetterChange} handleKeyDown={Word.handleKeyDown}/>);
+    letters.push(<LetterInput
+      wordId={Word.wordId} key='last' value='' handleLetterChange={Word.handleLetterChange} handleKeyDown={Word.handleKeyDown}/>);
     this.setState({letterComponents:letters});
   }
 
@@ -77,10 +75,15 @@ export default class Word extends Component {
     return (
       <div className="word">
         <div className="label">{this.props.wordId}.</div>
-        {this.state.letterComponents}
+          <LetterInput
+            wordId={this.props.wordId}
+            value=''
+          />
       </div>
     );
   }
 }
 Word.propTypes = {
 };
+
+export default Word;

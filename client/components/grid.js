@@ -19,9 +19,9 @@ class Grid extends Component {
     var letters = this.props.letters;
     // fill up the blank spaces with black tiles
     while (letters.length%10 != 0) {
-      letters.push(
-        {char:'',letterNumber:'',wordId:null,used:false}
-      );
+      letters = [...letters,
+        Object.assign({}, {char:'',letterNumber:'',wordId:null,used:false})
+      ]
     }
     var grid = letters.map(function(obj,i){
       return (
