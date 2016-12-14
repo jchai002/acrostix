@@ -1,4 +1,4 @@
-import * as types from '../actions/acttionTypes.js'
+import * as types from '../actions/actionTypes.js'
 
 export default function letterReducer(state =[],action) {
   switch (action.type) {

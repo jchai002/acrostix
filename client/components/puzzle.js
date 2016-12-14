@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as letterActions from '../actions/letterActions'
 import TextArea from './textArea';
+import Grid from './grid';
 import Tile from './tile';
 import Word from './word';
 
@@ -21,7 +22,6 @@ class Puzzle extends Component {
     this.nextStep = this.nextStep.bind(this);
     this.assignView = this.assignView.bind(this);
     this.createQuoteLetterStorage = this.createQuoteLetterStorage.bind(this);
-    this.updateGrid = this.updateGrid.bind(this);
     this.createWordsTracker = this.createWordsTracker.bind(this);
     this.updateWordComponents = this.updateWordComponents.bind(this);
     this.handleWordChange = this.handleWordChange.bind(this);
@@ -172,9 +172,7 @@ class Puzzle extends Component {
         return (
           <div className="row step-2">
             <div className="col-xs-12 col-lg-8 step step-2">
-              <div className="grid">
-                {this.state.gridComponent}
-              </div>
+              <Grid />
             </div>
             <div className="col-xs-12 col-lg-4 step step-2">
               <h2>Letters Remaining</h2>
@@ -198,10 +196,6 @@ class Puzzle extends Component {
           </div>
         );
       }
-    }
-
-    componentDidUpdate() {
-      console.log(this.props)
     }
 
     handleWordChange(char,wordId,action,wordComponent) {
@@ -228,7 +222,6 @@ class Puzzle extends Component {
         if (matched.letter == char && !matched.wordId) {
           matched.wordId = wordId;
           this.updateWordComponents(char,matched.letterNumber,wordId);
-          this.updateGrid(this.state.quoteLetterStorage);
           break
         }
       }
@@ -240,7 +233,6 @@ class Puzzle extends Component {
         var matched = this.state.quoteLetterStorage[i];
         if (matched.letter == char && matched.wordId == wordId) {
           matched.wordId = null;
-          this.updateGrid(this.state.quoteLetterStorage);
           return
         }
       }
@@ -308,27 +300,9 @@ class Puzzle extends Component {
         }
       });
 
-      while (tempArray.length%10 != 0) {
-        tempArray.push({letter:' '});
-      }
       Puzzle.setState({quoteLetterStorage:tempArray},function(){
         this.createWordsTracker();
-        Puzzle.updateGrid(Puzzle.state.quoteLetterStorage);
       });
-    }
-
-    updateGrid(indexedLetters) {
-      grid = indexedLetters.map(function(obj,i){
-        return (
-          <Tile
-            key={i}
-            letter={obj.letter}
-            letterNumber={obj.letterNumber}
-            wordId={obj.wordId}
-            />
-        );
-      });
-      this.setState({gridComponent:grid});
     }
 
     outOfLetter(char) {

@@ -58,7 +58,6 @@ export default class Word extends Component {
   }
 
   updateLetters() {
-    console.log('new letter in word',this.props.wordId, 'it is', this.props.newChar);
     const Word = this;
     var letters = Word.state.letters.split('').map(function(char,i){
       return(

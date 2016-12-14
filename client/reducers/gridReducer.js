@@ -1,4 +1,4 @@
-import * as types from '../actions/acttionTypes.js';
+import * as types from '../actions/actionTypes.js';
 import initialState from './initialState';
 
 
