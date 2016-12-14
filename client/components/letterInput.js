@@ -16,7 +16,7 @@ class LetterInput extends Component {
     var value = e.target.value;
     console.log(this.props)
     this.setState({value});
-    this.props.actions.updateLetterWordId({char:value,letterNumber:null,wordId:this.props.wordId,used:false});
+    this.props.actions.updateLetterWordId({char:value,gridId:null,wordId:this.props.wordId,used:false});
   }
 
   render() {
@@ -30,7 +30,7 @@ class LetterInput extends Component {
           value={value}
           disabled={value}
           />
-        <small>{this.props.letterNumber}</small>
+        <small>{this.props.gridId}</small>
       </div>
     );
   }

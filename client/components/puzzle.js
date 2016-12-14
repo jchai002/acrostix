@@ -221,7 +221,7 @@ class Puzzle extends Component {
         var matched = this.state.quoteLetterStorage[i];
         if (matched.letter == char && !matched.wordId) {
           matched.wordId = wordId;
-          this.updateWordComponents(char,matched.letterNumber,wordId);
+          this.updateWordComponents(char,matched.gridId,wordId);
           break
         }
       }
@@ -257,11 +257,11 @@ class Puzzle extends Component {
       });
     }
 
-    updateWordComponents(letter,letterNumber,wordId) {
+    updateWordComponents(letter,gridId,wordId) {
       const Puzzle = this;
       var wordComponents = Object.keys(Puzzle.state.wordsTracker).map(function(id,i){
         if (wordId == id) {
-          var newChar = {letter:letter,letterNumber:letterNumber,wordId:wordId}
+          var newChar = {letter:letter,gridId:gridId,wordId:wordId}
         }
         return (
           <Word
@@ -286,15 +286,15 @@ class Puzzle extends Component {
         var letterInfo = {};
         if (isLetter(char)) {
           letterInfo.letter = char;
-          letterInfo.letterNumber = index;
-          Puzzle.props.actions.addLetter({char:char,letterNumber:index,wordId:null,used:false});
+          letterInfo.gridId = index;
+          Puzzle.props.actions.addLetter({char:char,gridId:index,wordId:null,used:false});
           letterInfo.wordId = null;
           index ++;
           tempArray.push(letterInfo);
         } else if (char===' ') {
-          Puzzle.props.actions.addLetter({char:char,letterNumber:index,wordId:null,used:false});
+          Puzzle.props.actions.addLetter({char:char,gridId:index,wordId:null,used:false});
           letterInfo.letter = char;
-          letterInfo.letterNumber = null;
+          letterInfo.gridId = null;
           letterInfo.wordId = null;
           tempArray.push(letterInfo);
         }

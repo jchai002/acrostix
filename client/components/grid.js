@@ -20,7 +20,7 @@ class Grid extends Component {
     // fill up the blank spaces with black tiles
     while (letters.length%10 != 0) {
       letters = [...letters,
-        Object.assign({}, {char:'',letterNumber:'',wordId:null,used:false})
+        Object.assign({}, {char:'',gridId:'',wordId:null,used:false})
       ]
     }
     var grid = letters.map(function(obj,i){
@@ -28,7 +28,7 @@ class Grid extends Component {
         <Tile
           key={i}
           char={obj.char}
-          letterNumber={obj.letterNumber}
+          gridId={obj.gridId}
           wordId={obj.wordId}
           />
       );
