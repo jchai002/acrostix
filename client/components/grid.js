@@ -37,7 +37,6 @@ class Grid extends Component {
   }
 
   render() {
-    console.log(this.props)
     var grid = this.updateGrid()
     return (
       <div className="grid">
