@@ -287,12 +287,12 @@ class Puzzle extends Component {
         if (isLetter(char)) {
           letterInfo.letter = char;
           letterInfo.gridId = index;
-          Puzzle.props.actions.addLetter({char:char,gridId:index,wordId:null});
+          Puzzle.props.actions.createLetter({char:char,gridId:index,wordId:null});
           letterInfo.wordId = null;
           index ++;
           tempArray.push(letterInfo);
         } else if (char===' ') {
-          Puzzle.props.actions.addLetter({char:char,gridId:index,wordId:null});
+          Puzzle.props.actions.createLetter({char:char,gridId:index,wordId:null});
           letterInfo.letter = char;
           letterInfo.gridId = null;
           letterInfo.wordId = null;

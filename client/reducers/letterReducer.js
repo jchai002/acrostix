@@ -3,7 +3,7 @@ import initialState from './initialState';
 
 export default function letterReducer(state = initialState.letters,action) {
   switch (action.type) {
-    case types.ADD_LETTER_SUCCESS:
+    case types.CREATE_LETTER_SUCCESS:
       return [...state,
         Object.assign({}, action.letter)
       ]
@@ -23,10 +23,6 @@ export default function letterReducer(state = initialState.letters,action) {
         }
       }
       return stateClone
-   case types.UPDATE_LETTER_WORDID_SUCCESS:
-     console.log(state)
-       // need to find the first letter in state that matches grid id of the payload and return new state
-      return state
     default:
       return state
   }
