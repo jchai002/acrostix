@@ -41,7 +41,6 @@ class Word extends Component {
         return letter
       }
     });
-
     // turn into strings to allow lodash comparason
     var currentLetterStrings = this.state.currentLetters.map((letter)=>{
       return JSON.stringify(letter)
@@ -54,14 +53,20 @@ class Word extends Component {
         return newLetter = letter;
       }
     })
-    // make a deep clone of current state
-    var currentLettersClone = [...this.state.currentLetters]
-    // replace laster char with new letter
-    currentLettersClone.splice(-1,1,newLetter)
-    // push another empty input
-    currentLettersClone.push({char:'',wordId:nextProps.wordId,gridId:''})
-    // update current letters
-    this.setState({currentLetters:currentLettersClone});
+    
+    // if there is new letter for this word
+    if (newLetter) {
+      // make a deep clone of current state
+      var currentLettersClone = [...this.state.currentLetters]
+      // replace laster char with new letter
+      currentLettersClone.splice(-1,1,newLetter)
+      // push another empty input
+      currentLettersClone.push({char:'',wordId:this.props.wordId,gridId:''})
+      // update current letters
+      this.setState({currentLetters:currentLettersClone});
+    } else {
+      return false
+    }
   }
 
   render() {
