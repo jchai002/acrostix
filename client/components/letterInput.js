@@ -14,9 +14,8 @@ class LetterInput extends Component {
 
   handleChange(e) {
     var value = e.target.value;
-    console.log(this.props)
+    this.props.actions.updateLetterWordId({char:value,gridId:null,wordId:this.props.wordId});
     this.setState({value});
-    this.props.actions.updateLetterWordId({char:value,gridId:null,wordId:this.props.wordId,used:false});
   }
 
   render() {
@@ -49,4 +48,5 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators(letterActions,dispatch)
   }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(LetterInput);

@@ -1,4 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as letterActions from '../actions/letterActions'
 import LetterInput from './letterInput';
 
 class Word extends Component {
@@ -10,8 +13,8 @@ class Word extends Component {
     this.handleLetterDelete = this.handleLetterDelete.bind(this);
     this.updateLetters = this.updateLetters.bind(this);
     this.state = {
-      letters:this.props.firstLetter.toUpperCase(),
-      letterComponents:null
+      letterComponents:<LetterInput
+        wordId={this.props.wordId} value='' />
     }
   }
 
@@ -25,13 +28,13 @@ class Word extends Component {
   }
 
   handleLetterInput(char) {
-    var letters;
-    const Word = this;
-    const newLetterState = Word.state.letters + char;
-    Word.setState({letters:newLetterState},function(){
-      Word.props.handleWordChange(char,Word.props.wordId,'input');
-      this.updateLetters();
-    });
+    // var letters;
+    // const Word = this;
+    // const newLetterState = Word.state.letters + char;
+    // Word.setState({letters:newLetterState},function(){
+    //   Word.props.handleWordChange(char,Word.props.wordId,'input');
+    //   this.updateLetters();
+    // });
   }
 
   handleKeyDown(e) {
@@ -68,22 +71,55 @@ class Word extends Component {
     });
     letters.push(<LetterInput
       wordId={Word.wordId} key='last' value='' handleLetterChange={Word.handleLetterChange} handleKeyDown={Word.handleKeyDown}/>);
-    this.setState({letterComponents:letters});
-  }
+      this.setState({letterComponents:letters});
+    }
 
-  render() {
-    return (
-      <div className="word">
-        <div className="label">{this.props.wordId}.</div>
+    componentWillReceiveProps(nextProps) {
+      var wordLetters = nextProps.letters.filter((letter)=>{
+        if (letter.wordId === nextProps.wordId) {
+          return letter
+        }
+      });
+      console.log(nextProps)
+      var letterComponents = wordLetters.map((letter)=>{
+        return (
           <LetterInput
-            wordId={this.props.wordId}
-            value=''
-          />
-      </div>
-    );
-  }
-}
-Word.propTypes = {
-};
+            key={letter.gridId}
+            wordId={letter.wordId}
+            gridId={letter.gridId}
+            value={letter.char}
+            />
+        );
+      });
+      console.log(letterComponents)
 
-export default Word;
+      letterComponents.push(<LetterInput
+        wordId={this.props.wordId} key='last' value='' />);
+      this.setState({letterComponents});
+    }
+
+    render() {
+      return (
+        <div className="word">
+          <div className="label">{this.props.wordId}.</div>
+          {this.state.letterComponents}
+        </div>
+      );
+    }
+  }
+  Word.propTypes = {
+  };
+
+  function mapStateToProps(state, ownProps) {
+    return {
+      letters: state.letters
+    };
+  }
+
+  function mapDispatchToProps(dispatch) {
+    return {
+      actions: bindActionCreators(letterActions,dispatch)
+    }
+  }
+
+  export default connect(mapStateToProps, mapDispatchToProps)(Word);

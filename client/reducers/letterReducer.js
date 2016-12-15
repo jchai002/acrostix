@@ -8,13 +8,22 @@ export default function letterReducer(state = initialState.letters,action) {
         Object.assign({}, action.letter)
       ]
     case types.UPDATE_LETTER_WORDID_SUCCESS:
-      console.log('update letter word id')
-        // need to find the first letter in state that matches word id of the payload and return new state
-        // iterate through current state, use JSON.stringify to find the first letter object that matches the char
-        // replace the value of WordID in that letter
-        // make copy of state with the letter updated
-        // return updated state
-       return state
+      // need to find the first letter in state that matches word id of the payload and return new state
+      // iterate through current state, use JSON.stringify to find the first letter object that matches the char
+      // replace the value of WordID in that letter
+      // make copy of state with the letter updated
+      // return updated state
+      var stateClone = JSON.parse(JSON.stringify(state))
+      for (var i in stateClone) {
+        let letter = stateClone[i];
+        if (!letter.wordId && letter.char===action.letter.char) {
+          letter.wordId = action.letter.wordId
+          stateClone[i] = letter;
+          break
+        }
+      }
+      console.log(stateClone)
+      return stateClone
    case types.UPDATE_LETTER_WORDID_SUCCESS:
      console.log(state)
        // need to find the first letter in state that matches grid id of the payload and return new state

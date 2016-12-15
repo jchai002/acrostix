@@ -11,16 +11,12 @@ class Grid extends Component {
     this.updateGrid = this.updateGrid.bind(this)
   }
 
-  componentDidUpdate() {
-    console.log(this.props)
-  }
-
   updateGrid() {
     var letters = this.props.letters;
     // fill up the blank spaces with black tiles
     while (letters.length%10 != 0) {
       letters = [...letters,
-        Object.assign({}, {char:'',gridId:'',wordId:null,used:false})
+        Object.assign({}, {char:'',gridId:'',wordId:null})
       ]
     }
     var grid = letters.map(function(obj,i){
