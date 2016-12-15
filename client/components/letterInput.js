@@ -17,12 +17,15 @@ class LetterInput extends Component {
     this.props.actions.updateLetterWordId({char:value,gridId:null,wordId:this.props.wordId});
     this.setState({value});
   }
-
+  componentDidMount() {
+    this._input.focus();
+  }
   render() {
     const value = this.state.value;
     return (
       <div className="letter">
         <input
+          ref={(c) => this._input = c}
           onChange={this.handleChange}
           maxLength='1'
           value={value}
