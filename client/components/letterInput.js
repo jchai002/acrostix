@@ -21,10 +21,9 @@ class LetterInput extends Component {
   render() {
     const value = this.state.value;
     return (
-      <div>
+      <div className="letter">
         <input
           onChange={this.handleChange}
-          className="letter"
           maxLength='1'
           value={value}
           disabled={value}

@@ -12,7 +12,7 @@ body {
 
 #root {
   padding: $space-stack-xl;
-  .step-1 {
+
     .quote-input, .author-input {
       @extend .form-control;
       resize: none;
@@ -29,73 +29,81 @@ body {
         list-style: none;
       }
     }
+
+  .grid {
+    display: flex;
+    flex-flow: row wrap;
+    width: 502px;
+    margin: auto;
+    border-top: 2px solid $black;
+    border-right: 2px solid $black;
+    .tile {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: $space-xs;
+      border: 2px solid $black;
+      border-top: none;
+      border-right: none;
+      .letter-number {
+        position: absolute;
+        left: 2px;
+        top: 0;
+        font-size: 12px;
+      }
+      .word-id {
+        position: absolute;
+        right: 2px;
+        top: 0;
+        font-size: 12px;
+      }
+    }
   }
 
-  .step-2 {
-    .grid {
+  .trackers {
+    @extend .card;
+    width: 100%;
+    margin: $space-stack-md;
+    display: flex;
+    flex-flow: row wrap;
+    padding: $space-md;
+    .tracker {
       display: flex;
-      flex-flow: row wrap;
-      width: 502px;
-      margin: auto;
-      border-top: 2px solid $black;
-      border-right: 2px solid $black;
-      .tile {
-        width: 50px;
-        height: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      align-items: center;
+      width: 20%;
+      height: 40px;
+      span {
+        margin: $space-inset-xs;
+      }
+      .vowels {
+        color: $blue;
+      }
+    }
+  }
+
+  .words {
+    .word {
+      max-width: 100%;
+      flex-wrap: wrap;
+      display: flex;
+      align-items: flex-end;
+      font-size: 18px;
+      line-height: 18px;
+      padding: $space-stack-md;
+      .letter {
         position: relative;
-        padding: $space-xs;
-        border: 2px solid $black;
-        border-top: none;
-        border-right: none;
-        .letter-number {
-          position: absolute;
-          left: 2px;
-          top: 0;
+        small {
           font-size: 12px;
-        }
-        .word-id {
           position: absolute;
-          right: 2px;
-          top: 0;
-          font-size: 12px;
+          bottom: -2em;
+          width: 100%;
+          left: 0;
+          text-align: center;
         }
-      }
-    }
-
-    .trackers {
-      @extend .card;
-      width: 100%;
-      margin: $space-stack-md;
-      display: flex;
-      flex-flow: row wrap;
-      padding: $space-md;
-      .tracker {
-        display: flex;
-        align-items: center;
-        width: 20%;
-        height: 40px;
-        span {
-          margin: $space-inset-xs;
-        }
-        .vowels {
-          color: $blue;
-        }
-      }
-    }
-
-    .words {
-      .word {
-        max-width: 100%;
-        flex-wrap: wrap;
-        display: flex;
-        align-items: flex-end;
-        font-size: 18px;
-        line-height: 18px;
-        padding: $space-stack-sm;
-        input.letter {
+        input {
           width: 20px;
           text-align: center;
           margin: $space-inset-xs;
@@ -106,6 +114,7 @@ body {
           text-shadow: none;
           outline: none;
           &:focus {
+            background-color: rgba($gray,0.3);
             border-bottom: 2px solid $gray;
             color : transparent;
             text-shadow : 0 0 0 $text-base;
@@ -115,12 +124,13 @@ body {
             }
           }
         }
-        .first-letter {
-          text-transform: capitalize;
-        }
-        .label {
-          margin-right: $space-xs;
-        }
+
+      }
+      .first-letter {
+        text-transform: capitalize;
+      }
+      .label {
+        margin-right: $space-xs;
       }
     }
   }
