@@ -1,14 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as letterActions from '../actions/letterActions'
+import * as wordActions from '../actions/wordActions'
 import Tile from './tile';
+import _ from 'lodash';
 
 
 class Grid extends Component {
   constructor(props) {
-    super(props)
-    this.updateGrid = this.updateGrid.bind(this)
+    super(props);
+    this.updateGrid = this.updateGrid.bind(this);
   }
 
   updateGrid() {
@@ -30,6 +31,32 @@ class Grid extends Component {
       );
     });
     return grid
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // turn into strings to allow lodash comparason
+    var currentLetterStrings = this.props.letters.map((letter)=>{
+      return JSON.stringify(letter)
+    })
+    // get new letter entered
+    var modifiedLetter;
+    nextProps.letters.forEach((letter)=>{
+      if (!_.includes(currentLetterStrings,JSON.stringify(letter))) {
+        return modifiedLetter = letter;
+      }
+    })
+
+    if (modifiedLetter.wordId) {
+      this.props.actions.addLetterToWord({char:modifiedLetter.char,wordId:modifiedLetter.wordId,gridId:modifiedLetter.gridId})
+    } else {
+      var wordId;
+      this.props.letters.forEach((letter)=>{
+        if (letter.gridId === modifiedLetter.gridId) {
+          wordId = letter.wordId
+        }
+      })
+      this.props.actions.removeLetterFromWord({char:modifiedLetter.char,wordId:wordId,gridId:modifiedLetter.gridId})
+    }
   }
 
   render() {
@@ -54,7 +81,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(letterActions,dispatch)
+    actions: bindActionCreators(wordActions,dispatch)
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Grid);

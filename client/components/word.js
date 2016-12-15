@@ -11,49 +11,36 @@ class Word extends Component {
     this.state = {
       currentLetters:[{char:'',wordId:this.props.wordId,gridId:''}]
     }
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
-  // handleKeyDown(e) {
-  //   if (e.keyCode === 8 || e.keyCode === 46) {
-  //     this.handleLetterDelete();
-  //   }
-  // }
-  //
-  // handleLetterDelete() {
-  //   if (this.state.letters.length === 1) {
-  //     return
-  //   }
-  //   const Word = this;
-  //   const deletedChar = Word.state.letters.split('').pop();
-  //   const newLetterState = Word.state.letters.slice(0, -1);
-  //   Word.setState({letters:newLetterState},function(){
-  //     Word.props.handleWordChange(deletedChar,Word.props.wordId,'delete');
-  //     Word.updateLetters();
-  //   });
-  // }
-
-
+  handleKeyDown(e) {
+    if (e.keyCode === 8 || e.keyCode === 46) {
+      let wordLength = this.state.currentLetters.length;
+      let gridId = this.state.currentLetters[wordLength-2].gridId;
+      this.props.actions.restoreLetter({gridId:gridId,wordId:this.props.wordId});
+    }
+  }
 
   componentWillReceiveProps(nextProps) {
-    // find all the letters that belong to word
-    var newLetters = nextProps.letters.filter((letter)=>{
+    // find all the letters that belong to word in store
+    var storeLetters = nextProps.letters.filter((letter)=>{
       if (letter.wordId === nextProps.wordId) {
         return letter
       }
     });
+
     // turn into strings to allow lodash comparason
     var currentLetterStrings = this.state.currentLetters.map((letter)=>{
       return JSON.stringify(letter)
     })
-
     // get new letter entered
     var newLetter;
-    newLetters.forEach((letter)=>{
+    storeLetters.forEach((letter)=>{
       if (!_.includes(currentLetterStrings,JSON.stringify(letter))) {
         return newLetter = letter;
       }
     })
-    
     // if there is new letter for this word
     if (newLetter) {
       // make a deep clone of current state
@@ -65,11 +52,11 @@ class Word extends Component {
       // update current letters
       this.setState({currentLetters:currentLettersClone});
     } else {
-      return false
+      // this is for all words that didn't get input or letter put back event
     }
   }
-
   render() {
+    const Word = this;
     var letterComponents = this.state.currentLetters.map((letter,i)=>{
       return (
         <LetterInput
@@ -77,6 +64,7 @@ class Word extends Component {
           wordId={letter.wordId}
           gridId={letter.gridId}
           value={letter.char}
+          handleKeyDown={Word.handleKeyDown}
           />
       );
     });

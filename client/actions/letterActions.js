@@ -13,16 +13,26 @@ export function createLetterSuccess(letter) {
   return {type: types.CREATE_LETTER_SUCCESS, letter}
 }
 
-export function updateLetter(letter) {
+export function useLetter(letter) {
   return function(dispatch) {
-    dispatch(updateLetterSuccess(letter));
+    dispatch(useLetterSuccess(letter));
   }
 }
 
-export function updateLetterSuccess(letter) {
-  return {type: types.UPDATE_LETTER_SUCCESS, letter}
+export function useLetterSuccess(letter) {
+  return {type: types.USE_LETTER_SUCCESS, letter}
 }
 
-export function updateLetterFail(letter) {
-  return {type: types.UPDATE_LETTER_FAIL, letter}
+export function useLetterFail(letter) {
+  return {type: types.USE_LETTER_FAIL, letter}
+}
+
+export function restoreLetter(letter) {
+  return function(dispatch) {
+    dispatch(restoreLetterSuccess(letter));
+  }
+}
+
+export function restoreLetterSuccess(letter) {
+  return {type: types.RESTORE_LETTER_SUCCESS, letter}
 }

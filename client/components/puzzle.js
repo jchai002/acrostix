@@ -267,12 +267,7 @@ class Puzzle extends Component {
           <Word
             key={id}
             wordId={id}
-            firstLetter = {Puzzle.state.wordsTracker[wordId][0]}
-            outOfLetter = {Puzzle.outOfLetter}
-            letterCounters = {Puzzle.state.quoteLetterCounter}
-            newChar = {newChar}
-            handleWordChange={Puzzle.handleWordChange}
-            />
+          />
         );
       });
       this.setState({wordComponents:wordComponents});
