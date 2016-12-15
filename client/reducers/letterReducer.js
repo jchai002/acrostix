@@ -22,7 +22,6 @@ export default function letterReducer(state = initialState.letters,action) {
           break
         }
       }
-      console.log(stateClone)
       return stateClone
    case types.UPDATE_LETTER_WORDID_SUCCESS:
      console.log(state)

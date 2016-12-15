@@ -3,123 +3,100 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as letterActions from '../actions/letterActions'
 import LetterInput from './letterInput';
+import _ from 'lodash';
 
 class Word extends Component {
   constructor(props) {
     super(props);
-    this.handleLetterChange = this.handleLetterChange.bind(this);
-    this.handleLetterInput = this.handleLetterInput.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.handleLetterDelete = this.handleLetterDelete.bind(this);
-    this.updateLetters = this.updateLetters.bind(this);
     this.state = {
-      letterComponents:<LetterInput
-        wordId={this.props.wordId} value='' />
+      currentLetters:[{char:'',wordId:this.props.wordId,gridId:''}]
     }
   }
 
-  handleLetterChange(e) {
-    var char = e.target.value;
-    if (char && this.props.letterCounters[char] > 0) {
-      this.handleLetterInput(char);
-    } else {
-      this.props.outOfLetter(char);
-    }
-  }
+  // handleKeyDown(e) {
+  //   if (e.keyCode === 8 || e.keyCode === 46) {
+  //     this.handleLetterDelete();
+  //   }
+  // }
+  //
+  // handleLetterDelete() {
+  //   if (this.state.letters.length === 1) {
+  //     return
+  //   }
+  //   const Word = this;
+  //   const deletedChar = Word.state.letters.split('').pop();
+  //   const newLetterState = Word.state.letters.slice(0, -1);
+  //   Word.setState({letters:newLetterState},function(){
+  //     Word.props.handleWordChange(deletedChar,Word.props.wordId,'delete');
+  //     Word.updateLetters();
+  //   });
+  // }
 
-  handleLetterInput(char) {
-    // var letters;
-    // const Word = this;
-    // const newLetterState = Word.state.letters + char;
-    // Word.setState({letters:newLetterState},function(){
-    //   Word.props.handleWordChange(char,Word.props.wordId,'input');
-    //   this.updateLetters();
-    // });
-  }
 
-  handleKeyDown(e) {
-    if (e.keyCode === 8 || e.keyCode === 46) {
-      this.handleLetterDelete();
-    }
-  }
 
-  handleLetterDelete() {
-    if (this.state.letters.length === 1) {
-      return
-    }
-    const Word = this;
-    const deletedChar = Word.state.letters.split('').pop();
-    const newLetterState = Word.state.letters.slice(0, -1);
-    Word.setState({letters:newLetterState},function(){
-      Word.props.handleWordChange(deletedChar,Word.props.wordId,'delete');
-      Word.updateLetters();
+  componentWillReceiveProps(nextProps) {
+    // find all the letters that belong to word
+    var newLetters = nextProps.letters.filter((letter)=>{
+      if (letter.wordId === nextProps.wordId) {
+        return letter
+      }
     });
+
+    // turn into strings to allow lodash comparason
+    var currentLetterStrings = this.state.currentLetters.map((letter)=>{
+      return JSON.stringify(letter)
+    })
+
+    // get new letter entered
+    var newLetter;
+    newLetters.forEach((letter)=>{
+      if (!_.includes(currentLetterStrings,JSON.stringify(letter))) {
+        return newLetter = letter;
+      }
+    })
+    // make a deep clone of current state
+    var currentLettersClone = [...this.state.currentLetters]
+    // replace laster char with new letter
+    currentLettersClone.splice(-1,1,newLetter)
+    // push another empty input
+    currentLettersClone.push({char:'',wordId:nextProps.wordId,gridId:''})
+    // update current letters
+    this.setState({currentLetters:currentLettersClone});
   }
 
-  updateLetters() {
-    const Word = this;
-    var letters = Word.state.letters.split('').map(function(char,i){
-      return(
+  render() {
+    var letterComponents = this.state.currentLetters.map((letter,i)=>{
+      return (
         <LetterInput
-          wordId={Word.wordId}
           key={i}
-          value={char}
-          handleLetterChange={Word.handleLetterChange}
-          handleKeyDown={Word.handleKeyDown}
+          wordId={letter.wordId}
+          gridId={letter.gridId}
+          value={letter.char}
           />
       );
     });
-    letters.push(<LetterInput
-      wordId={Word.wordId} key='last' value='' handleLetterChange={Word.handleLetterChange} handleKeyDown={Word.handleKeyDown}/>);
-      this.setState({letterComponents:letters});
-    }
 
-    componentWillReceiveProps(nextProps) {
-      var wordLetters = nextProps.letters.filter((letter)=>{
-        if (letter.wordId === nextProps.wordId) {
-          return letter
-        }
-      });
-      console.log(nextProps)
-      var letterComponents = wordLetters.map((letter)=>{
-        return (
-          <LetterInput
-            key={letter.gridId}
-            wordId={letter.wordId}
-            gridId={letter.gridId}
-            value={letter.char}
-            />
-        );
-      });
-      console.log(letterComponents)
-
-      letterComponents.push(<LetterInput
-        wordId={this.props.wordId} key='last' value='' />);
-      this.setState({letterComponents});
-    }
-
-    render() {
-      return (
-        <div className="word">
-          <div className="label">{this.props.wordId}.</div>
-          {this.state.letterComponents}
-        </div>
-      );
-    }
+    return (
+      <div className="word">
+        <div className="label">{this.props.wordId}.</div>
+        {letterComponents}
+      </div>
+    );
   }
-  Word.propTypes = {
+}
+Word.propTypes = {
+};
+
+function mapStateToProps(state, ownProps) {
+  return {
+    letters: state.letters
   };
+}
 
-  function mapStateToProps(state, ownProps) {
-    return {
-      letters: state.letters
-    };
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(letterActions,dispatch)
   }
+}
 
-  function mapDispatchToProps(dispatch) {
-    return {
-      actions: bindActionCreators(letterActions,dispatch)
-    }
-  }
-
-  export default connect(mapStateToProps, mapDispatchToProps)(Word);
+export default connect(mapStateToProps, mapDispatchToProps)(Word);
