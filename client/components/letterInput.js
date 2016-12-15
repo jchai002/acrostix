@@ -38,6 +38,11 @@ class LetterInput extends Component {
   componentDidMount() {
     this._input.focus();
   }
+
+  componentWillUpdate(nextProps,nextState) {
+    console.log(this.state,nextState)
+  }
+
   render() {
     const value = this.state.value;
     return (

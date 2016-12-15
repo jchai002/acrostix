@@ -12,6 +12,7 @@ function isLetter(char) {
 }
 
 const Alphabet = "abcdefghijklmnopqrstuvwxyz";
+const AlphabetUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 class Puzzle extends Component {
   constructor(props) {
