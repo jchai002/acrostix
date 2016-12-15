@@ -7,7 +7,7 @@ export default function letterReducer(state = initialState.letters,action) {
       return [...state,
         Object.assign({}, action.letter)
       ]
-    case types.UPDATE_LETTER_WORDID_SUCCESS:
+    case types.UPDATE_LETTER_SUCCESS:
       // need to find the first letter in state that matches word id of the payload and return new state
       // iterate through current state, use JSON.stringify to find the first letter object that matches the char
       // replace the value of WordID in that letter

@@ -13,22 +13,16 @@ export function createLetterSuccess(letter) {
   return {type: types.CREATE_LETTER_SUCCESS, letter}
 }
 
-export function updateLetterWordId(letter) {
+export function updateLetter(letter) {
   return function(dispatch) {
-    dispatch(updateLetterWordIdSuccess(letter));
+    dispatch(updateLetterSuccess(letter));
   }
 }
 
-export function updateLetterWordIdSuccess(letter) {
-  return {type: types.UPDATE_LETTER_WORDID_SUCCESS, letter}
+export function updateLetterSuccess(letter) {
+  return {type: types.UPDATE_LETTER_SUCCESS, letter}
 }
 
-export function updateLetterGridId(letter) {
-  return function(dispatch) {
-    dispatch(updateLetterGridIdSuccess(letter));
-  }
-}
-
-export function updateLetterGridIdSuccess(letter) {
-  return {type: types.UPDATE_LETTER_GRIDID_SUCCESS, letter}
+export function updateLetterFail(letter) {
+  return {type: types.UPDATE_LETTER_FAIL, letter}
 }
