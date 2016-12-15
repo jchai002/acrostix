@@ -6,9 +6,6 @@ import * as letterActions from '../actions/letterActions'
 class LetterInput extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value:this.props.value
-    }
     this.handleChange = this.handleChange.bind(this);
     this.letterIsAvailable = this.letterIsAvailable.bind(this);
   }
@@ -27,7 +24,6 @@ class LetterInput extends Component {
     var value = e.target.value;
     if (this.letterIsAvailable(value)){
       this.props.actions.useLetter({char:value,gridId:null,wordId:this.props.wordId});
-      this.setState({value});
     } else {
       // if there are no more letters left for this input, don't update and dispatch fail event
       this.props.actions.useLetterFail();
@@ -39,12 +35,13 @@ class LetterInput extends Component {
     this._input.focus();
   }
 
-  componentWillUpdate(nextProps,nextState) {
-    console.log(this.state,nextState)
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   // this._input.focus();
+  //   console.log(this.props)
+  // }
 
   render() {
-    const value = this.state.value;
+    const value = this.props.value;
     return (
       <div className="letter">
         <input

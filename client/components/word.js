@@ -8,7 +8,7 @@ import _ from 'lodash';
 class Word extends Component {
   constructor(props) {
     super(props);
-    this.state = {currentLetters:[{char:undefined,wordId:this.props.wordId,gridId:undefined}]}
+    this.state = {currentLetters:[{char:'',wordId:this.props.wordId,gridId:''}]}
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
@@ -29,7 +29,7 @@ class Word extends Component {
       var currentLetters = nextProps.words[wordId].map((letter)=>{
         return letter
       });
-      currentLetters.push({char:undefined,wordId:this.props.wordId,gridId:undefined});
+      currentLetters.push({char:'',wordId:this.props.wordId,gridId:''});
       this.setState({currentLetters});
     }
   }
