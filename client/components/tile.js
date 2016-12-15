@@ -1,31 +1,23 @@
-import React, { Component, PropTypes } from 'react';
-
-// should be stateless Component
-export default class Tile extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
+import React from 'react';
+const Tile = ({wordId,gridId,char}) => {
     var letterClass, tileClass;
-    if (this.props.wordId) {
+    if (wordId) {
       letterClass = 'letter red';
     } else {
       letterClass = 'letter';
     }
-    if (this.props.gridId) {
+    if (gridId) {
       tileClass = 'tile';
     } else {
       tileClass = 'tile white bg-black';
     }
     return (
       <div className={tileClass}>
-        <div className="word-id">{this.props.wordId}</div>
-        <div className="letter-number">{this.props.gridId}</div>
-        <div className={letterClass}>{this.props.char}</div>
+        <div className="word-id">{wordId}</div>
+        <div className="letter-number">{gridId}</div>
+        <div className={letterClass}>{char}</div>
       </div>
     );
-  }
 }
-Tile.propTypes = {
-};
+
+export default Tile
