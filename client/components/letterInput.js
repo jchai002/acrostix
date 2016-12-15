@@ -31,14 +31,18 @@ class LetterInput extends Component {
     }
   }
 
+  // set which input is auto-focused on
   componentDidMount() {
-    this._input.focus();
+    if (this.props.shouldFocus) {
+      this._input.focus();
+    }
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   // this._input.focus();
-  //   console.log(this.props)
-  // }
+  componentDidUpdate() {
+    if (this.props.shouldFocus) {
+      this._input.focus();
+    }
+  }
 
   render() {
     const value = this.props.value;

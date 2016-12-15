@@ -8,7 +8,10 @@ import _ from 'lodash';
 class Word extends Component {
   constructor(props) {
     super(props);
-    this.state = {currentLetters:[{char:'',wordId:this.props.wordId,gridId:''}]}
+    this.state = {
+      currentLetters:[{char:'',wordId:this.props.wordId,gridId:''}],
+      lastWordUpdated:false
+    }
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
@@ -25,12 +28,14 @@ class Word extends Component {
     var wordId = this.props.wordId;
     var currentWord = this.props.words[wordId];
     var newWord = nextProps.words[wordId];
-    if (this.props.words[wordId].length != nextProps.words[wordId]) {
-      var currentLetters = nextProps.words[wordId].map((letter)=>{
+    if (currentWord.length != newWord.length) {
+      var currentLetters = newWord.map((letter)=>{
         return letter
       });
       currentLetters.push({char:'',wordId:this.props.wordId,gridId:''});
-      this.setState({currentLetters});
+      this.setState({currentLetters:currentLetters,lastWordUpdated:true});
+    } else {
+      this.setState({lastWordUpdated:false})
     }
   }
 
@@ -40,6 +45,7 @@ class Word extends Component {
       return (
         <LetterInput
           key={i}
+          shouldFocus={Word.state.lastWordUpdated}
           wordId={letter.wordId}
           gridId={letter.gridId}
           value={letter.char}
