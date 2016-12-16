@@ -8,8 +8,16 @@ import _ from 'lodash';
 class Word extends Component {
   constructor(props) {
     super(props);
+    var wordId = this.props.wordId;
+    var initialLetters;
+    if (this.props.words[wordId]) {
+      initialLetters = [...this.props.words[wordId],
+        Object.assign({}, {char:'',wordId:wordId,gridId:''})];
+    } else {
+      initialLetters = [{char:'',wordId:wordId,gridId:''}];
+    }
     this.state = {
-      currentLetters:[{char:'',wordId:this.props.wordId,gridId:''}],
+      currentLetters:initialLetters,
       lastWordUpdated:false
     }
     this.handleKeyDown = this.handleKeyDown.bind(this);

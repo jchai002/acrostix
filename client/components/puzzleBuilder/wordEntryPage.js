@@ -2,8 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
 import Grid from '../grid'
 import Word from '../word'
-
-const Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+import Alphabet from "../../constants/alphabet";
 
 class WordEntryPage extends Component {
   constructor(props) {

@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as letterActions from '../../actions/letterActions';
 import * as wordActions from '../../actions/wordActions';
+import Alphabet from "../../constants/alphabet";
 
 import TextArea from '../textArea'
 
@@ -55,7 +56,12 @@ class QuoteEntryPage extends Component {
   }
 
   goToNextStep() {
-    var Page = this;
+    const Page = this;
+    // add future logic to opt out of author name match constraints here
+    var authorNameLetters = Page.state.authorName.split('');
+    var numberOfWords = authorNameLetters.length
+    Page.props.wordActions.createWords(numberOfWords);
+
     var counter = 1;
     Page.state.quote.split('').forEach(function(char){
       var char = char.toLowerCase();
@@ -67,11 +73,11 @@ class QuoteEntryPage extends Component {
       }
     });
 
-    // add future logic to opt out of author name match constraints here
-    var numberOfWords = this.state.authorName.length
-    Page.props.wordActions.createWords(numberOfWords);
+    for (var i = 0;i < numberOfWords; i++) {
+      Page.props.letterActions.useLetter({char:authorNameLetters[i],gridId:'',wordId:Alphabet[i]});
+    }
 
-    this.props.handleStepChange('next');
+    Page.props.handleStepChange('next');
   }
 
   render() {

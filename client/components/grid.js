@@ -33,6 +33,14 @@ class Grid extends Component {
     return grid
   }
 
+  componentWillMount() {
+    this.props.letters.forEach((letter) => {
+      if (letter.wordId) {
+        this.props.actions.addLetterToWord(letter);
+      }
+    })
+  }
+
   componentWillReceiveProps(nextProps) {
     // turn into strings to allow lodash comparason
     var currentLetterStrings = this.props.letters.map((letter)=>{
@@ -44,10 +52,10 @@ class Grid extends Component {
       if (!_.includes(currentLetterStrings,JSON.stringify(letter))) {
         return modifiedLetter = letter;
       }
-    })
+    });
 
     if (modifiedLetter.wordId) {
-      this.props.actions.addLetterToWord({char:modifiedLetter.char,wordId:modifiedLetter.wordId,gridId:modifiedLetter.gridId})
+      this.props.actions.addLetterToWord(modifiedLetter)
     } else {
       var wordId;
       this.props.letters.forEach((letter)=>{

@@ -1,6 +1,6 @@
 import * as types from '../actions/actionTypes.js'
 import initialState from './initialState';
-const Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+import Alphabet from "../constants/alphabet";
 
 export default function wordReducer(state = initialState.words,action) {
   switch (action.type) {
