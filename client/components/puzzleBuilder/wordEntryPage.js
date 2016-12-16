@@ -13,7 +13,14 @@ class WordEntryPage extends Component {
 
   render() {
     var dictionary = {};
-    this.props.letters.forEach((letter)=>{
+    var lettersRemaining = [];
+    for (var key in this.props.letters) {
+      var letter = this.props.letters[key];
+      if (!letter.wordId) {
+        lettersRemaining.push(letter);
+      }
+    }
+    lettersRemaining.forEach((letter)=>{
       var char = letter.char.toUpperCase();
       if (dictionary[char]) {
         dictionary[char] ++
@@ -46,36 +53,36 @@ class WordEntryPage extends Component {
           <Word
             key={id}
             wordId={id}
-          />
+            />
         );
       })
-    return (
-      <div className="row">
-        <div className="col-xs-12 col-lg-7">
-          <Grid />
-        </div>
-        <div className="col-xs-12 col-lg-5">
-          <h2>Letters Remaining</h2>
+      return (
+        <div className="row">
+          <div className="col-xs-12 col-lg-6">
+            <Grid />
+          </div>
+          <div className="col-xs-12 col-lg-6">
+            <h2>Letters Remaining</h2>
             <div className="trackers">
               {letterCounters}
             </div>
             <div className="words">
               {wordComponents}
             </div>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
-}
 
-WordEntryPage.propTypes = {
-};
-
-function mapStateToProps(state, ownProps) {
-  return {
-    letters: state.letters,
-    words: state.words
+  WordEntryPage.propTypes = {
   };
-}
 
-export default connect(mapStateToProps)(WordEntryPage);
+  function mapStateToProps(state, ownProps) {
+    return {
+      letters: state.letters,
+      words: state.words
+    };
+  }
+
+  export default connect(mapStateToProps)(WordEntryPage);
