@@ -7,7 +7,7 @@ import ClueEntryPage from './clueEntryPage';
 class PuzzleBuilder extends Component {
   constructor(props) {
     super(props);
-    state = {
+    this.state = {
       currentStep:1
     }
   }
