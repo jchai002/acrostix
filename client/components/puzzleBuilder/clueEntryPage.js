@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import NavBar from '../navBar';
 
 class ClueEntryPage extends Component {
   constructor(props) {
@@ -6,10 +7,14 @@ class ClueEntryPage extends Component {
   }
 
   render() {
+    var pageComplete = false;
     return (
-      <div className="row">
-        <div className="col-xs-12">
-          <h2>Enter Clues For Each Word</h2>
+      <div className="container">
+        <NavBar pageComplete={pageComplete} goToNextStep={this.props.goToNextStep} />
+        <div className="row">
+          <div className="col-xs-12">
+            <h2>Enter Clues For Each Word</h2>
+          </div>
         </div>
       </div>
     );

@@ -2,18 +2,31 @@ import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
 import Grid from '../grid'
 import Word from '../word'
+import NavBar from '../navBar';
 import Alphabet from "../../constants/alphabet";
 
 class WordEntryPage extends Component {
   constructor(props) {
     super(props);
+    this.displayLetterCounter = this.displayLetterCounter.bind(this);
+    this.getRemainingLetters = this.getRemainingLetters.bind(this);
+    this.goToNextStep = this.goToNextStep.bind(this);
   }
 
-
-
-  render() {
-    var dictionary = {};
+  getRemainingLetters() {
     var lettersRemaining = [];
+    for (var key in this.props.letters) {
+      var letter = this.props.letters[key];
+      if (!letter.wordId) {
+        lettersRemaining.push(letter);
+      }
+    }
+    return lettersRemaining
+  }
+
+  displayLetterCounter() {
+    var dictionary = {};
+    var lettersRemaining = this.getRemainingLetters()
     for (var key in this.props.letters) {
       var letter = this.props.letters[key];
       if (!letter.wordId) {
@@ -44,6 +57,17 @@ class WordEntryPage extends Component {
         )
       });
 
+      return letterCounters
+    }
+
+    goToNextStep() {
+      // save clues here
+      this.props.goToNextStep()
+    }
+
+
+    render() {
+      var letterCounters = this.displayLetterCounter();
       var wordIds = [];
       for (var wordId in this.props.words) {
         wordIds.push(wordId)
@@ -55,19 +79,23 @@ class WordEntryPage extends Component {
             wordId={id}
             />
         );
-      })
+      });
+      var pageComplete = !this.getRemainingLetters().length;
       return (
-        <div className="row">
-          <div className="col-xs-12 col-lg-6">
-            <Grid />
-          </div>
-          <div className="col-xs-12 col-lg-6">
-            <h2>Letters Remaining</h2>
-            <div className="trackers">
-              {letterCounters}
+        <div className="container">
+          <NavBar pageComplete={pageComplete} goToNextStep={this.goToNextStep} />
+          <div className="row">
+            <div className="col-xs-12 col-lg-6">
+              <Grid />
             </div>
-            <div className="words">
-              {wordComponents}
+            <div className="col-xs-12 col-lg-6">
+              <h2>Letters Remaining</h2>
+              <div className="trackers">
+                {letterCounters}
+              </div>
+              <div className="words">
+                {wordComponents}
+              </div>
             </div>
           </div>
         </div>

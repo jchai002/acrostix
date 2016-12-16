@@ -4,8 +4,8 @@ import {bindActionCreators} from 'redux';
 import * as letterActions from '../../actions/letterActions';
 import * as wordActions from '../../actions/wordActions';
 import Alphabet from "../../constants/alphabet";
-
-import TextArea from '../textArea'
+import NavBar from '../navBar';
+import TextArea from '../textArea';
 
 function isLetter(char) {
   return char.match(/^[A-Za-z]+$/);
@@ -22,7 +22,8 @@ class QuoteEntryPage extends Component {
     this.handleQuoteChange = this.handleQuoteChange.bind(this);
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
     this.validatePuzzle = this.validatePuzzle.bind(this);
-    this.goToNextStep = this.goToNextStep.bind(this)
+    this.checkForCompletion = this.checkForCompletion.bind(this)
+    this.goToNextStep = this.goToNextStep.bind(this);
   }
 
   handleQuoteChange(string) {
@@ -77,11 +78,17 @@ class QuoteEntryPage extends Component {
       Page.props.letterActions.useLetter({char:authorNameLetters[i],gridId:'',wordId:Alphabet[i]});
     }
 
-    Page.props.handleStepChange('next');
+    Page.props.goToNextStep()
+  }
+
+  checkForCompletion() {
+    if (this.state.quote.length && this.state.authorName.length && this.validatePuzzle()) {
+      return true
+    }
   }
 
   render() {
-    var continueButtonClass, quoteConstraintClass, authorConstraintClass, validityConstraintClass;
+    var quoteConstraintClass, authorConstraintClass, validityConstraintClass;
 
     if (this.state.quote.length) {
       var quoteConstraintClass = "green";
@@ -95,44 +102,47 @@ class QuoteEntryPage extends Component {
       authorConstraintClass = "red";
     }
 
-    if (this.state.quote.length && this.state.authorName.length && this.validatePuzzle()) {
-      continueButtonClass = "btn btn-primary white";
+    if (this.state.authorName.length && this.validatePuzzle()) {
       validityConstraintClass = "green";
     } else {
-      continueButtonClass = "btn btn-primary white disabled";
       validityConstraintClass = "red";
     }
+
+    var pageComplete = this.checkForCompletion();
+
     return (
-      <div className="row">
-        <div className="col-xs-12 col-lg-8 step step-1">
-          <h2>Enter a quote and its author</h2>
-          <form>
-            <div className="form-group">
-              <label>Please Enter Quote</label>
-              <TextArea
-                className="quote-input"
-                rows="5"
-                handleChange={this.handleQuoteChange} />
-            </div>
-            <div className="form-group">
-              <label>Please Enter Author</label>
-              <TextArea
-                className="author-input"
-                rows="1"
-                maxLength="26"
-                handleChange={this.handleAuthorChange}
-                />
-            </div>
-            <a onClick={this.goToNextStep} className={continueButtonClass} >Continue</a>
-          </form>
-        </div>
-        <div className="col-xs-12 col-lg-4 step step-1">
-          <h2>Constraints</h2>
-          <ul className="constraints">
-            <li className={quoteConstraintClass}>Quote is not empty</li>
-            <li className={authorConstraintClass}>Author is not empty</li>
-            <li className={validityConstraintClass}>Author name can be made up by letters from the quote</li>
-          </ul>
+      <div className="container">
+        <NavBar pageComplete={pageComplete} goToNextStep={this.goToNextStep} />
+        <div className="row">
+          <div className="col-xs-12 col-lg-6">
+            <h2>Enter a quote and its author</h2>
+            <form>
+              <div className="form-group">
+                <label>Please Enter Quote</label>
+                <TextArea
+                  className="quote-input"
+                  rows="5"
+                  handleChange={this.handleQuoteChange} />
+              </div>
+              <div className="form-group">
+                <label>Please Enter Author</label>
+                <TextArea
+                  className="author-input"
+                  rows="1"
+                  maxLength="26"
+                  handleChange={this.handleAuthorChange}
+                  />
+              </div>
+            </form>
+          </div>
+          <div className="col-xs-12 col-lg-6">
+            <h2>Constraints</h2>
+            <ul className="constraints">
+              <li className={quoteConstraintClass}>Quote is not empty</li>
+              <li className={authorConstraintClass}>Author is not empty</li>
+              <li className={validityConstraintClass}>Author name can be made up by letters from the quote</li>
+            </ul>
+          </div>
         </div>
       </div>
     );

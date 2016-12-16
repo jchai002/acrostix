@@ -10,38 +10,38 @@ class PuzzleBuilder extends Component {
     this.state = {
       currentStep:1
     }
-    this.handleStepChange = this.handleStepChange.bind(this);
+    this.goToNextStep = this.goToNextStep.bind(this);
   }
 
-  handleStepChange(action) {
-    if (action === 'next') {
-      var currentStep = this.state.currentStep + 1;
-      this.setState({currentStep})
-    }
-    if (action === 'prev') {
-      var currentStep = this.state.currentStep - 1;
-      this.setState({currentStep})
-    }
+  goToNextStep() {
+    var currentStep = this.state.currentStep + 1;
+    this.setState({currentStep})
+  }
+
+  goToPrevStep() {
+    var currentStep = this.state.currentStep - 1;
+    this.setState({currentStep})
   }
 
   assignView() {
     switch(this.state.currentStep) {
       case 1:
-        return (<QuoteEntryPage handleStepChange={this.handleStepChange} />);
+      return (<QuoteEntryPage goToNextStep={this.goToNextStep} />);
       case 2:
-        return (<WordEntryPage handleStepChange={this.handleStepChange} />);
+      return (<WordEntryPage goToNextStep={this.goToNextStep} />);
       case 3:
-        return (<ClueEntryPage handleStepChange={this.handleStepChange} />);
+      return (<ClueEntryPage goToNextStep={this.goToNextStep} />);
+      defualt:
+      return (<QuoteEntryPage goToNextStep={this.goToNextStep} />);
     }
   }
 
   render() {
     var view = this.assignView();
     return (
-      <div className="container">
-        <h1>Puzzle Builder</h1>
+      <section id="builder">
         {view}
-      </div>
+      </section>
     );
   }
 }

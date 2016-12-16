@@ -10,9 +10,15 @@ body {
   font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
-#root {
-  padding: $space-stack-xl;
+.navbar {
+  margin-bottom: $space-lg;
+  .row {
+    display: flex;
+    justify-content: space-between;
+  }
+}
 
+#builder {
     .quote-input, .author-input {
       @extend .form-control;
       resize: none;
