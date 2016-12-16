@@ -28,7 +28,17 @@ class LetterInput extends Component {
       // if there are no more letters left for this input, don't update and dispatch fail event
       this.props.actions.useLetterFail();
       console.log('no more', value);
+      this.outOfLetterAnimation(value);
     }
+  }
+
+  outOfLetterAnimation(char) {
+    var $tracker = $('.letter-'+char.toUpperCase()).parent();
+    console.log('.letter-'+char.toUpperCase())
+    $tracker.addClass('animated rubberBand');
+    setTimeout(function(){
+      $tracker.removeClass('animated rubberBand');
+    },2000);
   }
 
   // set which input is auto-focused on
