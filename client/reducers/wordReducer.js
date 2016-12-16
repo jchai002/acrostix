@@ -4,6 +4,8 @@ import update from 'immutability-helper';
 
 export default function wordReducer(state = initialState.words,action) {
   switch (action.type) {
+    case types.CREATE_WORD_SUCCESS:
+
     case types.ADD_LETTER_TO_WORD_SUCCESS:
       var wordId = action.letter.wordId;
       var stateClone = JSON.parse(JSON.stringify(state));

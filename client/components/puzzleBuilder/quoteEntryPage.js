@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as letterActions from '../../actions/letterActions';
+import * as wordActions from '../../actions/wordActions';
+
 import TextArea from '../textArea'
 
 function isLetter(char) {
@@ -57,12 +59,16 @@ class QuoteEntryPage extends Component {
     Page.state.quote.split('').forEach(function(char){
       var char = char.toLowerCase();
       if (isLetter(char)) {
-        Page.props.actions.createLetter({char:char,gridId:counter,wordId:''});
+        Page.props.letterActions.createLetter({char:char,gridId:counter,wordId:''});
         counter ++;
       } else if (char===' ') {
-        Page.props.actions.createLetter({char:char,gridId:'',wordId:null});
+        Page.props.letterActions.createLetter({char:char,gridId:'',wordId:null});
       }
     });
+
+    // create one word in word store for each letter in authorName
+
+
     this.props.handleStepChange('next');
   }
 
@@ -136,7 +142,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(letterActions,dispatch)
+    letterActions: bindActionCreators(letterActions,dispatch),
+    wordActions: bindActionCreators(wordActions,dispatch),
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(QuoteEntryPage);
