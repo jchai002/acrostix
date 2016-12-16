@@ -14,7 +14,7 @@ function isLetter(char) {
 const Alphabet = "abcdefghijklmnopqrstuvwxyz";
 const AlphabetUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-class Puzzle extends Component {
+class PuzzleBuilder extends Component {
   constructor(props) {
     super(props);
     this.handleQuoteChange = this.handleQuoteChange.bind(this);
@@ -318,7 +318,7 @@ class Puzzle extends Component {
       );
     }
   }
-  Puzzle.propTypes = {
+  PuzzleBuilder.propTypes = {
     letters: PropTypes.array.isRequired
   };
 
@@ -333,4 +333,4 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators(letterActions,dispatch)
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Puzzle);
+export default connect(mapStateToProps, mapDispatchToProps)(PuzzleBuilder);

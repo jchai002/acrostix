@@ -3,12 +3,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import configureStore from './store/configureStore';
 import {Provider} from 'react-redux';
-import Puzzle from './components/puzzle';
+import PuzzleBuilder from './components/puzzleBuilder';
 const store = configureStore();
 Meteor.startup(() => {
   ReactDOM.render(
     <Provider store={store}>
-      <Puzzle />
+      <PuzzleBuilder />
     </Provider>,
     document.getElementById('root')
   );
