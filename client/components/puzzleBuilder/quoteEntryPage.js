@@ -15,7 +15,8 @@ class QuoteEntryPage extends Component {
     super(props);
     this.state = {
       quote:'',
-      authorName:''
+      authorName:'',
+      numberOfWords:0
     }
     this.handleQuoteChange = this.handleQuoteChange.bind(this);
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
@@ -27,7 +28,7 @@ class QuoteEntryPage extends Component {
     this.setState({quote: string});
   }
   handleAuthorChange(string) {
-    this.setState({authorName: string});
+    this.setState({authorName: string.replace(/[^A-Za-z]/g,'')});
   }
 
   validatePuzzle() {
@@ -66,8 +67,9 @@ class QuoteEntryPage extends Component {
       }
     });
 
-    // create one word in word store for each letter in authorName
-
+    // add future logic to opt out of author name match constraints here
+    var numberOfWords = this.state.authorName.length
+    Page.props.wordActions.createWords(numberOfWords);
 
     this.props.handleStepChange('next');
   }
@@ -143,7 +145,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
   return {
     letterActions: bindActionCreators(letterActions,dispatch),
-    wordActions: bindActionCreators(wordActions,dispatch),
+    wordActions: bindActionCreators(wordActions,dispatch)
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(QuoteEntryPage);

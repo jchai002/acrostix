@@ -1,11 +1,15 @@
 import * as types from '../actions/actionTypes.js'
 import initialState from './initialState';
-import update from 'immutability-helper';
+const Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 export default function wordReducer(state = initialState.words,action) {
   switch (action.type) {
-    case types.CREATE_WORD_SUCCESS:
-
+    case types.CREATE_WORDS_SUCCESS:
+      var words = {}
+      for (var i = 0;i < action.numberOfWords; i++){
+        words[Alphabet[i]] = []
+      }
+      return words
     case types.ADD_LETTER_TO_WORD_SUCCESS:
       var wordId = action.letter.wordId;
       var stateClone = JSON.parse(JSON.stringify(state));

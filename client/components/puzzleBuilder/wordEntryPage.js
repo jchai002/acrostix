@@ -38,16 +38,18 @@ class WordEntryPage extends Component {
         )
       });
 
-      console.log(this.props.words)
-
-      // var wordComponents = this.props.words.map((word)=>{
-      //   // return (
-      //   //   <Word
-      //   //     key={id}
-      //   //     wordId={id}
-      //   //   />
-      //   // );
-      // })
+      var wordIds = [];
+      for (var wordId in this.props.words) {
+        wordIds.push(wordId)
+      }
+      var wordComponents = wordIds.map((id)=>{
+        return (
+          <Word
+            key={id}
+            wordId={id}
+          />
+        );
+      })
     return (
       <div className="row">
         <div className="col-xs-12 col-lg-7">
@@ -57,6 +59,9 @@ class WordEntryPage extends Component {
           <h2>Letters Remaining</h2>
             <div className="trackers">
               {letterCounters}
+            </div>
+            <div className="words">
+              {wordComponents}
             </div>
         </div>
       </div>

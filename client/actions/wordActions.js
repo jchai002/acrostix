@@ -1,14 +1,14 @@
 import * as types from './actionTypes.js'
 
 // thunk
-export function createWord(letter) {
+export function createWords(numberOfWords) {
   return function(dispatch) {
-    dispatch(createWordSuccess(letter));
+    dispatch(createWordsSuccess(numberOfWords));
   }
 }
 
-export function createWordSuccess(letter) {
-  return {type: types.CREATE_WORD_SUCCESS, letter}
+export function createWordsSuccess(numberOfWords) {
+  return {type: types.CREATE_WORDS_SUCCESS, numberOfWords}
 }
 
 export function addLetterToWord(letter) {
