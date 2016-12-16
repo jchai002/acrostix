@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-export default class ClueEntryPage extends Component {
+class ClueEntryPage extends Component {
   constructor(props) {
     super(props);
   }
@@ -14,3 +14,5 @@ export default class ClueEntryPage extends Component {
 
 ClueEntryPage.propTypes = {
 };
+
+export default ClueEntryPage;
