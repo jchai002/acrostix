@@ -63,7 +63,7 @@ class QuoteEntryPage extends Component {
         Page.props.actions.createLetter({char:char,gridId:'',wordId:null});
       }
     });
-     window.location = '/enter-words'
+    this.props.handleStepChange('next');
   }
 
   render() {

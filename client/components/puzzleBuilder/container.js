@@ -10,16 +10,28 @@ class PuzzleBuilder extends Component {
     this.state = {
       currentStep:1
     }
+    this.handleStepChange = this.handleStepChange.bind(this);
+  }
+
+  handleStepChange(action) {
+    if (action === 'next') {
+      var currentStep = this.state.currentStep + 1;
+      this.setState({currentStep})
+    }
+    if (action === 'prev') {
+      var currentStep = this.state.currentStep - 1;
+      this.setState({currentStep})
+    }
   }
 
   assignView() {
     switch(this.state.currentStep) {
       case 1:
-        return (<QuoteEntryPage />);
+        return (<QuoteEntryPage handleStepChange={this.handleStepChange} />);
       case 2:
-        return (<WordEntryPage />);
+        return (<WordEntryPage handleStepChange={this.handleStepChange} />);
       case 3:
-        return (<ClueEntryPage />);
+        return (<ClueEntryPage handleStepChange={this.handleStepChange} />);
     }
   }
 
