@@ -12,7 +12,6 @@ class PuzzleBuilder extends Component {
 }
 
 PuzzleBuilder.propTypes = {
-  children: PropTypes.object.isRequired
 }
 
 export default PuzzleBuilder;

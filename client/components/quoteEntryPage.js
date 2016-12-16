@@ -52,14 +52,15 @@ class QuoteEntryPage extends Component {
   }
 
   goToNextStep() {
+    var Page = this;
     var counter = 1;
-    this.state.quote.split('').forEach(function(char){
+    Page.state.quote.split('').forEach(function(char){
       var char = char.toLowerCase();
       if (isLetter(char)) {
-        this.props.actions.createLetter({char:char,gridId:counter,wordId:''});
+        Page.props.actions.createLetter({char:char,gridId:counter,wordId:''});
         counter ++;
       } else if (char===' ') {
-        this.props.actions.createLetter({char:char,gridId:'',wordId:null});
+        Page.props.actions.createLetter({char:char,gridId:'',wordId:null});
       }
     });
      window.location = '/enter-words'

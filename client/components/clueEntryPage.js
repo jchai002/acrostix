@@ -7,7 +7,11 @@ class ClueEntryPage extends Component {
 
   render() {
     return (
-      <div>hi</div>
+      <div className="row">
+        <div className="col-xs-12">
+          <h2>Enter Clues For Each Word</h2>
+        </div>
+      </div>
     );
   }
 }
