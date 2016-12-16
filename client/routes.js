@@ -7,7 +7,7 @@ import ClueEntryPage from './components/clueEntryPage';
 
 export default (
   <Route path="/" component={PuzzleBuilder}>
-    <IndexRoute component={QuoteEntryPage} />
+    <IndexRoute component={PuzzleBuilder} />
     <Route path="enter-words" component={WordEntryPage} />
     <Route path="enter-clues" component={ClueEntryPage} />
   </Route>
