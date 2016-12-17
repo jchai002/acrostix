@@ -17,7 +17,7 @@ export default class TextArea extends Component {
       var charCount = <small className="remaining">{this.props.maxLength - this.state.value.length} characters remaining</small>
     }
     return (
-      <div>
+      <div className="textarea">
         <textarea
           value={value}
           maxLength={this.props.maxLength}

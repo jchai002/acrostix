@@ -3,11 +3,16 @@ import NavBar from '../navBar';
 import {connect} from 'react-redux';
 import * as wordActions from '../../actions/wordActions';
 import Word from '../word'
+import Label from '../label';
+import TextArea from '../textArea';
 
 
 class ClueEntryPage extends Component {
   constructor(props) {
     super(props);
+  }
+  handleClueChange(e){
+    // do something
   }
 
   render() {
@@ -26,6 +31,19 @@ class ClueEntryPage extends Component {
           />
       );
     });
+    var clueComponents = wordIds.map((id)=>{
+      return (
+        <div className="clues">
+          <Label key={id} value={id} />
+          <TextArea
+            key={'clue-'+id}
+            className="author-input"
+            rows="1"
+            handleChange={this.handleClueChange}
+            />
+        </div>
+      );
+    });
     var pageComplete = false;
     return (
       <div className="container">
@@ -33,9 +51,14 @@ class ClueEntryPage extends Component {
         <div className="row">
           <div className="col-xs-12">
             <h2>Enter Clues For Each Word</h2>
-              <div className="words">
-                {wordComponents}
-              </div>
+          </div>
+          <div className="col-xs-12 col-lg-6">
+            <div className="words">
+              {wordComponents}
+            </div>
+          </div>
+          <div className="col-xs-12 col-lg-6">
+            {clueComponents}
           </div>
         </div>
       </div>

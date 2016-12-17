@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as letterActions from '../actions/letterActions'
 import LetterInput from './letterInput';
+import Label from './label';
 import _ from 'lodash';
 
 class Word extends Component {
@@ -70,7 +71,7 @@ class Word extends Component {
     });
     return (
       <div className="word">
-        <div className="label">{this.props.wordId}.</div>
+        <Label value={this.props.wordId} />
         {letterComponents}
       </div>
     );

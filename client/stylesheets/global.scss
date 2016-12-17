@@ -90,30 +90,42 @@ body {
     }
   }
 
+  .clues {
+    padding: $space-stack-md;
+    display: flex;
+    align-items: center;
+    .textarea {
+      margin-left: $space-xs;
+      width: 100%;
+    }
+  }
+
   .words {
     .word {
       max-width: 100%;
       flex-wrap: wrap;
       display: flex;
-      align-items: flex-end;
       font-size: 18px;
       line-height: 18px;
+      height: 68px;
       padding: $space-stack-md;
       .letter {
         position: relative;
+        height: 100%;
         small {
           font-size: 12px;
           position: absolute;
-          bottom: -2em;
-          width: 100%;
           left: 0;
+          bottom:0;
+          width: 100%;
           text-align: center;
         }
         input {
           width: 20px;
+          transform: translateY(-12px);
           text-align: center;
           margin: $space-inset-xs;
-          transform: translateY(6px);
+          position: relative;
           background-color: $bg-color;
           border: none;
           border-bottom: 2px solid $black;
