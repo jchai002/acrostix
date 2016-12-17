@@ -27,14 +27,12 @@ class LetterInput extends Component {
     } else {
       // if there are no more letters left for this input, don't update and dispatch fail event
       this.props.actions.useLetterFail();
-      console.log('no more', value);
       this.outOfLetterAnimation(value);
     }
   }
 
   outOfLetterAnimation(char) {
     var $tracker = $('.letter-'+char.toUpperCase()).parent();
-    console.log('.letter-'+char.toUpperCase())
     $tracker.addClass('animated rubberBand');
     setTimeout(function(){
       $tracker.removeClass('animated rubberBand');

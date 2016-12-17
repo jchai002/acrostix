@@ -32,6 +32,13 @@ class Word extends Component {
     }
   }
 
+  componentWillMount() {
+    // might need to refactor to avoid state mutation
+    if (this.props.noLetterEntryAllowed) {
+      this.state.currentLetters.pop();
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     var wordId = this.props.wordId;
     var currentWord = this.props.words[wordId];
