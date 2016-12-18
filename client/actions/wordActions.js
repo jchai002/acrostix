@@ -30,3 +30,13 @@ export function removeLetterFromWord(letter) {
 export function removeLetterFromWordSuccess(letter) {
   return {type: types.REMOVE_LETTER_FROM_WORD_SUCCESS, letter}
 }
+
+export function updateClue(clue) {
+  return function(dispatch) {
+    dispatch(updateClueSuccess(clue));
+  }
+}
+
+export function updateClueSuccess(clue) {
+  return {type: types.UPDATE_CLUE, clue}
+}

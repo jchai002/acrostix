@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import NavBar from '../navBar';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import * as wordActions from '../../actions/wordActions';
 import Word from '../word'
 import Label from '../label';
@@ -10,9 +11,11 @@ import TextArea from '../textArea';
 class ClueEntryPage extends Component {
   constructor(props) {
     super(props);
+    this.handleClueChange = this.handleClueChange.bind(this);
   }
-  handleClueChange(e){
-    // do something
+
+  handleClueChange(text,wordId){
+    this.props.actions.updateClue({wordId:wordId,text:text});
   }
 
   render() {
@@ -22,23 +25,23 @@ class ClueEntryPage extends Component {
     }
     var noLetterEntryAllowed = true;
 
-    var wordComponents = wordIds.map((id)=>{
+    var wordComponents = wordIds.map((id,i)=>{
       return (
         <Word
           noLetterEntryAllowed={noLetterEntryAllowed}
-          key={id}
+          key={i}
           wordId={id}
           />
       );
     });
-    var clueComponents = wordIds.map((id)=>{
+    var clueComponents = wordIds.map((id,i)=>{
       return (
-        <div className="clues">
-          <Label key={id} value={id} />
+        <div key = {'clue-'+i} className="clues">
+          <Label value={id} />
           <TextArea
-            key={'clue-'+id}
             className="author-input"
             rows="1"
+            wordId={id}
             handleChange={this.handleClueChange}
             />
         </div>
@@ -76,4 +79,10 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps)(ClueEntryPage);
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(wordActions,dispatch)
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(ClueEntryPage);

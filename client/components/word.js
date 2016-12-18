@@ -12,7 +12,7 @@ class Word extends Component {
     var wordId = this.props.wordId;
     var initialLetters;
     if (this.props.words[wordId]) {
-      initialLetters = [...this.props.words[wordId],
+      initialLetters = [...this.props.words[wordId].letters,
         Object.assign({}, {char:'',wordId:wordId,gridId:''})];
     } else {
       initialLetters = [{char:'',wordId:wordId,gridId:''}];
@@ -26,9 +26,9 @@ class Word extends Component {
 
   handleKeyDown(e) {
     if (e.keyCode === 8 || e.keyCode === 46) {
-      let currentWord = this.props.words[this.props.wordId]
-      let length = currentWord.length;
-      let gridId = currentWord[length-1].gridId;
+      let currentLetters = this.props.words[this.props.wordId].letters;
+      let length = currentLetters.length;
+      let gridId = currentLetters[length-1].gridId;
       this.props.actions.restoreLetter({gridId:gridId,wordId:this.props.wordId});
     }
   }
@@ -42,8 +42,8 @@ class Word extends Component {
 
   componentWillReceiveProps(nextProps) {
     var wordId = this.props.wordId;
-    var currentWord = this.props.words[wordId];
-    var newWord = nextProps.words[wordId];
+    var currentWord = this.props.words[wordId].letters;
+    var newWord = nextProps.words[wordId].letters;
     if (currentWord.length != newWord.length) {
       var currentLetters = newWord.map((letter)=>{
         return letter

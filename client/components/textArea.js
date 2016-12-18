@@ -8,7 +8,7 @@ export default class TextArea extends Component {
 
   handleChange(e) {
     this.setState({value: e.target.value});
-    this.props.handleChange(e.target.value);
+    this.props.handleChange(e.target.value,this.props.wordId);
   }
 
   render() {
