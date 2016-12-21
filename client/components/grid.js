@@ -15,7 +15,7 @@ class Grid extends Component {
   updateGrid() {
     var letters = this.props.letters;
     // fill up the blank spaces with black tiles
-    while (letters.length%10 != 0) {
+    while (letters.length%12 != 0) {
       letters = [...letters,
         Object.assign({}, {char:'',gridId:'',wordId:null})
       ]
