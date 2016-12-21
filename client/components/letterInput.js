@@ -42,13 +42,13 @@ class LetterInput extends Component {
   // set which input is auto-focused on
   componentDidMount() {
     if (this.props.shouldFocus) {
-      this._input.focus();
+      this.refs._input.focus();
     }
   }
 
   componentDidUpdate() {
     if (this.props.shouldFocus) {
-      this._input.focus();
+      this.refs._input.focus();
     }
   }
 
@@ -57,7 +57,7 @@ class LetterInput extends Component {
     return (
       <div className="letter">
         <input
-          ref={(c) => this._input = c}
+          ref='_input'
           onChange={this.handleChange}
           onKeyDown={this.props.handleKeyDown}
           maxLength='1'
