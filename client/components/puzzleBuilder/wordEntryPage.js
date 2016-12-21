@@ -27,12 +27,6 @@ class WordEntryPage extends Component {
   displayLetterCounter() {
     var dictionary = {};
     var lettersRemaining = this.getRemainingLetters()
-    for (var key in this.props.letters) {
-      var letter = this.props.letters[key];
-      if (!letter.wordId) {
-        lettersRemaining.push(letter);
-      }
-    }
     lettersRemaining.forEach((letter)=>{
       var char = letter.char.toUpperCase();
       if (dictionary[char]) {
