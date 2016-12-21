@@ -79,10 +79,10 @@ class WordEntryPage extends Component {
         <div className="container">
           <NavBar pageComplete={pageComplete} goToNextStep={this.goToNextStep} />
           <div className="row">
-            <div className="col-xs-12 col-lg-6">
+            <div className="col-xs-12">
               <Grid />
             </div>
-            <div className="col-xs-12 col-lg-6">
+            <div className="col-xs-12">
               <h2>Letters Remaining</h2>
               <div className="trackers">
                 {letterCounters}
