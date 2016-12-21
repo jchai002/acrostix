@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as letterActions from '../actions/letterActions'
+import * as utils from  '../helpers/utils';
 
 class LetterInput extends Component {
   constructor(props) {
@@ -22,12 +23,17 @@ class LetterInput extends Component {
 
   handleChange(e) {
     var value = e.target.value;
-    if (this.letterIsAvailable(value)){
-      this.props.actions.useLetter({char:value,gridId:null,wordId:this.props.wordId});
+    if (utils.isLetter(value)) {
+      if (this.letterIsAvailable(value)){
+        this.props.actions.useLetter({char:value,gridId:null,wordId:this.props.wordId});
+      } else {
+        // if there are no more letters left for this input, don't update and dispatch fail event
+        console.log('no more',value)
+        this.props.actions.useLetterFail();
+        this.outOfLetterAnimation(value);
+      }
     } else {
-      // if there are no more letters left for this input, don't update and dispatch fail event
-      this.props.actions.useLetterFail();
-      this.outOfLetterAnimation(value);
+      console.log(value,'is not a valid character')
     }
   }
 

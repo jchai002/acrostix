@@ -6,10 +6,7 @@ import * as wordActions from '../../actions/wordActions';
 import Alphabet from "../../constants/alphabet";
 import NavBar from '../navBar';
 import TextArea from '../textArea';
-
-function isLetter(char) {
-  return char.match(/^[A-Za-z]+$/);
-}
+import * as utils from  '../../helpers/utils';
 
 class QuoteEntryPage extends Component {
   constructor(props) {
@@ -37,7 +34,7 @@ class QuoteEntryPage extends Component {
     var dictionary = {};
     var enoughLetters = true;
     this.state.quote.split('').forEach((char)=>{
-      if (isLetter(char)) {
+      if (utils.isLetter(char)) {
         if (dictionary[char.toLowerCase()]) {
           dictionary[char.toLowerCase()] += 1;
         } else {
@@ -66,7 +63,7 @@ class QuoteEntryPage extends Component {
     var counter = 1;
     Page.state.quote.split('').forEach(function(char){
       var char = char.toLowerCase();
-      if (isLetter(char)) {
+      if (utils.isLetter(char)) {
         Page.props.letterActions.createLetter({char:char,gridId:counter,wordId:''});
         counter ++;
       } else if (char===' ') {
