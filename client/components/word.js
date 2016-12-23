@@ -29,7 +29,7 @@ class Word extends Component {
       let currentLetters = this.props.words[this.props.wordId].letters;
       let length = currentLetters.length;
       let gridId = currentLetters[length-1].gridId;
-      this.props.actions.restoreLetter({gridId:gridId,wordId:this.props.wordId});
+      this.props.actions.restoreGridLetter({gridId:gridId,wordId:this.props.wordId});
     }
   }
 

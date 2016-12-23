@@ -64,17 +64,20 @@ class QuoteEntryPage extends Component {
     Page.state.quote.split('').forEach(function(char){
       var char = char.toLowerCase();
       if (utils.isLetter(char)) {
-        Page.props.gridActions.createLetter({char:char,gridId:counter,wordId:''});
+        Page.props.gridActions.addLetterToGrid({char:char,gridId:counter,wordId:''});
         counter ++;
       } else if (char===' ') {
-        Page.props.gridActions.createLetter({char:char,gridId:'',wordId:null});
+        Page.props.gridActions.addLetterToGrid({char:char,gridId:'',wordId:null});
       }
     });
 
     for (var i = 0;i < numberOfWords; i++) {
-      Page.props.gridActions.useLetter({char:authorNameLetters[i],gridId:'',wordId:Alphabet[i]});
+      Page.props.gridActions.useGridLetter({char:authorNameLetters[i],gridId:'',wordId:Alphabet[i]});
     }
 
+    Meteor.call('puzzle.insert', (error, puzzleId) => {
+      // navigate to the new puzzle
+    });
     Page.props.goToNextStep()
   }
 

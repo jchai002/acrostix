@@ -25,11 +25,11 @@ class LetterInput extends Component {
     var value = e.target.value;
     if (utils.isLetter(value)) {
       if (this.letterIsAvailable(value)){
-        this.props.actions.useLetter({char:value,gridId:null,wordId:this.props.wordId});
+        this.props.actions.useGridLetter({char:value,gridId:null,wordId:this.props.wordId});
       } else {
         // if there are no more letters left for this input, don't update and dispatch fail event
         console.log('no more',value)
-        this.props.actions.useLetterFail();
+        this.props.actions.useGridLetterFail();
         this.outOfLetterAnimation(value);
       }
     } else {
