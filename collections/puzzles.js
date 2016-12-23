@@ -1,26 +1,29 @@
 import { Mongo } from 'meteor/mongo';
 
 Meteor.methods({
-  'puzzle.insert': function() {
-    console.log('creating new puzzle')
+  'puzzles.insert': function(grid) {
     return Puzzles.insert({
       createdAt: new Date(),
-      grid:[],
+      grid,
       words:{},
       ownerId: ''
       // will add user id here
     });
   },
 
-  'puzzle.remove': function(puzzle) {
-    console.log('remove puzzle')
+  'puzzles.remove': function(puzzle) {
+     return Puzzles.remove(puzzle);
   },
 
-  'puzzle.updateGrid': function(puzzle, payload) {
+  'puzzles.initializeGrid': function(puzzle, payload) {
     console.log('update puzzle grid')
   },
 
-  'puzzle.updateWord': function(puzzle, payload) {
+  'puzzles.updateGrid': function(puzzle, payload) {
+    console.log('update puzzle grid')
+  },
+
+  'puzzles.updateWord': function(puzzle, payload) {
     console.log('update puzzle word')
   }
 });

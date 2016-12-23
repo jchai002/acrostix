@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux';
 import * as gridActions from '../../actions/gridActions';
 import * as wordActions from '../../actions/wordActions';
 import Alphabet from "../../constants/alphabet";
-import NavBar from '../navBar';
+import BuilderNav from './builderNav';
 import TextArea from '../textArea';
 import * as utils from  '../../helpers/utils';
 
@@ -71,14 +71,18 @@ class QuoteEntryPage extends Component {
       }
     });
 
+    // use the letters already used by author name
     for (var i = 0;i < numberOfWords; i++) {
       Page.props.gridActions.useGridLetter({char:authorNameLetters[i],gridId:'',wordId:Alphabet[i]});
     }
+  }
 
-    Meteor.call('puzzle.insert', (error, puzzleId) => {
-      // navigate to the new puzzle
-    });
-    Page.props.goToNextStep()
+  componentWillReceiveProps(nextProps) {
+    // if grid is created, create a new puzzle with the grid
+    if (nextProps.grid) {
+      Meteor.call('puzzle.insert',nextProps.grid)
+      this.props.goToNextStep();
+    }
   }
 
   checkForCompletion() {
@@ -112,7 +116,7 @@ class QuoteEntryPage extends Component {
 
     return (
       <div className="container">
-        <NavBar pageComplete={pageComplete} goToNextStep={this.goToNextStep} />
+        <BuilderNav pageComplete={pageComplete} goToNextStep={this.goToNextStep} />
         <div className="row">
           <div className="col-xs-12 col-lg-6">
             <h2>Enter a quote and its author</h2>
@@ -154,7 +158,7 @@ QuoteEntryPage.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    letters: state.letters
+    grid: state.grid
   };
 }
 

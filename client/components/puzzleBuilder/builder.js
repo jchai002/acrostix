@@ -3,6 +3,7 @@ import QuoteEntryPage from './quoteEntryPage';
 import WordEntryPage from './wordEntryPage';
 import ClueEntryPage from './clueEntryPage';
 import { createContainer } from 'meteor/react-meteor-data';
+import { Puzzles } from '../../../collections/puzzles';
 
 class PuzzleBuilder extends Component {
   constructor(props) {
@@ -37,6 +38,7 @@ class PuzzleBuilder extends Component {
   }
 
   render() {
+    console.log(this.props.puzzles)
     var view = this.assignView();
     return (
       <section id="builder">

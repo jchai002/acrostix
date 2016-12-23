@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
 import Grid from '../grid'
 import Word from '../word'
-import NavBar from '../navBar';
+import BuilderNav from './builderNav';
 import Alphabet from "../../constants/alphabet";
 
 class WordEntryPage extends Component {
@@ -77,7 +77,7 @@ class WordEntryPage extends Component {
       var pageComplete = !this.getRemainingLetters().length;
       return (
         <div className="container">
-          <NavBar pageComplete={pageComplete} goToNextStep={this.goToNextStep} />
+          <BuilderNav pageComplete={pageComplete} goToNextStep={this.goToNextStep} />
           <div className="row">
             <div className="col-xs-12">
               <Grid />

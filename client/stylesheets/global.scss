@@ -18,6 +18,23 @@ body {
   }
 }
 
+.list-group {
+  @extend .container;
+  .list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.builder-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .btn {
+    @extend .white;
+  }
+}
 #builder {
     h2 {
       margin: $space-stack-md;

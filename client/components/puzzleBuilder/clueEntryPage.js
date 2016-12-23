@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import NavBar from '../navBar';
+import BuilderNav from './builderNav';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as wordActions from '../../actions/wordActions';
@@ -50,7 +50,7 @@ class ClueEntryPage extends Component {
     var pageComplete = false;
     return (
       <div className="container">
-        <NavBar pageComplete={pageComplete} goToNextStep={this.props.goToNextStep} />
+        <BuilderNav pageComplete={pageComplete} goToNextStep={this.props.goToNextStep} />
         <div className="row">
           <div className="col-xs-12">
             <h2>Enter Clues For Each Word</h2>
