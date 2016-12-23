@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import QuoteEntryPage from './quoteEntryPage';
 import WordEntryPage from './wordEntryPage';
 import ClueEntryPage from './clueEntryPage';
-
+import { createContainer } from 'meteor/react-meteor-data';
 
 class PuzzleBuilder extends Component {
   constructor(props) {
@@ -49,4 +49,7 @@ class PuzzleBuilder extends Component {
 PuzzleBuilder.propTypes = {
 }
 
-export default PuzzleBuilder;
+export default createContainer(() => {
+  Meteor.subscribe('puzzles');
+  return { puzzles: Puzzles.find({}).fetch() };
+}, PuzzleBuilder);
