@@ -36,7 +36,7 @@ body {
   }
 }
 #builder {
-    h2 {
+    .builder-nav {
       margin: $space-stack-md;
     }
     .quote-input, .author-input {
@@ -59,13 +59,13 @@ body {
   .grid {
     display: flex;
     flex-flow: row wrap;
-    width: 1142px;
-    margin-right: auto;
+    width: 1112px;
+    margin-bottom: $space-md;
     border-top: 2px solid $black;
     border-right: 2px solid $black;
     .tile {
-      width: 47.5px;
-      height: 47.5px;
+      width: 46.25px;
+      height: 46.25px;
       display: flex;
       justify-content: center;
       align-items: center;
