@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as letterActions from '../../actions/letterActions';
+import * as gridActions from '../../actions/gridActions';
 import * as wordActions from '../../actions/wordActions';
 import Alphabet from "../../constants/alphabet";
 import NavBar from '../navBar';
@@ -64,15 +64,15 @@ class QuoteEntryPage extends Component {
     Page.state.quote.split('').forEach(function(char){
       var char = char.toLowerCase();
       if (utils.isLetter(char)) {
-        Page.props.letterActions.createLetter({char:char,gridId:counter,wordId:''});
+        Page.props.gridActions.createLetter({char:char,gridId:counter,wordId:''});
         counter ++;
       } else if (char===' ') {
-        Page.props.letterActions.createLetter({char:char,gridId:'',wordId:null});
+        Page.props.gridActions.createLetter({char:char,gridId:'',wordId:null});
       }
     });
 
     for (var i = 0;i < numberOfWords; i++) {
-      Page.props.letterActions.useLetter({char:authorNameLetters[i],gridId:'',wordId:Alphabet[i]});
+      Page.props.gridActions.useLetter({char:authorNameLetters[i],gridId:'',wordId:Alphabet[i]});
     }
 
     Page.props.goToNextStep()
@@ -157,7 +157,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    letterActions: bindActionCreators(letterActions,dispatch),
+    gridActions: bindActionCreators(gridActions,dispatch),
     wordActions: bindActionCreators(wordActions,dispatch)
   }
 }

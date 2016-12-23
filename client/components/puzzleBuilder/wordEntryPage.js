@@ -15,8 +15,8 @@ class WordEntryPage extends Component {
 
   getRemainingLetters() {
     var lettersRemaining = [];
-    for (var key in this.props.letters) {
-      var letter = this.props.letters[key];
+    for (var key in this.props.grid) {
+      var letter = this.props.grid[key];
       if (!letter.wordId) {
         lettersRemaining.push(letter);
       }
@@ -102,7 +102,7 @@ class WordEntryPage extends Component {
 
   function mapStateToProps(state, ownProps) {
     return {
-      letters: state.letters,
+      grid: state.grid,
       words: state.words
     };
   }

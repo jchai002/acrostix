@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as letterActions from '../actions/letterActions'
+import * as gridActions from '../actions/gridActions'
 import * as utils from  '../helpers/utils';
 
 class LetterInput extends Component {
@@ -13,7 +13,7 @@ class LetterInput extends Component {
 
   letterIsAvailable(char) {
     var available = false;
-    this.props.letters.forEach((letter)=>{
+    this.props.grid.forEach((letter)=>{
       if (!letter.wordId && letter.char === char) {
         available = true;
       }
@@ -80,13 +80,13 @@ LetterInput.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    letters: state.letters
+    grid: state.grid
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(letterActions,dispatch)
+    actions: bindActionCreators(gridActions,dispatch)
   }
 }
 

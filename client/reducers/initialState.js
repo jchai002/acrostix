@@ -1,4 +1,4 @@
 export default {
-  letters:[],
+  grid:[],
   words:{}
 }

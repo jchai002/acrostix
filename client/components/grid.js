@@ -13,14 +13,14 @@ class Grid extends Component {
   }
 
   updateGrid() {
-    var letters = this.props.letters;
+    var grid = this.props.grid;
     // fill up the blank spaces with black tiles
-    while (letters.length%24 != 0) {
-      letters = [...letters,
+    while (grid.length%24 != 0) {
+      grid = [...grid,
         Object.assign({}, {char:'',gridId:'',wordId:null})
       ]
     }
-    var grid = letters.map(function(obj,i){
+    return grid.map(function(obj,i){
       return (
         <Tile
           key={i}
@@ -30,11 +30,10 @@ class Grid extends Component {
           />
       );
     });
-    return grid
   }
 
   componentWillMount() {
-    this.props.letters.forEach((letter) => {
+    this.props.grid.forEach((letter) => {
       if (letter.wordId) {
         this.props.actions.addLetterToWord(letter);
       }
@@ -43,12 +42,12 @@ class Grid extends Component {
 
   componentWillReceiveProps(nextProps) {
     // turn into strings to allow lodash comparason
-    var currentLetterStrings = this.props.letters.map((letter)=>{
+    var currentLetterStrings = this.props.grid.map((letter)=>{
       return JSON.stringify(letter)
     })
     // get new letter entered
     var modifiedLetter;
-    nextProps.letters.forEach((letter)=>{
+    nextProps.grid.forEach((letter)=>{
       if (!_.includes(currentLetterStrings,JSON.stringify(letter))) {
         return modifiedLetter = letter;
       }
@@ -58,7 +57,7 @@ class Grid extends Component {
       this.props.actions.addLetterToWord(modifiedLetter)
     } else {
       var wordId;
-      this.props.letters.forEach((letter)=>{
+      this.props.grid.forEach((letter)=>{
         if (letter.gridId === modifiedLetter.gridId) {
           wordId = letter.wordId
         }
@@ -78,12 +77,12 @@ class Grid extends Component {
 
 }
 Grid.propTypes = {
-  letters: PropTypes.array.isRequired
+  grid: PropTypes.array.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
   return {
-    letters: state.letters
+    grid: state.grid
   };
 }
 

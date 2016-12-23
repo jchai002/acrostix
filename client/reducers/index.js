@@ -1,9 +1,9 @@
 import {combineReducers} from 'redux';
-import letters from './letterReducer';
+import grid from './gridReducer';
 import words from './wordReducer';
 
 const rootReducer = combineReducers({
-  letters,
+  grid,
   words
 });
 

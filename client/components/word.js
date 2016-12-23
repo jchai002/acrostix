@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as letterActions from '../actions/letterActions'
+import * as gridActions from '../actions/gridActions'
 import LetterInput from './letterInput';
 import Label from './label';
 import _ from 'lodash';
@@ -88,7 +88,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(letterActions,dispatch)
+    actions: bindActionCreators(gridActions,dispatch)
   }
 }
 

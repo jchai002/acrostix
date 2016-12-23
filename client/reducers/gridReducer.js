@@ -1,7 +1,7 @@
 import * as types from '../actions/actionTypes.js'
 import initialState from './initialState';
 
-export default function letterReducer(state = initialState.letters,action) {
+export default function letterReducer(state = initialState.grid,action) {
   switch (action.type) {
     case types.CREATE_LETTER_SUCCESS:
       return [...state,
