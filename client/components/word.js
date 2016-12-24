@@ -28,8 +28,12 @@ class Word extends Component {
     if (e.keyCode === 8 || e.keyCode === 46) {
       let currentLetters = this.props.words[this.props.wordId].letters;
       let length = currentLetters.length;
-      let gridId = currentLetters[length-1].gridId;
-      this.props.actions.restoreGridLetter({gridId:gridId,wordId:this.props.wordId});
+      if (length > this.props.minLength) {
+        let gridId = currentLetters[length-1].gridId;
+        this.props.actions.restoreGridLetter({gridId:gridId,wordId:this.props.wordId});
+      } else {
+        console.log('cannot delete any more letters from this word')
+      }
     }
   }
 

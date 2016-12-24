@@ -91,10 +91,12 @@ class WordEntryPage extends Component {
         wordIds.push(wordId)
       }
       var wordComponents = wordIds.map((id)=>{
+        // TODO set min length to 0 if there is no author name requirement
         return (
           <Word
             key={id}
             wordId={id}
+            minLength={1}
             />
         );
       });
