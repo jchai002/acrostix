@@ -10,6 +10,11 @@ body {
   font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
+textarea,input {
+  @extend .form-control;
+  resize: none;
+}
+
 .navbar {
   margin-bottom: $space-lg;
   .row {
@@ -52,10 +57,6 @@ body {
 #builder {
   .builder-nav {
     margin: $space-stack-md;
-  }
-  .quote-input, .author-input {
-    @extend .form-control;
-    resize: none;
   }
   .remaining {
     float: right;

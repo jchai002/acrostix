@@ -1,15 +1,16 @@
 import { Mongo } from 'meteor/mongo';
 
 Meteor.methods({
-  'puzzles.insert': function() {
+  'puzzles.insert': function(name,publishStatus,callback) {
     return Puzzles.insert({
       createdAt: new Date(),
       currentStep:1,
       grid:[],
       words:{},
       ownerId: this.userId,
-      public: true
-    });
+      name,
+      public: publishStatus
+    }, callback);
   },
 
   'puzzles.remove': function(puzzle) {

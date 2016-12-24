@@ -27,7 +27,6 @@ export default class TextArea extends Component {
         <textarea
           value={value}
           maxLength={this.props.maxLength}
-          className={this.props.className}
           onChange={this.handleChange}
           cols={this.props.cols}
           rows={this.props.rows}

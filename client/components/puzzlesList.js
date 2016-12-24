@@ -27,7 +27,7 @@ class PuzzlesList extends Component {
         <li className="list-group-item" key={puzzle._id}>
         <span>
         <span className="tag tag-success">{stage}</span>
-        <Link to={url}>Puzzle {puzzle._id}</Link>
+        <Link to={url}>{puzzle.name}</Link>
         </span>
         <span>
         <button

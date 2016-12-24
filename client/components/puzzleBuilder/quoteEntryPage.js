@@ -111,7 +111,6 @@ class QuoteEntryPage extends Component {
     }
 
     var pageComplete = this.checkForCompletion();
-
     return (
       <div className="container">
         <BuilderNav
@@ -125,14 +124,12 @@ class QuoteEntryPage extends Component {
               <div className="form-group">
                 <label>Please Enter Quote</label>
                 <TextArea
-                  className="quote-input"
                   rows="5"
                   handleChange={this.handleQuoteChange} />
               </div>
               <div className="form-group">
                 <label>Please Enter Author</label>
                 <TextArea
-                  className="author-input"
                   rows="1"
                   maxLength="26"
                   handleChange={this.handleAuthorChange}
