@@ -3,7 +3,13 @@ export default class TextArea extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.state = {value: this.props.value};
+    this.state = {value: ''};
+  }
+
+  componentWillMount() {
+    if (this.props.value) {
+      this.setState({value: this.props.value})
+    }
   }
 
   handleChange(e) {
