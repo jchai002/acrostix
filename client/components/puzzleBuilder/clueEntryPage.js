@@ -6,6 +6,7 @@ import * as wordActions from '../../actions/wordActions';
 import Word from '../word'
 import Label from '../label';
 import TextArea from '../textArea';
+import _ from 'lodash'
 
 
 class ClueEntryPage extends Component {
@@ -18,17 +19,27 @@ class ClueEntryPage extends Component {
     this.props.actions.updateClue({wordId:wordId,text:text});
   }
 
+  componentWillMount() {
+    if (_.isEmpty(this.props.words)) {
+      this.props.actions.loadWordsFromDB(this.props.puzzle._id);
+    }
+  }
+
+  componentDidUpdate() {
+    Meteor.call('puzzles.updateWords',this.props.puzzle,this.props.words);
+  }
+
   render() {
     var wordIds = [];
-    for (var wordId in this.props.words) {
+    const Words = this.props.words;
+    for (var wordId in Words) {
       wordIds.push(wordId)
     }
-    var noLetterEntryAllowed = true;
 
     var wordComponents = wordIds.map((id,i)=>{
       return (
         <Word
-          noLetterEntryAllowed={noLetterEntryAllowed}
+          noLetterEntryAllowed={true}
           key={i}
           wordId={id}
           />
@@ -42,6 +53,7 @@ class ClueEntryPage extends Component {
             className="author-input"
             rows="1"
             wordId={id}
+            value={Words[id].clue}
             handleChange={this.handleClueChange}
             />
         </div>

@@ -7,7 +7,7 @@ import Grid from '../grid'
 import Word from '../word'
 import BuilderNav from './builderNav';
 import Alphabet from "../../constants/alphabet";
-import _ from 'lodash'
+import _ from 'lodash';
 
 class WordEntryPage extends Component {
   constructor(props) {
