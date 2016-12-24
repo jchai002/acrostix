@@ -10,7 +10,7 @@ body {
   font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
-textarea,input {
+textarea {
   @extend .form-control;
   resize: none;
 }
@@ -54,6 +54,20 @@ textarea,input {
     @extend .white;
   }
 }
+
+#newPuzzlePage {
+  form {
+    .form-group {
+      display: flex;
+      align-items: center;
+      label {
+        margin-bottom: 0;
+        margin-right: $space-md;
+      }
+    }
+  }
+}
+
 #builder {
   .builder-nav {
     margin: $space-stack-md;

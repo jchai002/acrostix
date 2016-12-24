@@ -56,6 +56,7 @@ PuzzleBuilder.propTypes = {
 
 export default createContainer((props) => {
   Meteor.subscribe('ownPuzzles');
+  Meteor.subscribe('publicPuzzles');
   const { puzzleId } = props.params;
   return { puzzle: Puzzles.findOne(puzzleId) };
 }, PuzzleBuilder);
