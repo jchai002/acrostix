@@ -37,7 +37,6 @@ class PuzzleBuilder extends Component {
   }
 
   render() {
-    console.log(this.props.puzzle)
     var view;
     if (this.props.puzzle) {
       view = this.assignView();
@@ -56,7 +55,7 @@ PuzzleBuilder.propTypes = {
 }
 
 export default createContainer((props) => {
-  Meteor.subscribe('puzzles');
+  Meteor.subscribe('ownPuzzles');
   const { puzzleId } = props.params;
   return { puzzle: Puzzles.findOne(puzzleId) };
 }, PuzzleBuilder);

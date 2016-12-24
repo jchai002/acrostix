@@ -18,8 +18,8 @@ body {
   }
 
   .nav-buttons {
-    width: 25%;
     justify-content: space-between;
+    align-items: center;
     display: flex;
     #login-buttons {
       margin-top: $space-sm;
