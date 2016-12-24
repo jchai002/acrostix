@@ -12,10 +12,8 @@ export function createWordsSuccess(numberOfWords) {
   return {type: types.CREATE_WORDS_SUCCESS, numberOfWords}
 }
 
-export function addLetterToWord(letter,puzzle) {
+export function addLetterToWord(letter) {
   return function(dispatch) {
-    Meteor.call('puzzles.useGridLetter',puzzle,letter);
-    Meteor.call('puzzles.addLetterToWord',puzzle,letter);
     dispatch(addLetterToWordSuccess(letter));
   }
 }
@@ -24,10 +22,8 @@ export function addLetterToWordSuccess(letter) {
   return {type: types.ADD_LETTER_TO_WORD_SUCCESS, letter}
 }
 
-export function removeLetterFromWord(letter,puzzle) {
+export function removeLetterFromWord(letter) {
   return function(dispatch) {
-    Meteor.call('puzzles.restoreGridLetter',puzzle,letter);
-    Meteor.call('puzzles.removeLetterFromWord',puzzle,letter);
     dispatch(removeLetterFromWordSuccess(letter));
   }
 }
@@ -49,6 +45,7 @@ export function updateClueSuccess(clue) {
 export function loadWordsFromDB(puzzleId) {
   return function(dispatch) {
     var puzzle = Puzzles.findOne(puzzleId);
+    console.log(puzzle.words)
     dispatch(loadWordsFromDBSuccess(puzzle.words));
   }
 }

@@ -13,17 +13,14 @@ Meteor.methods({
   },
 
   'puzzles.remove': function(puzzle) {
-     return Puzzles.remove(puzzle);
+    return Puzzles.remove(puzzle);
   },
 
   'puzzles.initializeGrid': function(puzzle, grid) {
-    console.log('init grid',grid)
-
     return Puzzles.update(puzzle._id, { $set: { grid } });
   },
 
   'puzzles.initializeWords': function(puzzle, words) {
-    console.log('init words',words)
     return Puzzles.update(puzzle._id, { $set: { words } });
   },
 
@@ -31,20 +28,12 @@ Meteor.methods({
     return Puzzles.update(puzzle._id, { $set: { currentStep: step } });
   },
 
-  'puzzles.useGridLetter': function(puzzle, letter) {
-    console.log(letter,puzzle)
+  'puzzles.updateGrid': function(puzzle, grid) {
+    return Puzzles.update(puzzle._id, { $set: { grid } });
   },
 
-  'puzzles.restoreGridLetter': function(puzzle, letter) {
-    // console.log('running puzzles.restoreGridLetter')
-  },
-
-  'puzzles.addLetterToWord': function(puzzle, letter) {
-    // console.log('running puzzles.addLetterToWord')
-  },
-
-  'puzzles.removeLetterFromWord': function(puzzle, letter) {
-    // console.log('running puzzles.removeLetterFromWord')
+  'puzzles.updateWords': function(puzzle, words) {
+    return Puzzles.update(puzzle._id, { $set: { words } });
   }
 });
 

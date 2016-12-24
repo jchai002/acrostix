@@ -64,18 +64,24 @@ class WordEntryPage extends Component {
     }
 
     componentWillMount() {
-      // var currentGrid = this.props.puzzle.grid
-      // currentGrid.forEach((letter)=>{
-      //   this.props.gridActions.addLetterToGrid(letter);
-      // });
-      if (_.isEmpty(this.props.words)) {
-        // load grid and words from DB
-        this.props.wordActions.loadWordsFromDB(this.props.puzzle._id);
-        this.props.gridActions.loadGridFromDB(this.props.puzzle._id);
-      } else {
-        Meteor.call('puzzles.initializeGrid',this.props.puzzle,this.props.grid);
-        Meteor.call('puzzles.initializeWords',this.props.puzzle, this.props.words);
+      if (this.props.grid.length) {
+        this.props.grid.forEach((letter) => {
+          if (letter.wordId) {
+            this.props.wordActions.addLetterToWord(letter);
+          }
+        })
       }
+      if (_.isEmpty(this.props.grid)) {
+        this.props.gridActions.loadGridFromDB(this.props.puzzle._id);
+      }
+      if (_.isEmpty(this.props.words)) {
+        this.props.wordActions.loadWordsFromDB(this.props.puzzle._id);
+      }
+    }
+
+    componentDidUpdate() {
+      Meteor.call('puzzles.updateGrid',this.props.puzzle,this.props.grid)
+      Meteor.call('puzzles.updateWords',this.props.puzzle,this.props.words)
     }
 
     render() {

@@ -58,6 +58,10 @@ class LetterInput extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.refs._input.remove();
+  }
+  
   render() {
     const value = this.props.value;
     return (

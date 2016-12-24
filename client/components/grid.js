@@ -32,14 +32,6 @@ class Grid extends Component {
     });
   }
 
-  componentWillMount() {
-    this.props.grid.forEach((letter) => {
-      if (letter.wordId) {
-        this.props.actions.addLetterToWord(letter,this.props.puzzle);
-      }
-    })
-  }
-
   componentWillReceiveProps(nextProps) {
     // turn into strings to allow lodash comparason
     var currentLetterStrings = this.props.grid.map((letter)=>{
@@ -53,16 +45,19 @@ class Grid extends Component {
       }
     });
 
-    if (modifiedLetter.wordId) {
-      this.props.actions.addLetterToWord(modifiedLetter,this.props.puzzle)
-    } else {
-      var wordId;
-      this.props.grid.forEach((letter)=>{
-        if (letter.gridId === modifiedLetter.gridId) {
-          wordId = letter.wordId
-        }
-      })
-      this.props.actions.removeLetterFromWord({char:modifiedLetter.char,wordId:wordId,gridId:modifiedLetter.gridId},this.props.puzzle)
+    // check to see if there is a letter modified
+    if (modifiedLetter) {
+      if (modifiedLetter.wordId) {
+        this.props.actions.addLetterToWord(modifiedLetter)
+      } else {
+        var wordId;
+        this.props.grid.forEach((letter)=>{
+          if (letter.gridId === modifiedLetter.gridId) {
+            wordId = letter.wordId
+          }
+        })
+        this.props.actions.removeLetterFromWord({char:modifiedLetter.char,wordId:wordId,gridId:modifiedLetter.gridId})
+      }
     }
   }
 
