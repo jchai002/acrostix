@@ -28,12 +28,13 @@ class LetterInput extends Component {
         this.props.actions.useGridLetter({char:value,gridId:null,wordId:this.props.wordId});
       } else {
         // if there are no more letters left for this input, don't update and dispatch fail event
-        console.log('no more',value)
+        toastr.warning(`No more ${value} left!`);
+
         this.props.actions.useGridLetterFail();
         this.outOfLetterAnimation(value);
       }
     } else {
-      console.log(value,'is not a valid character')
+       toastr.error(`${value} is not a valid letter`,'Sorry!');
     }
   }
 
@@ -61,7 +62,7 @@ class LetterInput extends Component {
   componentWillUnmount() {
     this.refs._input.remove();
   }
-  
+
   render() {
     const value = this.props.value;
     return (

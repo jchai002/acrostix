@@ -20,3 +20,4 @@ shell-server
 fourseven:scss
 seba:minifiers-autoprefixer
 react-meteor-data
+chrismbeckett:toastr

@@ -32,7 +32,7 @@ class Word extends Component {
         let gridId = currentLetters[length-1].gridId;
         this.props.actions.restoreGridLetter({gridId:gridId,wordId:this.props.wordId});
       } else {
-        console.log('cannot delete any more letters from this word')
+        toastr.error('Cannot delete any more letters from this word', 'Ops!');
       }
     }
   }
