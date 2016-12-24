@@ -1,10 +1,10 @@
 import { Mongo } from 'meteor/mongo';
 
 Meteor.methods({
-  'puzzles.insert': function(grid) {
+  'puzzles.insert': function() {
     return Puzzles.insert({
       createdAt: new Date(),
-      grid,
+      grid:[],
       words:{},
       ownerId: ''
       // will add user id here
@@ -15,8 +15,8 @@ Meteor.methods({
      return Puzzles.remove(puzzle);
   },
 
-  'puzzles.initializeGrid': function(puzzle, payload) {
-    console.log('update puzzle grid')
+  'puzzles.initializeGrid': function(puzzle, grid) {
+    return Puzzles.update(puzzle._id, { $set: { grid } });
   },
 
   'puzzles.updateGrid': function(puzzle, payload) {

@@ -80,7 +80,7 @@ class QuoteEntryPage extends Component {
   componentWillReceiveProps(nextProps) {
     // if grid is created, create a new puzzle with the grid
     if (nextProps.grid) {
-      Meteor.call('puzzle.insert',nextProps.grid)
+      Meteor.call('puzzles.initializeGrid',this.props.puzzle,nextProps.grid)
       this.props.goToNextStep();
     }
   }

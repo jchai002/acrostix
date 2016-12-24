@@ -61,6 +61,7 @@ class WordEntryPage extends Component {
 
 
     render() {
+      console.log(this.props.puzzle)
       var letterCounters = this.displayLetterCounter();
       var wordIds = [];
       for (var wordId in this.props.words) {

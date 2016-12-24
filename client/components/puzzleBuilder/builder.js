@@ -27,22 +27,26 @@ class PuzzleBuilder extends Component {
   assignView() {
     switch(this.state.currentStep) {
       case 1:
-      return (<QuoteEntryPage goToNextStep={this.goToNextStep} />);
+      return (<QuoteEntryPage goToNextStep={this.goToNextStep} puzzle={this.props.puzzle} />);
       case 2:
-      return (<WordEntryPage goToNextStep={this.goToNextStep} />);
+      return (<WordEntryPage goToNextStep={this.goToNextStep} puzzle={this.props.puzzle} />);
       case 3:
-      return (<ClueEntryPage goToNextStep={this.goToNextStep} />);
+      return (<ClueEntryPage goToNextStep={this.goToNextStep} puzzle={this.props.puzzle} />);
       defualt:
-      return (<QuoteEntryPage goToNextStep={this.goToNextStep} />);
+      return (<QuoteEntryPage goToNextStep={this.goToNextStep} puzzle={this.props.puzzle} />);
     }
   }
 
   render() {
-    console.log(this.props.puzzles)
-    var view = this.assignView();
+    var view;
+    if (this.props.puzzle) {
+      view = this.assignView();
+    } else {
+      view = <div>Loading...</div>;
+    }
     return (
       <section id="builder">
-        {view}
+      {view}
       </section>
     );
   }
@@ -51,7 +55,8 @@ class PuzzleBuilder extends Component {
 PuzzleBuilder.propTypes = {
 }
 
-export default createContainer(() => {
+export default createContainer((props) => {
   Meteor.subscribe('puzzles');
-  return { puzzles: Puzzles.find({}).fetch() };
+  const { puzzleId } = props.params;
+  return { puzzle: Puzzles.findOne(puzzleId) };
 }, PuzzleBuilder);
