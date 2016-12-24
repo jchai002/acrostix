@@ -19,11 +19,15 @@ body {
 }
 
 .list-group {
+  font-family: sans-serif;
   @extend .container;
   .list-group-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    .tag {
+      margin-right: $space-sm;
+    }
   }
 }
 
