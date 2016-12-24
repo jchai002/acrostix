@@ -16,14 +16,6 @@ Meteor.methods({
     return Puzzles.remove(puzzle);
   },
 
-  'puzzles.initializeGrid': function(puzzle, grid) {
-    return Puzzles.update(puzzle._id, { $set: { grid } });
-  },
-
-  'puzzles.initializeWords': function(puzzle, words) {
-    return Puzzles.update(puzzle._id, { $set: { words } });
-  },
-
   'puzzles.updateCurrentStep': function(puzzle, step) {
     return Puzzles.update(puzzle._id, { $set: { currentStep: step } });
   },
