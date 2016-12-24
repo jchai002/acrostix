@@ -35,7 +35,7 @@ class Grid extends Component {
   componentWillMount() {
     this.props.grid.forEach((letter) => {
       if (letter.wordId) {
-        this.props.actions.addLetterToWord(letter);
+        this.props.actions.addLetterToWord(letter,this.props.puzzle);
       }
     })
   }
@@ -54,7 +54,7 @@ class Grid extends Component {
     });
 
     if (modifiedLetter.wordId) {
-      this.props.actions.addLetterToWord(modifiedLetter)
+      this.props.actions.addLetterToWord(modifiedLetter,this.props.puzzle)
     } else {
       var wordId;
       this.props.grid.forEach((letter)=>{
@@ -62,7 +62,7 @@ class Grid extends Component {
           wordId = letter.wordId
         }
       })
-      this.props.actions.removeLetterFromWord({char:modifiedLetter.char,wordId:wordId,gridId:modifiedLetter.gridId})
+      this.props.actions.removeLetterFromWord({char:modifiedLetter.char,wordId:wordId,gridId:modifiedLetter.gridId},this.props.puzzle)
     }
   }
 

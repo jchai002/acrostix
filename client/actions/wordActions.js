@@ -12,8 +12,10 @@ export function createWordsSuccess(numberOfWords) {
   return {type: types.CREATE_WORDS_SUCCESS, numberOfWords}
 }
 
-export function addLetterToWord(letter) {
+export function addLetterToWord(letter,puzzle) {
   return function(dispatch) {
+    Meteor.call('puzzles.useGridLetter',puzzle,letter);
+    Meteor.call('puzzles.addLetterToWord',puzzle,letter);
     dispatch(addLetterToWordSuccess(letter));
   }
 }
@@ -22,8 +24,10 @@ export function addLetterToWordSuccess(letter) {
   return {type: types.ADD_LETTER_TO_WORD_SUCCESS, letter}
 }
 
-export function removeLetterFromWord(letter) {
+export function removeLetterFromWord(letter,puzzle) {
   return function(dispatch) {
+    Meteor.call('puzzles.restoreGridLetter',puzzle,letter);
+    Meteor.call('puzzles.removeLetterFromWord',puzzle,letter);
     dispatch(removeLetterFromWordSuccess(letter));
   }
 }

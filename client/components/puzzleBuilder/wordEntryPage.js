@@ -101,7 +101,7 @@ class WordEntryPage extends Component {
             />
           <div className="row">
             <div className="col-xs-12">
-              <Grid />
+              <Grid puzzle={this.props.puzzle} />
             </div>
             <div className="col-xs-12">
               <h2>Letters Remaining</h2>

@@ -31,12 +31,20 @@ Meteor.methods({
     return Puzzles.update(puzzle._id, { $set: { currentStep: step } });
   },
 
-  'puzzles.updateGrid': function(puzzle, payload) {
-    console.log('update puzzle grid')
+  'puzzles.useGridLetter': function(puzzle, letter) {
+    console.log(letter,puzzle)
   },
 
-  'puzzles.updateWord': function(puzzle, payload) {
-    console.log('update puzzle word')
+  'puzzles.restoreGridLetter': function(puzzle, letter) {
+    // console.log('running puzzles.restoreGridLetter')
+  },
+
+  'puzzles.addLetterToWord': function(puzzle, letter) {
+    // console.log('running puzzles.addLetterToWord')
+  },
+
+  'puzzles.removeLetterFromWord': function(puzzle, letter) {
+    // console.log('running puzzles.removeLetterFromWord')
   }
 });
 
