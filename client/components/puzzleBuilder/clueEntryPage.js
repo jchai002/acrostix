@@ -50,7 +50,11 @@ class ClueEntryPage extends Component {
     var pageComplete = false;
     return (
       <div className="container">
-        <BuilderNav pageComplete={pageComplete} goToNextStep={this.props.goToNextStep} />
+        <BuilderNav
+           pageComplete={pageComplete}
+           goToNextStep={this.goToNextStep}
+           goToPrevStep={this.props.goToPrevStep}
+          />
         <div className="row">
           <div className="col-xs-12">
             <h2>Enter Clues For Each Word</h2>

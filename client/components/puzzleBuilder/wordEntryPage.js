@@ -61,7 +61,6 @@ class WordEntryPage extends Component {
 
 
     render() {
-      console.log(this.props.puzzle)
       var letterCounters = this.displayLetterCounter();
       var wordIds = [];
       for (var wordId in this.props.words) {
@@ -78,7 +77,10 @@ class WordEntryPage extends Component {
       var pageComplete = !this.getRemainingLetters().length;
       return (
         <div className="container">
-          <BuilderNav pageComplete={pageComplete} goToNextStep={this.goToNextStep} />
+          <BuilderNav
+            pageComplete={pageComplete} goToNextStep={this.goToNextStep}
+            goToPrevStep={this.props.goToPrevStep}
+            />
           <div className="row">
             <div className="col-xs-12">
               <Grid />

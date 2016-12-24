@@ -1,5 +1,5 @@
 import React from 'react';
-const BuilderNav = ({pageComplete,goToNextStep}) => {
+const BuilderNav = ({pageComplete,goToPrevStep,goToNextStep}) => {
   var buttonClass;
   if (pageComplete) {
     buttonClass = "btn btn-success"
@@ -8,7 +8,6 @@ const BuilderNav = ({pageComplete,goToNextStep}) => {
   }
   return (
     <nav className="builder-nav">
-      <a onClick={goToNextStep} className={buttonClass}>Back</a>
       <a onClick={goToNextStep} className={buttonClass}>Continue</a>
     </nav>
   );

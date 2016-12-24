@@ -80,7 +80,7 @@ class QuoteEntryPage extends Component {
   componentWillReceiveProps(nextProps) {
     // if grid is created, create a new puzzle with the grid
     if (nextProps.grid) {
-      Meteor.call('puzzles.initializeGrid',this.props.puzzle,nextProps.grid)
+      Meteor.call('puzzles.initializeGrid',this.props.puzzle,nextProps.grid);
       this.props.goToNextStep();
     }
   }
@@ -116,7 +116,10 @@ class QuoteEntryPage extends Component {
 
     return (
       <div className="container">
-        <BuilderNav pageComplete={pageComplete} goToNextStep={this.goToNextStep} />
+        <BuilderNav
+          pageComplete={pageComplete} goToNextStep={this.goToNextStep}
+          goToPrevStep={this.props.goToPrevStep}
+          />
         <div className="row">
           <div className="col-xs-12 col-lg-6">
             <h2>Enter a quote and its author</h2>

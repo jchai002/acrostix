@@ -4,6 +4,7 @@ Meteor.methods({
   'puzzles.insert': function() {
     return Puzzles.insert({
       createdAt: new Date(),
+      currentStep:1,
       grid:[],
       words:{},
       ownerId: ''
@@ -17,6 +18,10 @@ Meteor.methods({
 
   'puzzles.initializeGrid': function(puzzle, grid) {
     return Puzzles.update(puzzle._id, { $set: { grid } });
+  },
+
+  'puzzles.updateCurrentStep': function(puzzle, step) {
+    return Puzzles.update(puzzle._id, { $set: { currentStep: step } });
   },
 
   'puzzles.updateGrid': function(puzzle, payload) {
