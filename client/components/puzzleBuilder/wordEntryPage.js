@@ -64,18 +64,18 @@ class WordEntryPage extends Component {
     }
 
     componentWillMount() {
-      if (this.props.grid.length) {
-        this.props.grid.forEach((letter) => {
-          if (letter.wordId) {
-            this.props.wordActions.addLetterToWord(letter);
-          }
-        })
-      }
-      if (_.isEmpty(this.props.grid)) {
+      if (_.isEmpty(this.props.grid) && _.isEmpty(this.props.words)) {
         this.props.gridActions.loadGridFromDB(this.props.puzzle._id);
-      }
-      if (_.isEmpty(this.props.words)) {
         this.props.wordActions.loadWordsFromDB(this.props.puzzle._id);
+      } else {
+        var words = this.props.words;
+        if (words[Object.keys(words)[0]].letters.length == 0) {
+          this.props.grid.forEach((letter) => {
+            if (letter.wordId) {
+              this.props.wordActions.addLetterToWord(letter);
+            }
+          })
+        }
       }
     }
 

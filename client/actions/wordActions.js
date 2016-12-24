@@ -45,7 +45,6 @@ export function updateClueSuccess(clue) {
 export function loadWordsFromDB(puzzleId) {
   return function(dispatch) {
     var puzzle = Puzzles.findOne(puzzleId);
-    console.log(puzzle.words)
     dispatch(loadWordsFromDBSuccess(puzzle.words));
   }
 }

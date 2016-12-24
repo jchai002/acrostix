@@ -20,14 +20,14 @@ class QuoteEntryPage extends Component {
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
     this.validatePuzzle = this.validatePuzzle.bind(this);
     this.checkForCompletion = this.checkForCompletion.bind(this)
-    this.goToNextStep = this.goToNextStep.bind(this);
+    this.prepGrid = this.prepGrid.bind(this);
   }
 
   handleQuoteChange(string) {
     this.setState({quote: string});
   }
   handleAuthorChange(string) {
-    this.setState({authorName: string.replace(/[^A-Za-z]/g,'')});
+    this.setState({authorName: string.replace(/[^A-Za-z]/g,'').toLowerCase()});
   }
 
   validatePuzzle() {
@@ -53,7 +53,7 @@ class QuoteEntryPage extends Component {
     return enoughLetters
   }
 
-  goToNextStep() {
+  prepGrid() {
     const Page = this;
     // add future logic to opt out of author name match constraints here
     var authorNameLetters = Page.state.authorName.split('');
@@ -61,7 +61,7 @@ class QuoteEntryPage extends Component {
     Page.props.wordActions.createWords(numberOfWords);
 
     var counter = 1;
-    Page.state.quote.split('').forEach(function(char){
+    Page.state.quote.replace(/[^a-zA-Z ]/g, "").replace(/\s+/g, ' ').split('').forEach(function(char){
       var char = char.toLowerCase();
       if (utils.isLetter(char)) {
         Page.props.gridActions.addLetterToGrid({char:char,gridId:counter,wordId:''});
@@ -75,8 +75,12 @@ class QuoteEntryPage extends Component {
     for (var i = 0;i < numberOfWords; i++) {
       Page.props.gridActions.useGridLetter({char:authorNameLetters[i],gridId:'',wordId:Alphabet[i]});
     }
+  }
 
-    this.props.goToNextStep();
+  componentDidUpdate() {
+    if (this.props.grid.length) {
+      this.props.goToNextStep()
+    }
   }
 
   checkForCompletion() {
@@ -111,7 +115,7 @@ class QuoteEntryPage extends Component {
     return (
       <div className="container">
         <BuilderNav
-          pageComplete={pageComplete} goToNextStep={this.goToNextStep}
+          pageComplete={pageComplete} goToNextStep={this.prepGrid}
           goToPrevStep={this.props.goToPrevStep}
           />
         <div className="row">
