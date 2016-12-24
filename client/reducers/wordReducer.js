@@ -10,6 +10,8 @@ export default function wordReducer(state = initialState.words,action) {
       words[Alphabet[i]] = {letters:[],clue:''}
     }
     return words
+    case types.LOAD_WORDS_FROM_DB_SUCCESSS:
+      return action.words
     case types.ADD_LETTER_TO_WORD_SUCCESS:
     var wordId = action.letter.wordId;
     var stateClone = JSON.parse(JSON.stringify(state));

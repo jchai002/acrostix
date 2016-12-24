@@ -1,4 +1,5 @@
 import * as types from './actionTypes.js'
+import { Puzzles } from '../../collections/puzzles';
 
 // thunk
 export function createWords(numberOfWords) {
@@ -39,4 +40,15 @@ export function updateClue(clue) {
 
 export function updateClueSuccess(clue) {
   return {type: types.UPDATE_CLUE, clue}
+}
+
+export function loadWordsFromDB(puzzleId) {
+  return function(dispatch) {
+    var puzzle = Puzzles.findOne(puzzleId);
+    dispatch(loadWordsFromDBSuccess(puzzle.words));
+  }
+}
+
+export function loadWordsFromDBSuccess(words) {
+  return {type: types.LOAD_WORDS_FROM_DB_SUCCESSS, words}
 }

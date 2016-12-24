@@ -69,10 +69,9 @@ class WordEntryPage extends Component {
       //   this.props.gridActions.addLetterToGrid(letter);
       // });
       if (_.isEmpty(this.props.words)) {
-        // load words from DB
-        console.log('word is empty')
-        console.log(this.props.grid)
-        this.props.gridActions.loadGridFromDB(this.props.puzzle._id)
+        // load grid and words from DB
+        this.props.wordActions.loadWordsFromDB(this.props.puzzle._id);
+        this.props.gridActions.loadGridFromDB(this.props.puzzle._id);
       } else {
         Meteor.call('puzzles.initializeGrid',this.props.puzzle,this.props.grid);
         Meteor.call('puzzles.initializeWords',this.props.puzzle, this.props.words);
