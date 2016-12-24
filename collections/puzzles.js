@@ -17,7 +17,14 @@ Meteor.methods({
   },
 
   'puzzles.initializeGrid': function(puzzle, grid) {
+    console.log('init grid',grid)
+
     return Puzzles.update(puzzle._id, { $set: { grid } });
+  },
+
+  'puzzles.initializeWords': function(puzzle, words) {
+    console.log('init words',words)
+    return Puzzles.update(puzzle._id, { $set: { words } });
   },
 
   'puzzles.updateCurrentStep': function(puzzle, step) {

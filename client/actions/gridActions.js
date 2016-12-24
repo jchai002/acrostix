@@ -1,4 +1,5 @@
 import * as types from './actionTypes.js'
+import { Puzzles } from '../../collections/puzzles';
 
 // thunk
 export function addLetterToGrid(letter) {
@@ -35,4 +36,15 @@ export function restoreGridLetter(letter) {
 
 export function restoreGridLetterSuccess(letter) {
   return {type: types.RESTORE_GRID_LETTER_SUCCESS, letter}
+}
+
+export function loadGridFromDB(puzzleId) {
+  return function(dispatch) {
+    var puzzle = Puzzles.findOne(puzzleId);
+    dispatch(loadGridFromDBSuccess(puzzle.grid));
+  }
+}
+
+export function loadGridFromDBSuccess(grid) {
+  return {type: types.LOAD_GRID_FROM_DB_SUCCESSS, grid}
 }

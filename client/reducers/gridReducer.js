@@ -31,6 +31,8 @@ export default function letterReducer(state = initialState.grid,action) {
         }
       }
       return stateClone
+    case types.LOAD_GRID_FROM_DB_SUCCESSS:
+      // return action.grid
     default:
       return state
   }

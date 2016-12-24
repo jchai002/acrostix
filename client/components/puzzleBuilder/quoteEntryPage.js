@@ -75,14 +75,8 @@ class QuoteEntryPage extends Component {
     for (var i = 0;i < numberOfWords; i++) {
       Page.props.gridActions.useGridLetter({char:authorNameLetters[i],gridId:'',wordId:Alphabet[i]});
     }
-  }
 
-  componentWillReceiveProps(nextProps) {
-    // if grid is created, create a new puzzle with the grid
-    if (nextProps.grid) {
-      Meteor.call('puzzles.initializeGrid',this.props.puzzle,nextProps.grid);
-      this.props.goToNextStep();
-    }
+    this.props.goToNextStep();
   }
 
   checkForCompletion() {

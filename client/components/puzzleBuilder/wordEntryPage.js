@@ -1,9 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as gridActions from '../../actions/gridActions';
+import * as wordActions from '../../actions/wordActions';
 import Grid from '../grid'
 import Word from '../word'
 import BuilderNav from './builderNav';
 import Alphabet from "../../constants/alphabet";
+import _ from 'lodash'
 
 class WordEntryPage extends Component {
   constructor(props) {
@@ -59,6 +63,21 @@ class WordEntryPage extends Component {
       this.props.goToNextStep()
     }
 
+    componentWillMount() {
+      // var currentGrid = this.props.puzzle.grid
+      // currentGrid.forEach((letter)=>{
+      //   this.props.gridActions.addLetterToGrid(letter);
+      // });
+      if (_.isEmpty(this.props.words)) {
+        // load words from DB
+        console.log('word is empty')
+        console.log(this.props.grid)
+        this.props.gridActions.loadGridFromDB(this.props.puzzle._id)
+      } else {
+        Meteor.call('puzzles.initializeGrid',this.props.puzzle,this.props.grid);
+        Meteor.call('puzzles.initializeWords',this.props.puzzle, this.props.words);
+      }
+    }
 
     render() {
       var letterCounters = this.displayLetterCounter();
@@ -110,4 +129,11 @@ class WordEntryPage extends Component {
     };
   }
 
-  export default connect(mapStateToProps)(WordEntryPage);
+  function mapDispatchToProps(dispatch) {
+    return {
+      gridActions: bindActionCreators(gridActions,dispatch),
+      wordActions: bindActionCreators(wordActions,dispatch)
+    }
+  }
+
+  export default connect(mapStateToProps,mapDispatchToProps)(WordEntryPage);
