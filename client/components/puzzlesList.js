@@ -51,7 +51,8 @@ class PuzzlesList extends Component {
 }
 
 export default createContainer(() => {
-  Meteor.subscribe('puzzles');
+  Meteor.subscribe('ownPuzzles');
+  Meteor.subscribe('publicPuzzles');
 
   return { puzzles: Puzzles.find({}).fetch() };
 }, PuzzlesList);

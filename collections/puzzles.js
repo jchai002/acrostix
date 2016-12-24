@@ -7,7 +7,8 @@ Meteor.methods({
       currentStep:1,
       grid:[],
       words:{},
-      ownerId: this.userId
+      ownerId: this.userId,
+      public: true
     });
   },
 
