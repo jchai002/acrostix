@@ -37,6 +37,7 @@ class PuzzleBuilder extends Component {
   }
 
   render() {
+    console.log(this.props.puzzle)
     var view;
     if (this.props.puzzle) {
       view = this.assignView();

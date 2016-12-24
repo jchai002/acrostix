@@ -16,6 +16,16 @@ body {
     display: flex;
     justify-content: space-between;
   }
+
+  .nav-buttons {
+    width: 25%;
+    justify-content: space-between;
+    display: flex;
+    #login-buttons {
+      margin-top: $space-sm;
+      font-size: 14px;
+    }
+  }
 }
 
 .list-group {
@@ -40,25 +50,25 @@ body {
   }
 }
 #builder {
-    .builder-nav {
-      margin: $space-stack-md;
+  .builder-nav {
+    margin: $space-stack-md;
+  }
+  .quote-input, .author-input {
+    @extend .form-control;
+    resize: none;
+  }
+  .remaining {
+    float: right;
+    color: $gray;
+    margin-top: $space-xs;
+    margin-bottom: $space-md;
+  }
+  .constraints {
+    padding-left: 0;
+    li {
+      list-style: none;
     }
-    .quote-input, .author-input {
-      @extend .form-control;
-      resize: none;
-    }
-    .remaining {
-      float: right;
-      color: $gray;
-      margin-top: $space-xs;
-      margin-bottom: $space-md;
-    }
-    .constraints {
-      padding-left: 0;
-      li {
-        list-style: none;
-      }
-    }
+  }
 
   .grid {
     display: flex;

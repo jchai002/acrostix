@@ -21,3 +21,5 @@ fourseven:scss
 seba:minifiers-autoprefixer
 react-meteor-data
 chrismbeckett:toastr
+accounts-ui
+accounts-password

@@ -7,8 +7,7 @@ Meteor.methods({
       currentStep:1,
       grid:[],
       words:{},
-      ownerId: ''
-      // will add user id here
+      ownerId: this.userId
     });
   },
 
