@@ -8,6 +8,7 @@ import Word from '../word'
 import BuilderNav from './builderNav';
 import Alphabet from "../../constants/alphabet";
 import _ from 'lodash';
+import * as utils from  '../../helpers/utils';
 
 class WordEntryPage extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class WordEntryPage extends Component {
     var lettersRemaining = [];
     for (var key in this.props.grid) {
       var letter = this.props.grid[key];
-      if (!letter.wordId) {
+      if (utils.isLetter(letter.char) && !letter.wordId) {
         lettersRemaining.push(letter);
       }
     }
