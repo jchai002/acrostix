@@ -34,6 +34,9 @@ class LetterInput extends Component {
         this.outOfLetterAnimation(value);
       }
     } else {
+       if (value==' ') {
+         value = 'space';
+       }
        toastr.error(`${value} is not a valid letter`,'Sorry!');
     }
   }
