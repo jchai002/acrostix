@@ -26,26 +26,33 @@ class PuzzleBuilder extends Component {
     switch(this.props.puzzle.currentStep) {
       case 1:
       return (<QuoteEntryPage  goToNextStep={this.goToNextStep} goToPrevStep={this.goToPrevStep} puzzle={this.props.puzzle} />
-      );
-      case 2:
-      return (<WordEntryPage goToNextStep={this.goToNextStep} goToPrevStep={this.goToPrevStep} puzzle={this.props.puzzle} />);
-      case 3:
-      return (<ClueEntryPage goToNextStep={this.goToNextStep} goToPrevStep={this.goToPrevStep} puzzle={this.props.puzzle} />);
-      defualt:
-      return (<QuoteEntryPage goToNextStep={this.goToNextStep} puzzle={this.props.puzzle} />);
-    }
+    );
+    case 2:
+    return (<WordEntryPage goToNextStep={this.goToNextStep} goToPrevStep={this.goToPrevStep} puzzle={this.props.puzzle} />);
+    case 3:
+    return (<ClueEntryPage goToNextStep={this.goToNextStep} goToPrevStep={this.goToPrevStep} puzzle={this.props.puzzle} />);
+    defualt:
+    return (<QuoteEntryPage goToNextStep={this.goToNextStep} puzzle={this.props.puzzle} />);
   }
+}
 
   render() {
     var view;
     if (this.props.puzzle) {
       view = this.assignView();
     } else {
-      view = <div>Loading...</div>;
+      view = (
+        <div id="loading">
+          <div className="animated pulse infinite">
+            <i className="fa fa-3x fa-puzzle-piece"></i>
+            <div>loading...</div>
+          </div>
+        </div>
+      );
     }
     return (
       <section id="builder">
-      {view}
+        {view}
       </section>
     );
   }
