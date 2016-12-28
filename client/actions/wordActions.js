@@ -1,6 +1,5 @@
 import * as types from './actionTypes.js'
 import { Puzzles } from '../../collections/puzzles';
-
 // thunk
 export function createWords(numberOfWords) {
   return function(dispatch) {

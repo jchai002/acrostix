@@ -4,4 +4,45 @@
   body {
     background-color: $white;
   }
+
+  #builder {
+    .builder-nav {
+      display: none;
+    }
+    .grid {
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: flex;
+      flex-flow: row wrap;
+      width: 511pt;
+      margin-bottom: $space-md;
+      border-top: 2px solid $black;
+      border-right: 2px solid $black;
+      .tile {
+        width: 4.1%;
+        height: 46.25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        padding: $space-xs;
+        border: 2px solid $black;
+        border-top: none;
+        border-right: none;
+        .letter-number {
+          position: absolute;
+          left: 2px;
+          top: -2px;
+          font-size: 12px;
+        }
+        .word-id {
+          position: absolute;
+          right: 2px;
+          top: -2px;
+          font-size: 12px;
+        }
+      }
+    }
+  }
 }

@@ -4,6 +4,10 @@ import WordEntryPage from './wordEntryPage';
 import ClueEntryPage from './clueEntryPage';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Puzzles } from '../../../collections/puzzles';
+import * as generalActions from '../../actions/generalActions';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+
 
 class PuzzleBuilder extends Component {
   constructor(props) {
@@ -28,13 +32,19 @@ class PuzzleBuilder extends Component {
       return (<QuoteEntryPage  goToNextStep={this.goToNextStep} goToPrevStep={this.goToPrevStep} puzzle={this.props.puzzle} />
     );
     case 2:
-    return (<WordEntryPage goToNextStep={this.goToNextStep} goToPrevStep={this.goToPrevStep} puzzle={this.props.puzzle} />);
+    return (<WordEntryPage goToNextStep={this.goToNextStep} goToPrevStep={this.goToPrevStep}
+    puzzle={this.props.puzzle} />);
     case 3:
     return (<ClueEntryPage goToNextStep={this.goToNextStep} goToPrevStep={this.goToPrevStep} puzzle={this.props.puzzle} />);
     defualt:
     return (<QuoteEntryPage goToNextStep={this.goToNextStep} puzzle={this.props.puzzle} />);
   }
 }
+
+
+  componentWillMount() {
+    this.props.actions.clearStore()
+  }
 
   render() {
     var view;
@@ -61,9 +71,21 @@ class PuzzleBuilder extends Component {
 PuzzleBuilder.propTypes = {
 }
 
+function mapStateToProps(state, ownProps) {
+  return {
+    grid: state.grid
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(generalActions,dispatch)
+  }
+}
+
 export default createContainer((props) => {
   Meteor.subscribe('ownPuzzles');
   Meteor.subscribe('publicPuzzles');
   const { puzzleId } = props.params;
   return { puzzle: Puzzles.findOne(puzzleId) };
-}, PuzzleBuilder);
+}, connect(mapStateToProps,mapDispatchToProps)(PuzzleBuilder));
