@@ -59,12 +59,11 @@ class ClueEntryPage extends Component {
         </div>
       );
     });
-    var pageComplete = false;
     return (
       <div className="container">
         <BuilderNav
-           pageComplete={pageComplete}
-           goToNextStep={this.goToNextStep}
+           pageComplete={true}
+           goToNextStep={this.props.goToNextStep}
            goToPrevStep={this.props.goToPrevStep}
           />
         <div className="row">

@@ -104,6 +104,13 @@ textarea {
     }
   }
 
+  .review-row {
+    margin-bottom: $space-md;
+    .word {
+      padding-bottom: $space-sm !important;
+    }
+  }
+
   .grid {
     display: flex;
     flex-flow: row wrap;
@@ -221,9 +228,5 @@ textarea {
         margin-right: $space-xs;
       }
     }
-  }
-
-  .step-3 {
-    // code here
   }
 }

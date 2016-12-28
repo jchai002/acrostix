@@ -2,12 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import QuoteEntryPage from './quoteEntryPage';
 import WordEntryPage from './wordEntryPage';
 import ClueEntryPage from './clueEntryPage';
+import ReviewPage from './reviewPage';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Puzzles } from '../../../collections/puzzles';
 import * as generalActions from '../../actions/generalActions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-
 
 class PuzzleBuilder extends Component {
   constructor(props) {
@@ -36,6 +36,8 @@ class PuzzleBuilder extends Component {
     puzzle={this.props.puzzle} />);
     case 3:
     return (<ClueEntryPage goToNextStep={this.goToNextStep} goToPrevStep={this.goToPrevStep} puzzle={this.props.puzzle} />);
+    case 4:
+    return (<ReviewPage goToNextStep={this.goToNextStep} goToPrevStep={this.goToPrevStep} puzzle={this.props.puzzle} />);
     defualt:
     return (<QuoteEntryPage goToNextStep={this.goToNextStep} puzzle={this.props.puzzle} />);
   }

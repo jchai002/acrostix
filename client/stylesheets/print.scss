@@ -10,9 +10,22 @@
       margin: 0;
       padding: 0;
     }
-    .builder-nav {
+    .builder-nav,
+    .letter.red {
       display: none;
     }
+
+    .letter {
+      margin: 0 $space-xs !important;
+      input {
+        border-bottom: none !important;
+        color: transparent;
+      }
+      small {
+        border-top: 2px solid $black !important;
+      }
+    }
+
     .grid {
       left: 0;
       top: 0;
