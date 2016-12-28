@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Puzzles } from '../../collections/puzzles';
 import { Link } from 'react-router';
+import _ from 'lodash';
 
 class PuzzlesList extends Component {
   onPuzzleRemove(puzzle) {
@@ -9,27 +10,41 @@ class PuzzlesList extends Component {
   }
 
   renderList() {
-    return this.props.puzzles.map(puzzle => {
+    var list = this.props.puzzles.map(puzzle => {
       const url = `/puzzles/${puzzle._id}`;
-      var stage;
+      var stage, stageCss, visibility, visibilityCss;
       switch (puzzle.currentStep) {
         case 1:
           stage = 'Quote Entry'
+          stageCss = 'tag tag-danger'
         break;
         case 2:
           stage = 'Words Entry'
+          stageCss = 'tag tag-warning'
         break;
         case 3:
           stage = 'Clues Entry'
+          stageCss = 'tag tag-success'
         break;
       }
+
+      if (puzzle.public) {
+        visibility = 'public';
+        visibilityCss = 'tag tag-info'
+      } else {
+        visibility = 'private'
+        visibilityCss = 'tag tag-primary'
+      }
+
       return (
         <li className="list-group-item" key={puzzle._id}>
         <span>
-        <span className="tag tag-success">{stage}</span>
+        <span className={visibilityCss}>{visibility}</span>
+        <span className={stageCss}>{stage}</span>
         <Link to={url}>{puzzle.name}</Link>
         </span>
         <span>
+        <span className="moment">Created {moment(puzzle.createdAt).fromNow()}</span>
         <button
         className="btn btn-danger"
         onClick={() => this.onPuzzleRemove(puzzle)}>
@@ -39,6 +54,9 @@ class PuzzlesList extends Component {
         </li>
       );
     });
+
+    return _.sortBy(list, 'createdAt').reverse();
+
   }
 
   render() {

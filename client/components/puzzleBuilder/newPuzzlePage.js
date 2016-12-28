@@ -17,7 +17,6 @@ class newPuzzlePage extends Component {
 
   createPuzzle() {
     Meteor.call('puzzles.insert',this.state.puzzleName,this.state.published,(error, puzzleId) => {
-      console.log(puzzleId)
       browserHistory.push(`/puzzles/${puzzleId}`);
     });
   }
