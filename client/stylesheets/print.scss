@@ -6,11 +6,14 @@
   }
 
   #builder {
+    .container {
+      margin: 0;
+      padding: 0;
+    }
     .builder-nav {
       display: none;
     }
     .grid {
-      position: absolute;
       left: 0;
       top: 0;
       display: flex;
