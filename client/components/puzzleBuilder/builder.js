@@ -63,7 +63,7 @@ class PuzzleBuilder extends Component {
       );
     }
     return (
-      <section id="builder">
+      <section id="builder" className="puzzle">
         {view}
       </section>
     );

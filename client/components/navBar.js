@@ -8,7 +8,7 @@ const Nabvar = ({insertPuzzle}) => {
       <div className="container">
         <div className="row">
           <div className="nav-buttons">
-            <a className="navbar-brand" href="/">Acrostix</a>
+            <a className="navbar-brand" href="/"><i className="fa fa-newspaper-o"/>Acrostix</a>
             <Accounts />
           </div>
           <Link className="btn btn-success" to="/new-puzzle">New Puzzle</Link>

@@ -15,16 +15,19 @@ class PuzzlesList extends Component {
       var stage, stageCss, visibility, visibilityCss;
       switch (puzzle.currentStep) {
         case 1:
-          stage = 'Quote Entry'
-          stageCss = 'tag tag-danger'
+        stage = 'Quote Entry'
+        stageCss = 'tag tag-default'
         break;
         case 2:
-          stage = 'Words Entry'
-          stageCss = 'tag tag-warning'
+        stage = 'Words Entry'
+        stageCss = 'tag tag-danger'
         break;
         case 3:
-          stage = 'Clues Entry'
-          stageCss = 'tag tag-success'
+        stage = 'Clues Entry'
+        stageCss = 'tag tag-warning'
+        case 4:
+        stage = 'Review & Print'
+        stageCss = 'tag tag-success'
         break;
       }
 
@@ -38,19 +41,19 @@ class PuzzlesList extends Component {
 
       return (
         <li className="list-group-item" key={puzzle._id}>
-        <span>
-        <span className={visibilityCss}>{visibility}</span>
-        <span className={stageCss}>{stage}</span>
-        <Link to={url}>{puzzle.name}</Link>
-        </span>
-        <span>
-        <span className="moment">Created {moment(puzzle.createdAt).fromNow()}</span>
-        <button
-        className="btn btn-danger"
-        onClick={() => this.onPuzzleRemove(puzzle)}>
-        Remove
-        </button>
-        </span>
+          <span>
+            <span className={visibilityCss}>{visibility}</span>
+            <span className={stageCss}>{stage}</span>
+            <Link to={url}>{puzzle.name}</Link>
+          </span>
+          <span>
+            <span className="moment">Created {moment(puzzle.createdAt).fromNow()}</span>
+            <button
+              className="btn btn-danger"
+              onClick={() => this.onPuzzleRemove(puzzle)}>
+              Remove
+            </button>
+          </span>
         </li>
       );
     });
@@ -62,7 +65,7 @@ class PuzzlesList extends Component {
   render() {
     return (
       <ul className="list-group">
-      {this.renderList()}
+        {this.renderList()}
       </ul>
     );
   }

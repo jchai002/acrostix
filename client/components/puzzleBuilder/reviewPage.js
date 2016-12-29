@@ -48,12 +48,13 @@ class ReviewPage extends Component {
       <div className="container">
         <BuilderNav
            pageComplete={true}
+           buttonContent="Print"
            goToNextStep={this.goToNextStep}
            goToPrevStep={this.props.goToPrevStep}
           />
         <div className="row">
           <div className="col-xs-12">
-            <h2>Review</h2>
+            <h2>Review & Print</h2>
           </div>
           <div className="col-xs-12">
             <Grid puzzle={this.props.puzzle} />

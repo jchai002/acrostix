@@ -3,8 +3,10 @@
 @media print {
   body {
     background-color: $white;
+    * {
+      page-break-inside: avoid !important;
+    }
   }
-
   #builder {
     .container {
       margin: 0;

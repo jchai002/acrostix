@@ -105,6 +105,7 @@ class WordEntryPage extends Component {
       return (
         <div className="container">
           <BuilderNav
+            buttonContent="Next: Enter Clues"
             pageComplete={pageComplete} goToNextStep={this.goToNextStep}
             goToPrevStep={this.props.goToPrevStep}
             />

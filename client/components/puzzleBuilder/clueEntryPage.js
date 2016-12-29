@@ -63,6 +63,7 @@ class ClueEntryPage extends Component {
       <div className="container">
         <BuilderNav
            pageComplete={true}
+           buttonContent="Next: Review & Print"
            goToNextStep={this.props.goToNextStep}
            goToPrevStep={this.props.goToPrevStep}
           />
