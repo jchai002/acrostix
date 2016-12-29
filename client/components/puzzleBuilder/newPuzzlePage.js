@@ -32,24 +32,26 @@ class newPuzzlePage extends Component {
   render() {
     var name = this.state.puzzleName;
     return (
-      <div id="newPuzzlePage">
+      <div id="new-puzzle-page">
         <div className="container">
           <div className="row">
-            <div className="col-xs-12 col-lg-6 col-lg-offset-3">
-              <h1>Create New Puzzle</h1>
-              <form>
-                <div className="form-group">
-                  <label>Puzzle Name</label>
-                  <TextArea handleChange={this.handleNameChange} rows="1" />
-                </div>
-                <div className="form-group">
-                  <label>Public?</label>
-                  <input type="checkbox" onChange={this.handlePublishChange} checked={this.state.published} />
-                </div>
-                <div className="form-group">
-                  <a className="btn btn-primary white" onClick={this.createPuzzle} to="/">Create</a>
-                </div>
-              </form>
+            <div className="col-xs-12 col-lg-6 offset-lg-3">
+              <div className="card">
+                <h1>Create New Puzzle</h1>
+                <form>
+                  <fieldset className="form-group">
+                    <label>Puzzle Name</label>
+                    <TextArea handleChange={this.handleNameChange} rows="1" />
+                  </fieldset>
+                  <fieldset className="form-group">
+                    <label>Public?</label>
+                    <input type="checkbox" onChange={this.handlePublishChange} checked={this.state.published} />
+                  </fieldset>
+                  <fieldset className="form-group">
+                    <a className="btn btn-primary white" onClick={this.createPuzzle} to="/">Create</a>
+                  </fieldset>
+                </form>
+              </div>
             </div>
           </div>
         </div>
