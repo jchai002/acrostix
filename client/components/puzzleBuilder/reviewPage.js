@@ -50,7 +50,6 @@ class ReviewPage extends Component {
            pageComplete={true}
            buttonContent="Print"
            goToNextStep={this.goToNextStep}
-           goToPrevStep={this.props.goToPrevStep}
           />
         <div className="row">
           <div className="col-xs-12">

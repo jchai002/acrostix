@@ -1,5 +1,5 @@
 import React from 'react';
-const BuilderNav = ({pageComplete,goToPrevStep,goToNextStep,buttonContent}) => {
+const BuilderNav = ({pageComplete,goToNextStep,buttonContent}) => {
   var buttonClass;
   if (pageComplete) {
     buttonClass = "btn btn-success"

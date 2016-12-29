@@ -65,7 +65,6 @@ class ClueEntryPage extends Component {
            pageComplete={true}
            buttonContent="Next: Review & Print"
            goToNextStep={this.props.goToNextStep}
-           goToPrevStep={this.props.goToPrevStep}
           />
         <div className="row">
           <div className="col-xs-12">

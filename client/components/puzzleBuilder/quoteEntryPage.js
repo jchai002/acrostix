@@ -116,7 +116,6 @@ class QuoteEntryPage extends Component {
         <BuilderNav
           buttonContent="Next: Enter Words"
           pageComplete={pageComplete} goToNextStep={this.prepGrid}
-          goToPrevStep={this.props.goToPrevStep}
           />
         <div className="row">
           <div className="col-xs-12 col-lg-6">

@@ -13,16 +13,10 @@ class PuzzleBuilder extends Component {
   constructor(props) {
     super(props);
     this.goToNextStep = this.goToNextStep.bind(this);
-    this.goToPrevStep = this.goToPrevStep.bind(this);
   }
 
   goToNextStep() {
     var currentStep = this.props.puzzle.currentStep + 1;
-    Meteor.call('puzzles.updateCurrentStep',this.props.puzzle, currentStep);
-  }
-
-  goToPrevStep() {
-    var currentStep = this.props.puzzle.currentStep - 1;
     Meteor.call('puzzles.updateCurrentStep',this.props.puzzle, currentStep);
   }
 
