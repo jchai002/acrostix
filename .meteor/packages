@@ -23,5 +23,8 @@ react-meteor-data
 chrismbeckett:toastr
 accounts-ui
 accounts-password
-fortawesome:fontawesome
 momentjs:moment
+accounts-oauth
+accounts-facebook
+accounts-google
+accounts-twitter
