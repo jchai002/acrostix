@@ -37,7 +37,10 @@ class ReviewPage extends Component {
           key={i}
           wordId={id}
           />
-        <span className="clue"> {this.props.words[id].clue}</span>
+        <div className="clue-row">
+          <Label key={'label-'+i} value={id} />
+          <span className="clue">{this.props.words[id].clue}</span>
+        </div>
         </div>
       );
     });

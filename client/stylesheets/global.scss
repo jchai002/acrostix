@@ -177,6 +177,17 @@ textarea {
     }
   }
 
+  .label {
+    font-size: 18px;
+  }
+
+  .clue {
+    margin-left: $space-sm;
+  }
+  .word & {
+    margin-right: $space-xs;
+  }
+
   .words {
     .word {
       max-width: 100%;
@@ -186,6 +197,9 @@ textarea {
       line-height: 18px;
       height: 68px;
       padding: $space-stack-md;
+      .label {
+        margin-right: $space-xs;
+      }
       .letter {
         position: relative;
         height: 100%;
@@ -219,13 +233,9 @@ textarea {
             }
           }
         }
-
       }
       .first-letter {
         text-transform: capitalize;
-      }
-      .label {
-        margin-right: $space-xs;
       }
     }
   }
