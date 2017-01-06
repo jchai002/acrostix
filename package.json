@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "puzzle game",
   "main": "main.js",
-  "engines": {
-    "node": "4.1.1",
-    "npm": "2.1.x"
-  },
   "dependencies": {
     "babel": "^6.5.2",
     "babel-polyfill": "^6.20.0",
