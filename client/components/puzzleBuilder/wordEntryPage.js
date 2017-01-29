@@ -15,7 +15,6 @@ class WordEntryPage extends Component {
     super(props);
     this.displayLetterCounter = this.displayLetterCounter.bind(this);
     this.getRemainingLetters = this.getRemainingLetters.bind(this);
-    this.goToNextStep = this.goToNextStep.bind(this);
   }
 
   getRemainingLetters() {
@@ -36,11 +35,6 @@ class WordEntryPage extends Component {
       lettersToDisplay.push(letter.char.toUpperCase());
     });
     return <LetterTracker letters={lettersToDisplay} />
-  }
-
-  goToNextStep() {
-    // save clues here
-    this.props.goToNextStep()
   }
 
   componentWillMount() {
