@@ -42,7 +42,7 @@ class WordEntryPage extends Component {
     });
     var letterCounters = Alphabet.split('').map((char) => {
       var letterClass = 'letter-'+char;
-      if (/[aeiou]/.test(char)) {
+      if (/[AEIOU]/.test(char)) {
         letterClass += " vowels"
       }
       if (!dictionary[char]) {
