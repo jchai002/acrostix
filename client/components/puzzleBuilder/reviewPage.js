@@ -22,6 +22,10 @@ class ReviewPage extends Component {
     }
   }
 
+  goToNextStep() {
+    window.print();
+  }
+
   render() {
     var wordIds = [];
     const Words = this.props.words;
