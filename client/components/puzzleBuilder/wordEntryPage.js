@@ -105,9 +105,9 @@ class WordEntryPage extends Component {
       return (
         <div className="container">
           <BuilderNav
-            buttonContent="Next: Enter Clues"
-            pageComplete={pageComplete} goToNextStep={this.goToNextStep}
-            />
+            pageComplete={pageComplete} goToNextStep={this.props.goToNextStep}
+            nextButtonContent="Next: Enter Clues"
+          />
           <div className="row">
             <div className="col-xs-12">
               <Grid puzzle={this.props.puzzle} />

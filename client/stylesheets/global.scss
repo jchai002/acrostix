@@ -59,8 +59,13 @@ textarea {
 
 .builder-nav {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  &.space-between {
+    justify-content: space-between;
+  }
+  &.flex-end {
+    justify-content: flex-end;
+  }
   .btn {
     @extend .white;
   }

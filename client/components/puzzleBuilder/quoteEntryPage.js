@@ -114,8 +114,9 @@ class QuoteEntryPage extends Component {
     return (
       <div className="container">
         <BuilderNav
-          buttonContent="Next: Enter Words"
-          pageComplete={pageComplete} goToNextStep={this.prepGrid}
+          nextButtonContent="Next: Enter Words"
+          goToNextStep={this.prepGrid}
+          pageComplete={pageComplete}
           />
         <div className="row">
           <div className="col-xs-12 col-lg-6">

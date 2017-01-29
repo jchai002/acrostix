@@ -63,8 +63,10 @@ class ClueEntryPage extends Component {
       <div className="container">
         <BuilderNav
            pageComplete={true}
-           buttonContent="Next: Review & Print"
+           nextButtonContent="Next: Review & Print"
+           prevButtonContent="Back to Word Entry"
            goToNextStep={this.props.goToNextStep}
+           goToPrevStep={this.props.goToPrevStep}
           />
         <div className="row">
           <div className="col-xs-12">

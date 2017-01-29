@@ -52,8 +52,10 @@ class ReviewPage extends Component {
       <div className="container">
         <BuilderNav
            pageComplete={true}
-           buttonContent="Print"
+           nextButtonContent="Print"
+           prevButtonContent="Back to Clue Entry"
            goToNextStep={this.goToNextStep}
+           goToPrevStep={this.props.goToPrevStep}
           />
         <div className="row">
           <div className="col-xs-12">
