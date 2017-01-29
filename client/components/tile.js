@@ -2,7 +2,7 @@ import React from 'react';
 const Tile = ({wordId,gridId,char}) => {
     var letterClass, tileClass;
     if (wordId) {
-      letterClass = 'letter red';
+      letterClass = 'letter used';
     } else {
       letterClass = 'letter';
     }

@@ -146,6 +146,12 @@ textarea {
       border: 2px solid $black;
       border-top: none;
       border-right: none;
+      .letter {
+        opacity: 0.1;
+        &.used {
+          opacity: 1;
+        }
+      }
       .letter-number {
         position: absolute;
         left: 2px;
