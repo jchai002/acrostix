@@ -7,6 +7,7 @@ import Alphabet from "../../constants/alphabet";
 import BuilderNav from './builderNav';
 import TextArea from '../textArea';
 import * as utils from  '../../helpers/utils';
+import LetterTracker from './letterTracker';
 
 class QuoteEntryPage extends Component {
   constructor(props) {
@@ -19,7 +20,8 @@ class QuoteEntryPage extends Component {
     this.handleQuoteChange = this.handleQuoteChange.bind(this);
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
     this.validatePuzzle = this.validatePuzzle.bind(this);
-    this.checkForCompletion = this.checkForCompletion.bind(this)
+    this.checkForCompletion = this.checkForCompletion.bind(this);
+    this.getTracker = this.getTracker.bind(this);
     this.prepGrid = this.prepGrid.bind(this);
   }
 
@@ -89,6 +91,26 @@ class QuoteEntryPage extends Component {
     }
   }
 
+  getTracker() {
+    var tracker = {};
+    this.state.quote.split('').forEach((char)=>{
+      if (utils.isLetter(char)) {
+        if (tracker[char.toUpperCase()]) {
+          tracker[char.toUpperCase()] += 1;
+        } else {
+          tracker[char.toUpperCase()] = 1;
+        }
+      }
+    });
+    this.state.authorName.split('').forEach((char)=>{
+      var char = char.toUpperCase();
+      if (tracker[char] && tracker[char] !== 0) {
+        tracker[char] --;
+      }
+    });
+    return tracker
+  }
+
   render() {
     var quoteConstraintClass, authorConstraintClass, validityConstraintClass;
 
@@ -111,6 +133,7 @@ class QuoteEntryPage extends Component {
     }
 
     var pageComplete = this.checkForCompletion();
+    var remainingLetters = this.getTracker();
     return (
       <div className="container">
         <BuilderNav
@@ -119,6 +142,10 @@ class QuoteEntryPage extends Component {
           pageComplete={pageComplete}
           />
         <div className="row">
+          <div className="col-xs-12">
+            <h2>Letters Remaining</h2>
+            <LetterTracker tracker={[]}/>
+          </div>
           <div className="col-xs-12 col-lg-6">
             <h2>Enter a quote and its author</h2>
             <form>
