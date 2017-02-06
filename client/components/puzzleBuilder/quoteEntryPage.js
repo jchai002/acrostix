@@ -21,7 +21,7 @@ class QuoteEntryPage extends Component {
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
     this.validatePuzzle = this.validatePuzzle.bind(this);
     this.checkForCompletion = this.checkForCompletion.bind(this);
-    this.getTracker = this.getTracker.bind(this);
+    this.getLibrary = this.getLibrary.bind(this);
     this.prepGrid = this.prepGrid.bind(this);
   }
 
@@ -91,24 +91,24 @@ class QuoteEntryPage extends Component {
     }
   }
 
-  getTracker() {
-    var tracker = {};
+  getLibrary() {
+    var library = {};
     this.state.quote.split('').forEach((char)=>{
       if (utils.isLetter(char)) {
-        if (tracker[char.toUpperCase()]) {
-          tracker[char.toUpperCase()] += 1;
+        if (library[char.toUpperCase()]) {
+          library[char.toUpperCase()] += 1;
         } else {
-          tracker[char.toUpperCase()] = 1;
+          library[char.toUpperCase()] = 1;
         }
       }
     });
     this.state.authorName.split('').forEach((char)=>{
       var char = char.toUpperCase();
-      if (tracker[char] && tracker[char] !== 0) {
-        tracker[char] --;
+      if (library[char] && library[char] !== 0) {
+        library[char] --;
       }
     });
-    return tracker
+    return library
   }
 
   render() {
@@ -133,7 +133,7 @@ class QuoteEntryPage extends Component {
     }
 
     var pageComplete = this.checkForCompletion();
-    var remainingLetters = this.getTracker();
+    var remainingLetters = this.getLibrary();
     return (
       <div className="container">
         <BuilderNav
@@ -144,7 +144,7 @@ class QuoteEntryPage extends Component {
         <div className="row">
           <div className="col-xs-12">
             <h2>Letters Remaining</h2>
-            <LetterTracker tracker={[]}/>
+            <LetterTracker library={this.getLibrary()}/>
           </div>
           <div className="col-xs-12 col-lg-6">
             <h2>Enter a quote and its author</h2>

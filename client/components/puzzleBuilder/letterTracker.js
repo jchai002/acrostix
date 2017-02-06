@@ -1,27 +1,31 @@
 import React from 'react';
 import Alphabet from "../../constants/alphabet";
 
-const LetterTracker = ({letters}) => {
-  var dictionary = {};
-  letters.forEach((letter)=>{
-    if (dictionary[letter]) {
-      dictionary[letter] ++
-    } else {
-      dictionary[letter] = 1
-    }
-  });
+const LetterTracker = ({letters,library}) => {
+  // can take either an existing letter library object or array of letters
+  console.log(library)
+  if (!library) {
+    var library = {};
+    letters.forEach((letter)=>{
+      if (library[letter]) {
+        library[letter] ++
+      } else {
+        library[letter] = 1
+      }
+    });
+  }
   var letterCounters = Alphabet.split('').map((letter) => {
     var letterClass = 'letter-'+letter;
     if (/[AEIOU]/.test(letter)) {
       letterClass += " vowels"
     }
-    if (!dictionary[letter]) {
+    if (!library[letter]) {
       var numberClass = "red"
     }
     return (
       <div key={letter} className="tracker">
         <span className={letterClass}>{letter}</span>:
-          <span className={numberClass}>{dictionary[letter] || 0}</span>
+          <span className={numberClass}>{library[letter] || 0}</span>
         </div>
       )
     });
