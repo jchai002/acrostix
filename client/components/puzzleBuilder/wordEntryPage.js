@@ -13,8 +13,20 @@ import * as utils from  '../../helpers/utils';
 class WordEntryPage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showGrid: true
+    }
+    this.toggleGrid = this.toggleGrid.bind(this);
     this.displayLetterCounter = this.displayLetterCounter.bind(this);
     this.getRemainingLetters = this.getRemainingLetters.bind(this);
+  }
+
+  toggleGrid() {
+    if (this.state.showGrid) {
+      this.setState({showGrid:false});
+    } else {
+      this.setState({showGrid:true});
+    }
   }
 
   getRemainingLetters() {
@@ -74,6 +86,15 @@ class WordEntryPage extends Component {
       );
     });
     var pageComplete = !this.getRemainingLetters().length;
+
+    var gridDisplay = {};
+    if (this.state.showGrid) {
+      gridDisplay = {display:'flex'}
+    } else {
+      gridDisplay = {display:'none'}
+    }
+
+
     return (
       <div className="container">
         <BuilderNav
@@ -82,7 +103,8 @@ class WordEntryPage extends Component {
           />
         <div className="row">
           <div className="col-xs-12">
-            <Grid puzzle={this.props.puzzle} />
+            <button className="btn btn-sm btn-info toggle-grid" onClick={this.toggleGrid}>Toggle Grid</button>
+            <Grid puzzle={this.props.puzzle} display={gridDisplay} />
           </div>
           <div className="col-xs-12">
             <h2>Letters Remaining</h2>

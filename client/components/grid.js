@@ -62,9 +62,10 @@ class Grid extends Component {
   }
 
   render() {
-    var grid = this.updateGrid()
+    var grid = this.updateGrid();
+    console.log(this.props)
     return (
-      <div className="grid">
+      <div className="grid" style={this.props.display}>
         {grid}
       </div>
     );

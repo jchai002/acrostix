@@ -7,6 +7,9 @@
 body {
   background-color: $bg-color;
   color: $text-base;
+  .btn {
+    cursor: pointer;
+  }
   .puzzle {
     font-family: "Comic Sans MS", cursive, sans-serif;
   }
@@ -125,6 +128,10 @@ textarea {
     .word {
       padding-bottom: $space-sm !important;
     }
+  }
+
+  .toggle-grid {
+    margin-bottom: $space-sm;
   }
 
   .grid {
