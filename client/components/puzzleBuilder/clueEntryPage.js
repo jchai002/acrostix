@@ -69,7 +69,7 @@ class ClueEntryPage extends Component {
            goToPrevStep={this.props.goToPrevStep}
           />
         <div className="row">
-          <div className="col-xs-12">
+          <div className="col-xs-12 col-lg-12">
             <h2>Enter Clues For Each Word</h2>
           </div>
           <div className="col-xs-12 col-lg-6">

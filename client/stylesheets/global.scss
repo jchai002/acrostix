@@ -21,9 +21,8 @@ textarea {
   margin-bottom: $space-lg;
   border-radius: 0;
   .navbar-brand {
-    .fa {
-      margin-right: $space-sm;
-    }
+    color: white;
+    font-family: "Comic Sans MS", cursive, sans-serif;
   }
   .row {
     display: flex;
@@ -47,7 +46,7 @@ textarea {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .tag {
+    .badge {
       margin-right: $space-sm;
     }
     .moment {

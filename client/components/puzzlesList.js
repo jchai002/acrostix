@@ -16,27 +16,27 @@ class PuzzlesList extends Component {
       switch (puzzle.currentStep) {
         case 1:
         stage = 'Quote Entry'
-        stageCss = 'tag tag-default'
+        stageCss = 'badge badge-default'
         break;
         case 2:
         stage = 'Words Entry'
-        stageCss = 'tag tag-danger'
+        stageCss = 'badge badge-danger'
         break;
         case 3:
         stage = 'Clues Entry'
-        stageCss = 'tag tag-warning'
+        stageCss = 'badge badge-warning'
         case 4:
         stage = 'Review & Print'
-        stageCss = 'tag tag-success'
+        stageCss = 'badge badge-success'
         break;
       }
 
       if (puzzle.public) {
         visibility = 'public';
-        visibilityCss = 'tag tag-info'
+        visibilityCss = 'badge badge-info'
       } else {
         visibility = 'private'
-        visibilityCss = 'tag tag-primary'
+        visibilityCss = 'badge badge-primary'
       }
 
       return (
